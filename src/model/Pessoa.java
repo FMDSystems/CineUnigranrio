@@ -19,25 +19,25 @@ public abstract class Pessoa {
 	}
 	
 	public String getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	public String getSenha() {
-		return senha;
+		return this.senha;
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
