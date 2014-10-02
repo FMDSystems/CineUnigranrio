@@ -10,7 +10,7 @@ public class Cliente extends Pessoa{
 		super();
 	}
 
-	public Cliente(int cpf, int nome, int email, int senha, Date dataNascimento) {
+	public Cliente(String cpf, String nome, String email, String senha, Date dataNascimento) {
 		super(cpf, nome, email, senha);
 		setDataNascimento(dataNascimento);
 	}
