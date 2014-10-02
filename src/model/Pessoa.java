@@ -1,16 +1,16 @@
 package model;
 
 public abstract class Pessoa {
-	private int cpf;
-	private int nome;
-	private int email;
-	private int senha;
+	private String cpf;
+	private String nome;
+	private String email;
+	private String senha;
 	
 	public Pessoa() {
 		super();
 	}
 
-	public Pessoa(int cpf, int nome, int email, int senha) {
+	public Pessoa(String cpf, String nome, String email, String senha) {
 		super();
 		this.setCpf(cpf);
 		this.setNome(nome);
@@ -18,28 +18,28 @@ public abstract class Pessoa {
 		this.setSenha(senha);
 	}
 	
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public int getNome() {
+	public String getNome() {
 		return nome;
 	}
-	public void setNome(int nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getEmail() {
+	public String getEmail() {
 		return email;
 	}
-	public void setEmail(int email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getSenha() {
+	public String getSenha() {
 		return senha;
 	}
-	public void setSenha(int senha) {
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 	
