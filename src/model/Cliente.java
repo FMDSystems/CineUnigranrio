@@ -12,12 +12,12 @@ public class Cliente extends Pessoa{
 
 	public Cliente(String cpf, String nome, String email, String senha, Date dataNascimento) {
 		super(cpf, nome, email, senha);
-		setDataNascimento(dataNascimento);
+		this.setDataNascimento(dataNascimento);
 	}
 
 
 	public Date getDataNascimento() {
-		return dataNascimento;
+		return this.dataNascimento;
 	}
 
 	public void setDataNascimento(Date dataNascimento) {

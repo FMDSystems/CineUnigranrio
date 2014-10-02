@@ -9,11 +9,11 @@ public class Funcionario extends Pessoa{
 
 	public Funcionario(String cpf, String nome, String email, String senha, int matricula) {
 		super(cpf, nome, email, senha);
-		setMatricula(matricula);
+		this.setMatricula(matricula);
 	}
 
 	public int getMatricula() {
-		return matricula;
+		return this.matricula;
 	}
 
 	public void setMatricula(int matricula) {
