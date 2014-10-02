@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.Set;
 
-public class Filme {
+public class Filme implements Comparable<Filme>{
 
 	private String titulo;
 
@@ -24,6 +24,25 @@ public class Filme {
 	private Set<Sessao> sessao;
 
 	private Set<Genero> genero;
+
+	public Filme(String titulo, Date duracao, String sinopse, String diretor,
+			boolean legendado, int faixaEtaria, String status, String tipo) {
+		super();
+		this.setTitulo(titulo);
+		this.setDuracao(duracao);
+		this.setSinopse(sinopse);
+		this.setDiretor(diretor);
+		this.setLegendado(legendado);
+		this.setFaixaEtaria(faixaEtaria);
+		this.setStatus(status);
+		this.setTipo(tipo);
+		this.setSessao(sessao);
+		this.setGenero(genero);
+	}
+	
+	public Filme() {
+		super();
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -107,49 +126,16 @@ public class Filme {
 		this.genero = genero;
 	}
 
-	public Filme(String titulo, Date duracao, String sinopse, String diretor,
-			boolean legendado, int faixaEtaria, String status, String tipo) {
-		super();
-		setTitulo(titulo);
-		setDuracao(duracao);
-		setSinopse(sinopse);
-		setDiretor(diretor);
-		setLegendado(legendado);
-		setFaixaEtaria(faixaEtaria);
-		setStatus(status);
-		setTipo(tipo);
-		setSessao(sessao);
-		setGenero(genero);
-	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Filme other = (Filme) obj;
-		if (titulo == null) {
-			if (other.titulo != null)
-				return false;
-		} else if (!titulo.equals(other.titulo))
-			return false;
-		return true;
-	}
 
 	@Override
 	public String toString() {
-		return "Filme [titulo=" + titulo + ", duracao=" + duracao + "]";
+		return this.titulo + " - " + this.tipo + " : " + this.duracao;
+	}
+
+	@Override
+	public int compareTo(Filme f) {
+		return this.titulo.compareTo(f.getTitulo());
 	}
 
 }
