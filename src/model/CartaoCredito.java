@@ -12,12 +12,27 @@ public class CartaoCredito {
 
 	private String operadora;
 
-	private int CVC;
+	private int cvc;
 
 	private Cliente cliente;
 
+	public CartaoCredito() {
+		super();
+	}
+
+	public CartaoCredito(int numero, String nome, Date validade,
+			String operadora, int cvc, Cliente cliente) {
+		super();
+		this.setNumero(numero);
+		this.setNome(nome);
+		this.setValidade(validade);
+		this.setOperadora(operadora);
+		this.setCVC(cvc);
+		this.setCliente(cliente);
+	}
+	
 	public int getNumero() {
-		return numero;
+		return this.numero;
 	}
 
 	public void setNumero(int numero) {
@@ -25,7 +40,7 @@ public class CartaoCredito {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -33,7 +48,7 @@ public class CartaoCredito {
 	}
 
 	public Date getValidade() {
-		return validade;
+		return this.validade;
 	}
 
 	public void setValidade(Date validade) {
@@ -41,7 +56,7 @@ public class CartaoCredito {
 	}
 
 	public String getOperadora() {
-		return operadora;
+		return this.operadora;
 	}
 
 	public void setOperadora(String operadora) {
@@ -49,68 +64,24 @@ public class CartaoCredito {
 	}
 
 	public int getCVC() {
-		return CVC;
+		return this.cvc;
 	}
 
-	public void setCVC(int cVC) {
-		CVC = cVC;
+	public void setCVC(int cvc) {
+		this.cvc = cvc;
 	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return this.cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	public CartaoCredito() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public CartaoCredito(int numero, String nome, Date validade,
-			String operadora, int cvc, Cliente cliente) {
-		super();
-		setNumero(numero);
-		setNome(nome);
-		setValidade(validade);
-		setOperadora(operadora);
-		setCVC(cvc);
-		setCliente(cliente);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + numero;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CartaoCredito other = (CartaoCredito) obj;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (numero != other.numero)
-			return false;
-		return true;
-	}
-
 	@Override
 	public String toString() {
-		return "CartaoCredito [numero=" + numero + ", nome=" + nome + "]";
+		return this.operadora + " - " + this.numero;
 	}
 
 }
