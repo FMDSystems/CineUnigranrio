@@ -7,18 +7,20 @@ public class Ingresso implements Comparable<Ingresso>{
 	private String tipoDesconto;
 	private Cliente cliente;
 	private Sessao sessao;
+	private Lugar lugar;
 
 	public Ingresso() {
 		super();
 	}
 
 	public Ingresso(Date dataCompra, String tipoDesconto, Cliente cliente,
-			Sessao sessao) {
+			Sessao sessao, Lugar Lugar) {
 		super();
 		this.setDataCompra(dataCompra);
 		this.setTipoDesconto(tipoDesconto);
 		this.setCliente(cliente);
 		this.setSessao(sessao);
+		this.setLugar(Lugar);
 	}
 
 	public Date getDataCompra() {
@@ -53,6 +55,14 @@ public class Ingresso implements Comparable<Ingresso>{
 		this.sessao = sessao;
 	}
 
+	public Lugar getLugar() {
+		return lugar;
+	}
+	// Alterar o método setLugar para a códificação correta
+	public void setLugar(Lugar lugar) {
+		this.lugar = lugar;
+	}
+	
 	@Override
 	public int compareTo(Ingresso i) {
 		return this.dataCompra.compareTo(i.getDataCompra());
