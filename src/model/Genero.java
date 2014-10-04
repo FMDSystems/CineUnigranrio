@@ -3,7 +3,7 @@ package model;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Genero {
+public class Genero implements Comparable<Genero>{
 	private String descricao;
 	private Set<Filme> listaFilmes;
 	
@@ -25,8 +25,14 @@ public class Genero {
 		this.descricao = descricao;
 	}
 	
+	//Criar métodos add e remove da lista Filmes
 	public Set<Filme> getFilme() {
-		return listaFilmes;
+		return this.listaFilmes;
+	}
+
+	@Override
+	public int compareTo(Genero g) {
+		return this.descricao.compareTo(g.getDescricao());
 	}
 	
 }

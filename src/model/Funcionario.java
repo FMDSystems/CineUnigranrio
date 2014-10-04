@@ -1,13 +1,15 @@
 package model;
 
-public class Funcionario extends Pessoa{
+public class Funcionario extends Pessoa {
 
 	private int matricula;
+
 	public Funcionario() {
-	super();
+		super();
 	}
 
-	public Funcionario(String cpf, String nome, String email, String senha, int matricula) {
+	public Funcionario(String cpf, String nome, String email, String senha,
+			int matricula) {
 		super(cpf, nome, email, senha);
 		this.setMatricula(matricula);
 	}

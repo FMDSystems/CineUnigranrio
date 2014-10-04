@@ -35,7 +35,7 @@ public class Lugar {
 	public Sala getSala() {
 		return this.sala;
 	}
-
+	// Alterar o método setSala para a códificação correta
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}

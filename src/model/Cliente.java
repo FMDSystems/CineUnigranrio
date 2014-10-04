@@ -23,4 +23,9 @@ public class Cliente extends Pessoa{
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+	
+	@Override
+	public String toString(){
+		return this.getCpf() + " - " + this.getNome();
+	}
 }

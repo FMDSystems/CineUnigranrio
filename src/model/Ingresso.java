@@ -1,9 +1,8 @@
 package model;
 
 import java.util.Date;
-import java.util.Set;
 
-public class Ingresso {
+public class Ingresso implements Comparable<Ingresso>{
 	private Date dataCompra;
 	private String tipoDesconto;
 	private Cliente cliente;
@@ -41,7 +40,7 @@ public class Ingresso {
 	public Cliente getCliente() {
 		return cliente;
 	}
-
+	// Alterar o método setCliente para a códificação correta
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -49,9 +48,14 @@ public class Ingresso {
 	public Sessao getSessao() {
 		return sessao;
 	}
-
+	// Alterar o método setSessao para a códificação correta
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
+	}
+
+	@Override
+	public int compareTo(Ingresso i) {
+		return this.dataCompra.compareTo(i.getDataCompra());
 	}
 
 }

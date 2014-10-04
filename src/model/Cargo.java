@@ -8,7 +8,6 @@ public class Cargo {
 
 	public Cargo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Cargo(int nivel, String nome, Funcionario funcionario) {
@@ -37,7 +36,8 @@ public class Cargo {
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
-
+	
+	// Alterar o método setFuncionário para a códificação correta
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}

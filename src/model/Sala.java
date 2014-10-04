@@ -40,11 +40,12 @@ public class Sala {
 	public Sessao getSessao() {
 		return this.sessao;
 	}
-
+	// Alterar o método setSessao para a códificação correta
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
 	}
 
+	//Criar métodos add e remove da lista de Lugares
 	public Set<Lugar> getLugar() {
 		return this.listaLugares;
 	}

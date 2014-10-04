@@ -2,6 +2,7 @@ package model;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Filme implements Comparable<Filme>{
 
@@ -21,9 +22,9 @@ public class Filme implements Comparable<Filme>{
 
 	private String tipo;
 
-	private Set<Sessao> sessao;
+	private Set<Sessao> listaSessoes;
 
-	private Set<Genero> genero;
+	private Set<Genero> listaGeneros;
 
 	public Filme(String titulo, Date duracao, String sinopse, String diretor,
 			boolean legendado, int faixaEtaria, String status, String tipo) {
@@ -36,8 +37,8 @@ public class Filme implements Comparable<Filme>{
 		this.setFaixaEtaria(faixaEtaria);
 		this.setStatus(status);
 		this.setTipo(tipo);
-		this.setSessao(sessao);
-		this.setGenero(genero);
+		this.listaSessoes = new TreeSet<Sessao>();
+		this.listaGeneros = new TreeSet<Genero>();
 	}
 	
 	public Filme() {
@@ -107,26 +108,15 @@ public class Filme implements Comparable<Filme>{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
+	
+	//Criar métodos add e remove da lista de Sessoes
 	public Set<Sessao> getSessao() {
-		return sessao;
+		return listaSessoes;
 	}
-
-	public void setSessao(Set<Sessao> sessao) {
-		this.sessao = sessao;
-	}
-
-
-
+	//Criar métodos add e remove da lista de Generos
 	public Set<Genero> getGenero() {
-		return genero;
+		return listaGeneros;
 	}
-
-	public void setGenero(Set<Genero> genero) {
-		this.genero = genero;
-	}
-
-
 
 	@Override
 	public String toString() {

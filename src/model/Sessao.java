@@ -2,6 +2,7 @@ package model;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Sessao {
 	private Date data;
@@ -9,7 +10,7 @@ public class Sessao {
 	private int tempoFim;
 	private float valor;
 	private Sala sala;
-	private Set<Ingresso> ingresso;
+	private Set<Ingresso> listaIngressos;
 	private Filme filme;
 	
 	public Sessao(){
@@ -24,7 +25,7 @@ public class Sessao {
 		this.setTempoFim(tempoFim);
 		this.setValor(valor);
 		this.setSala(sala);
-		this.setIngresso(ingresso);
+		this.listaIngressos = new TreeSet<Ingresso>();
 		this.setFilme(filme);
 	}
 
@@ -63,23 +64,19 @@ public class Sessao {
 	public Sala getSala() {
 		return sala;
 	}
-
+	// Alterar o método setSala para a códificação correta
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-
+	//Criar métodos add e remove da lista de Generos
 	public Set<Ingresso> getIngresso() {
-		return ingresso;
-	}
-
-	public void setIngresso(Set<Ingresso> ingresso) {
-		this.ingresso = ingresso;
+		return listaIngressos;
 	}
 
 	public Filme getFilme() {
 		return filme;
 	}
-
+	// Alterar o método setFilme para a códificação correta
 	public void setFilme(Filme filme) {
 		this.filme = filme;
 	}
