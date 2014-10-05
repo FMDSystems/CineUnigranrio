@@ -65,7 +65,7 @@ public class Ingresso implements Comparable<Ingresso>{
 	
 	@Override
 	public int compareTo(Ingresso i) {
-		return this.dataCompra.compareTo(i.getDataCompra());
+		return this.lugar.compareTo(i.getLugar());
 	}
 
 }

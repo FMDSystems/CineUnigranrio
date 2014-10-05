@@ -1,10 +1,258 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cinema Unigranrio">
+<meta name="author" content="FMD Systems">
+<link rel="icon" href="img/favicon.ico">
+
+<title>Cine Unigranrio - O melhor cinema na melhor faculdade</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<link href="css/flexslider.css" rel="stylesheet">
+
 </head>
+
 <body>
 
+	<div class="container">
+		<div class="header">
+			<a class="nameproject" href="#"><img src="img/logo.png"
+				width="200px"></a>
+		</div>
+
+		<!-- Static navbar -->
+		<div class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#">Cinemas</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">Filmes <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Em Exibição</a></li>
+								<li><a href="#">Em Breve</a></li>
+							</ul></li>
+						<li><a href="#">Promoções</a></li>
+						<li><a href="#">Sessões</a></li>
+					</ul>
+					<form class="navbar-form navbar-right">
+						<div class="input-group">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-default dropdown-toggle"
+									data-toggle="dropdown">
+									Selecione <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Filme</a></li>
+									<li><a href="#">Horário</a></li>
+									<li><a href="#">Cinema</a></li>
+								</ul>
+							</div>
+							<input type="text" class="form-control" placeholder="Pesquisar">
+						</div>
+					</form>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+			<!--/.container-fluid -->
+		</div>
+
+		<div class="row">
+			<div class="col-md-8">
+				<div class="letreiro">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner">
+							<div class="item active">
+								<a href="teste.html"><img src="img/banner1.png"
+									alt="First slide"></a>
+							</div>
+							<div class="item">
+								<img src="img/banner2.png" alt="Second slide">
+							</div>
+							<div class="item">
+								<img src="img/banner1.png" alt="Third slide">
+							</div>
+						</div>
+						<a class="left carousel-control" href="#myCarousel" role="button"
+							data-slide="prev"><span
+							class="glyphicon glyphicon-chevron-left"></span></a> <a
+							class="right carousel-control" href="#myCarousel" role="button"
+							data-slide="next"><span
+							class="glyphicon glyphicon-chevron-right"></span></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="login">
+					<form class="form-signin" role="form">
+						<h2 class="form-signin-heading">Acesso ao Sistema</h2>
+						<input type="email" class="form-control" name="email"
+							placeholder="Email" required autofocus> <input
+							type="password" class="form-control" name="senha"
+							placeholder="Senha" required> Esqueceu sua senha?
+						Esqueceu seu email? <br />
+						<button class="btn btn-lg btn-primary btn-block" type="submit">Confirmar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="page-header">
+			<h1>Em Exibição</h1>
+		</div>
+		<div class="flexslider carousel">
+			<ul class="slides">
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/maze-runner.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/maze-runner.jsp">Maze Runner</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/as-tartarugas-ninja.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/as-tartarugas-ninja.jsp">As Tartarugas Ninjas</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/deus-nao-esta-morto.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/deus-nao-esta-morto.jsp">Deus Não Está Morto</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/livrai-nos-do-mal.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/livrai-nos-do-mal.jsp">Livrai-nos do Mal</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/o-protetor.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/o-protetor.jsp">O Protetor</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/se-eu-ficar.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/se-eu-ficar.jsp">Se Eu Ficar</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="thumbnail">
+						<img src="img/filmes/sera-que.jpg">
+						<div class="caption" align="center">
+							<h4>
+								<a href="jsp/sera-que.jsp">Será Que?</a>
+							</h4>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	<!-- /container -->
+	<hr>
+	<div class="footer">
+		<div class="container">
+			<p class="text-muted" style="float: left;">&copy; Cine Unigranrio
+				2014</p>
+			<p class="text-muted" align="right">
+				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
+					Systems</a>
+			</p>
+		</div>
+	</div>
+	<!-- /container -->
+
+	<!-- Colocado no final do documento para caregar a página mais rápido -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/flexslider.js"></script>
+	<script type="text/javascript">
+		(function() {
+
+			// store the slider in a local variable
+			var $window = $(window), flexslider;
+
+			// tiny helper function to add breakpoints
+			function getGridSize() {
+				return (window.innerWidth < 600) ? 2
+						: (window.innerWidth < 900) ? 3 : 4;
+			}
+
+			$(function() {
+				SyntaxHighlighter.all();
+			});
+
+			$window.load(function() {
+				$('.flexslider').flexslider({
+					animation : "slide",
+					animationSpeed : 400,
+					animationLoop : false,
+					itemWidth : 210,
+					itemMargin : 5,
+					minItems : getGridSize(), // use function to pull in initial value
+					maxItems : getGridSize(), // use function to pull in initial value
+					start : function(slider) {
+						$('body').removeClass('loading');
+						flexslider = slider;
+					}
+				});
+			});
+
+			// check grid size on resize event
+			$window.resize(function() {
+				var gridSize = getGridSize();
+
+				flexslider.vars.minItems = gridSize;
+				flexslider.vars.maxItems = gridSize;
+			});
+		}());
+	</script>
 </body>
 </html>

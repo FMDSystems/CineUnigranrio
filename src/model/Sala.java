@@ -3,7 +3,7 @@ package model;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Sala {
+public class Sala implements Comparable<Sala>{
 	private int numero;
 	private int capacidade;
 	private Sessao sessao;
@@ -48,6 +48,11 @@ public class Sala {
 	//Criar métodos add e remove da lista de Lugares
 	public Set<Lugar> getLugar() {
 		return this.listaLugares;
+	}
+
+	@Override
+	public int compareTo(Sala o) {
+		return this.numero - o.getNumero();
 	}
 	
 }

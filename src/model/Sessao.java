@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Sessao {
+public class Sessao implements Comparable<Sessao>{
 	private Date data;
 	private int tempoInicio;
 	private int tempoFim;
@@ -79,6 +79,11 @@ public class Sessao {
 	// Alterar o método setFilme para a códificação correta
 	public void setFilme(Filme filme) {
 		this.filme = filme;
+	}
+
+	@Override
+	public int compareTo(Sessao s) {
+		return this.sala.compareTo(s.getSala());
 	}
 	
 }
