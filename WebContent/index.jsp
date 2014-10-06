@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
@@ -43,11 +43,11 @@
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Filmes <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Em Exibição</a></li>
+								<li><a href="#">Em Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="#">Em Breve</a></li>
 							</ul></li>
-						<li><a href="#">Promoções</a></li>
-						<li><a href="#">Sessões</a></li>
+						<li><a href="#">Promo&ccedil;&otilde;es</a></li>
+						<li><a href="#">Sess&otilde;es</a></li>
 					</ul>
 					<form class="navbar-form navbar-right">
 						<div class="input-group">
@@ -58,7 +58,7 @@
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">Filme</a></li>
-									<li><a href="#">Horário</a></li>
+									<li><a href="#">Hor&aacute;rio</a></li>
 									<li><a href="#">Cinema</a></li>
 								</ul>
 							</div>
@@ -118,7 +118,7 @@
 		</div>
 
 		<div class="page-header">
-			<h1>Em Exibição</h1>
+			<h1>Em Exibi&ccedil;&atilde;o</h1>
 		</div>
 
 		<div class="flexslider carousel">
@@ -156,7 +156,7 @@
 						<a href="jsp/deus-nao-esta-morto.jsp"><img
 							src="img/filmes/em-exibicao/deus-nao-esta-morto.jpg"></a>
 						<div class="caption" align="center">
-							<h4>Deus Não Está Morto</h4>
+							<h4>Deus N&atilde;o Est&aacute; Morto</h4>
 							<p>
 								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
 									href="jsp/deus-nao-esta-morto.jsp" class="btn btn-default"
@@ -212,7 +212,7 @@
 						<a href="jsp/sera-que.jsp"><img
 							src="img/filmes/em-exibicao/sera-que.jpg"></a>
 						<div class="caption" align="center">
-							<h4>Será Que?</h4>
+							<h4>Ser&aacute; Que?</h4>
 							<p>
 								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
 									href="jsp/sera-que.jsp" class="btn btn-default" role="button">Saiba
@@ -247,7 +247,7 @@
 						<a href="jsp/o-fisico.jsp"><img
 							src="img/filmes/em-breve/o-fisico.jpg"></a>
 						<div class="caption" align="center">
-							<h4>O Físico</h4>
+							<h4>O F&iacute;sico</h4>
 							<p>
 								<a href="jsp/o-fisico.jsp" class="btn btn-default" role="button">Saiba
 									Mais</a>
@@ -286,7 +286,7 @@
 						<a href="jsp/trash.jsp"><img
 							src="img/filmes/em-breve/trash.jpg"></a>
 						<div class="caption" align="center">
-							<h4>Trash - A Esperança Vem do Lixo</h4>
+							<h4>Trash - A Esperan&ccedil;a Vem do Lixo</h4>
 							<p>
 								<a href="jsp/trash.jsp" class="btn btn-default" role="button">Saiba
 									Mais</a>
@@ -335,7 +335,7 @@
 			</div>
 			<div class="col-6 col-sm-6 col-lg-4">
 				<h2>Contato</h2>
-				<div align="left" style="float:left;">Rua Prof. José de Souza Herdy, 1.160<br />
+				<div align="left" style="float:left;">Rua Prof. Jos&eacute; de Souza Herdy, 1.160<br />
 				25 de Agosto - Duque de Caxias<br />
 				Rio de Janeiro. CEP 25071-202<br />
 				Telefone: (21) 3219-4040<br />
