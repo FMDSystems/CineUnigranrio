@@ -107,14 +107,12 @@
 							type="password" class="form-control" name="senha"
 							placeholder="Senha" required>
 						<p>
-							<a href="">Esqueceu sua senha?</a> <br /> <a href="">Não
-								sabe seu E-mail? </a>
+							<a href="">Esqueceu sua senha?</a> <br />
 						</p>
 						<button class="btn btn-lg btn-primary btn-block" type="submit">Confirmar</button>
 					</form>
-					<br />
-					<h4>
-						<a href="">Não tem cadastro?</a>
+					<h4>ou<br/><br/>
+						<button class="btn btn-lg btn-success" type="submit">Cadastre-se</button>
 					</h4>
 				</div>
 			</div>
@@ -356,8 +354,8 @@
 			<p class="text-muted" style="float: left;">&copy; Cine Unigranrio
 				2014</p>
 			<p class="text-muted" align="right">
-				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a>
+				Made by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
+					Systems</a> - Design by  <a href="http://www.twitter.com/mxxxrcos" target="blank">M.Boscolo</a>
 			</p>
 		</div>
 	</div>
