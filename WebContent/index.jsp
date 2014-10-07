@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -39,7 +40,6 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#">Cinemas</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Filmes <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
@@ -52,15 +52,11 @@
 					<form class="navbar-form navbar-right">
 						<div class="input-group">
 							<div class="input-group-btn">
-								<button type="button" class="btn btn-default dropdown-toggle"
-									data-toggle="dropdown">
-									Selecione <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Filme</a></li>
-									<li><a href="#">Hor&aacute;rio</a></li>
-									<li><a href="#">Cinema</a></li>
-								</ul>
+								<select class="form-control" style="width: 100px;">
+									<option value="filme">Filme</option>
+									<option value="horario">Hor&aacute;rio</option>
+									<option value="cinema">Cinema</option>
+								</select>
 							</div>
 							<input type="text" class="form-control" placeholder="Pesquisar">
 						</div>
@@ -109,10 +105,17 @@
 						<input type="email" class="form-control" name="email"
 							placeholder="Email" required autofocus> <input
 							type="password" class="form-control" name="senha"
-							placeholder="Senha" required> Esqueceu sua senha?
-						Esqueceu seu email? <br />
+							placeholder="Senha" required>
+						<p>
+							<a href="">Esqueceu sua senha?</a> <br /> <a href="">Não
+								sabe seu E-mail? </a>
+						</p>
 						<button class="btn btn-lg btn-primary btn-block" type="submit">Confirmar</button>
 					</form>
+					<br />
+					<h4>
+						<a href="">Não tem cadastro?</a>
+					</h4>
 				</div>
 			</div>
 		</div>
@@ -318,28 +321,31 @@
 		<div class="container">
 			<div class="col-6 col-sm-6 col-lg-4">
 				<h2>Social Media</h2>
-				<a href="http://fb.com/" target="_blank"><img
-					src="img/socialmedia/facebook.png" width="48px"></a> <a
-					href="http://twitter.com/" target="_blank"><img
-					src="img/socialmedia/twitter.png" width="48px"></a> <a
-					href="http://instagram.com/" target="_blank"><img
-					src="img/socialmedia/instagram.png" width="48px"></a> <a
-					href="http://youtube.com/" target="_blank"><img
-					src="img/socialmedia/youtube.png" width="48px"></a>
+				<div class="socialmedia">
+					<a href="http://fb.com/" target="_blank"><img
+						src="img/socialmedia/facebook.png" width="48px"></a> <a
+						href="http://twitter.com/" target="_blank"><img
+						src="img/socialmedia/twitter.png" width="48px"></a> <a
+						href="http://instagram.com/" target="_blank"><img
+						src="img/socialmedia/instagram.png" width="48px"></a> <a
+						href="http://youtube.com/" target="_blank"><img
+						src="img/socialmedia/youtube.png" width="48px"></a>
+				</div>
 			</div>
 			<div class="col-6 col-sm-6 col-lg-4">
 				<h2>Mapa do Site</h2>
-				
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
+
+				<a class="btn btn-default" href="#" role="button">View details
+					&raquo;</a>
 			</div>
 			<div class="col-6 col-sm-6 col-lg-4">
 				<h2>Contato</h2>
-				<div align="left" style="float:left;">Rua Prof. Jos&eacute; de Souza Herdy, 1.160<br />
-				25 de Agosto - Duque de Caxias<br />
-				Rio de Janeiro. CEP 25071-202<br />
-				Telefone: (21) 3219-4040<br />
-				E-mail: contato@cineunigranrio.com.br </div>
+				<div align="left" style="float: left;">
+					Rua Prof. Jos&eacute; de Souza Herdy, 1.160<br /> 25 de Agosto -
+					Duque de Caxias<br /> Rio de Janeiro. CEP 25071-202<br />
+					Telefone: (21) 3219-4040<br /> E-mail:
+					contato@cineunigranrio.com.br
+				</div>
 			</div>
 		</div>
 	</div>
