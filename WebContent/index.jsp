@@ -23,7 +23,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="header">
-				<a class="nameproject" href="#"><img src="img/logo.png"
+				<a class="nameproject" href="/cineunigranrio"><img src="img/logo.png"
 					width="200px"></a>
 			</div>
 
@@ -45,7 +45,7 @@
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">Home</a></li>
+							<li class="active"><a href="/cineunigranrio">Home</a></li>
 							<li><a href="#">Sessões</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Filmes <b class="caret"></b></a>
@@ -66,7 +66,7 @@
 
 								if ((session == null) || (session.getAttribute("usuario") == null)) {
 							%>
-							<li><a href="#">Cadastrar</a></li>
+							<li><a href="cadastrarCliente">Cadastrar</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Acessar <b class="caret"></b></a>
 								<ul class="dropdown-menu"
@@ -85,7 +85,7 @@
 															placeholder="Senha" required>
 													</div>
 													<div class="form-group">
-														<button type="submit" class="btn btn-success btn-block">Confirmar</button>
+														<button type="submit" class="btn btn-primary btn-block">Confirmar</button>
 													</div>
 												</form>
 											</div>
@@ -145,7 +145,7 @@
 						</ol>
 						<div class="carousel-inner">
 							<div class="item active">
-								<a href="teste.html"><img src="img/banner1.jpg"
+								<a href="cadastrarCliente"><img src="img/banner1.jpg"
 									alt="First slide"></a>
 							</div>
 							<div class="item">
@@ -403,8 +403,8 @@
 			<p class="text-muted" style="float: left;">&copy; Cine Unigranrio
 				2014</p>
 			<p class="text-muted" align="right">
-				Made by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a> - Design by <a href="http://www.twitter.com/mxxxrcos"
+				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
+					Systems</a> & <a href="http://www.twitter.com/mxxxrcos"
 					target="blank">M.Boscolo</a>
 			</p>
 		</div>
