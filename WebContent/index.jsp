@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@page import="model.Pessoa"%>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -21,52 +21,118 @@
 <body>
 
 	<div class="container">
-		<div class="header">
-			<a class="nameproject" href="#"><img src="img/logo.png"
-				width="200px"></a>
-		</div>
-
-		<!-- Static navbar -->
-		<div class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-				</div>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">Filmes <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Em Exibi&ccedil;&atilde;o</a></li>
-								<li><a href="#">Em Breve</a></li>
-							</ul></li>
-						<li><a href="#">Promo&ccedil;&otilde;es</a></li>
-						<li><a href="#">Sess&otilde;es</a></li>
-					</ul>
-					<form class="navbar-form navbar-right">
-						<div class="input-group">
-							<div class="input-group-btn">
-								<select class="form-control" style="width: 100px;">
-									<option value="filme">Filme</option>
-									<option value="horario">Hor&aacute;rio</option>
-									<option value="cinema">Cinema</option>
-								</select>
-							</div>
-							<input type="text" class="form-control" placeholder="Pesquisar">
-						</div>
-					</form>
-				</div>
-				<!--/.nav-collapse -->
+		<div class="row">
+			<div class="header">
+				<a class="nameproject" href="#"><img src="img/logo.png"
+					width="200px"></a>
 			</div>
-			<!--/.container-fluid -->
+
 		</div>
 
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-default" role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse"
+						id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#">Home</a></li>
+							<li><a href="#">Sessões</a></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Filmes <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Em Exibição</a></li>
+									<li><a href="#">Em Breve</a></li>
+								</ul></li>
+						</ul>
+						<form class="navbar-form navbar-left" role="search">
+							<div class="form-group">
+								<input class="form-control glyphicon" type="search"
+									placeholder="&#57347; Pesquisar" />
+							</div>
+						</form>
+						<ul class="nav navbar-nav navbar-right">
+							<%
+								Pessoa usuario = null;
+
+								if ((session == null) || (session.getAttribute("usuario") == null)) {
+							%>
+							<li><a href="#">Cadastrar</a></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Acessar <b class="caret"></b></a>
+								<ul class="dropdown-menu"
+									style="padding: 15px; min-width: 250px;">
+									<li>
+										<div class="row">
+											<div class="col-md-12">
+												<form class="form" role="form" method="post" action="login"
+													accept-charset="UTF-8" id="login-nav">
+													<div class="form-group">
+														<input type="email" class="form-control" name="email"
+															placeholder="Email" required>
+													</div>
+													<div class="form-group">
+														<input type="password" class="form-control" name="senha"
+															placeholder="Senha" required>
+													</div>
+													<div class="form-group">
+														<button type="submit" class="btn btn-success btn-block">Confirmar</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</li>
+									<!-- 									 Em breve inclusão de cadastro com redes sociais -->
+									<!-- 																		<li class="divider"></li> -->
+									<!-- 																		<li><input class="btn btn-primary btn-block" type="button" -->
+									<!-- 																			id="sign-in-google" value="Sign In with Google"> <input -->
+									<!-- 																			class="btn btn-primary btn-block" type="button" -->
+									<!-- 																			id="sign-in-twitter" value="Sign In with Twitter"></li> -->
+								</ul></li>
+
+							<%
+								} else {
+									usuario = (Pessoa) session.getAttribute("usuario");
+							%>
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown"> <%=usuario.getNome()%> <span
+									class="glyphicon glyphicon-cog"></span>
+							</a>
+								<ul class="dropdown-menu" role="menu"
+									style="padding: 15px; min-width: 250px;">
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="#">Meus Ingressos <span
+									class="glyphicon glyphicon-tags"></span></a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="#">Alterar Informações <span
+									class="glyphicon glyphicon-list-alt"></span></a></li>
+									<li role="presentation" class="divider"></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="#" style="color: red;">Encerrar Sessão <span
+									class="glyphicon glyphicon-off"></span></a></li>
+								</ul></li>
+
+							<%
+								}
+							%>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</nav>
+			</div>
+		</div>
+		<!-- Fim da barra -->
+
+		<!-- Letreiro -->
 		<div class="row">
 			<div class="col-md-9">
 				<div class="letreiro">
@@ -98,24 +164,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<div class="login">
-					<form class="form-signin" role="form">
-						<h2 class="form-signin-heading">Acesso ao Sistema</h2>
-						<input type="email" class="form-control" name="email"
-							placeholder="Email" required autofocus> <input
-							type="password" class="form-control" name="senha"
-							placeholder="Senha" required>
-						<p>
-							<a href="">Esqueceu sua senha?</a> <br />
-						</p>
-						<button class="btn btn-lg btn-primary btn-block" type="submit">Confirmar</button>
-					</form>
-					<h4>ou<br/><br/>
-						<button class="btn btn-lg btn-success" type="submit">Cadastre-se</button>
-					</h4>
-				</div>
-			</div>
+			<div class="col-md-3"></div>
 		</div>
 
 		<div class="page-header">
@@ -317,7 +366,7 @@
 	<hr>
 	<div class="footer">
 		<div class="container">
-			<div class="col-6 col-sm-6 col-lg-4">
+			<div class="col-4 col-sm-4 col-lg-4">
 				<h2>Social Media</h2>
 				<div class="socialmedia">
 					<a href="http://fb.com/" target="_blank"><img
@@ -330,13 +379,13 @@
 						src="img/socialmedia/youtube.png" width="48px"></a>
 				</div>
 			</div>
-			<div class="col-6 col-sm-6 col-lg-4">
+			<div class="col-3 col-sm-4 col-lg-4">
 				<h2>Mapa do Site</h2>
 
 				<a class="btn btn-default" href="#" role="button">View details
 					&raquo;</a>
 			</div>
-			<div class="col-6 col-sm-6 col-lg-4">
+			<div class="col-3 col-sm-4 col-lg-4">
 				<h2>Contato</h2>
 				<div align="left" style="float: left;">
 					Rua Prof. Jos&eacute; de Souza Herdy, 1.160<br /> 25 de Agosto -
@@ -355,7 +404,8 @@
 				2014</p>
 			<p class="text-muted" align="right">
 				Made by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a> - Design by  <a href="http://www.twitter.com/mxxxrcos" target="blank">M.Boscolo</a>
+					Systems</a> - Design by <a href="http://www.twitter.com/mxxxrcos"
+					target="blank">M.Boscolo</a>
 			</p>
 		</div>
 	</div>
