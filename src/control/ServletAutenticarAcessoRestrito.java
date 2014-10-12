@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Cliente;
 import model.Funcionario;
 
 /**
@@ -48,26 +47,32 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		Funcionario func1 = null;
 		try {
 			func1 = new Funcionario("111.111.111-11", "Administrador",
-					"admin@cineuni.com.br", "admin", 0001);
+					"admin@cineuni.com.br", "admin", 1234);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String matricula = request.getParameter("matricula");
+		String Smatricula = request.getParameter("matricula");
+		int matricula;
+		if (Smatricula == null)
+			matricula = 0;
+		else
+			matricula = Integer.parseInt(Smatricula);
 		String senha = null;
 		try {
 			senha = this.criptografarSenha(request.getParameter("senha"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher acessoRestrito = request.getRequestDispatcher("acessoRestrito.jsp");
+		RequestDispatcher acessoRestrito = request
+				.getRequestDispatcher("acessoRestrito.jsp");
+		RequestDispatcher menuRestrito = request
+				.getRequestDispatcher("menuRestrito.jsp");
 
-		if (matricula == null)
-			matricula = "";
 		if (senha == null)
 			senha = "";
 
-		if (matricula.equals(func1.getMatricula())) {
+		if (matricula == func1.getMatricula()) {
 			if (senha.equals(func1.getSenha())) {
 				error = false;
 			} else {
@@ -86,7 +91,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		} else {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("usuario", func1);
-			response.sendRedirect("/cineunigranrio");
+			menuRestrito.forward(request, response);
 		}
 
 	}
