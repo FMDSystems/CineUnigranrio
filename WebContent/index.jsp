@@ -381,7 +381,7 @@
 			</div>
 			<div class="col-3 col-sm-4 col-lg-4">
 				<h2>Mapa do Site</h2>
-
+				<a href="acessoRestrito">&Aacute;rea Restrita</a><br />
 				<a class="btn btn-default" href="#" role="button">View details
 					&raquo;</a>
 			</div>
