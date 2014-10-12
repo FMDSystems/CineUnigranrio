@@ -66,8 +66,6 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		}
 		RequestDispatcher acessoRestrito = request
 				.getRequestDispatcher("acessoRestrito.jsp");
-		RequestDispatcher menuRestrito = request
-				.getRequestDispatcher("menuRestrito.jsp");
 
 		if (senha == null)
 			senha = "";
@@ -95,7 +93,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 			}else{
 				request.getSession(false).invalidate();
 			}
-			menuRestrito.forward(request, response);
+			response.sendRedirect("centralControle");
 		}
 
 	}

@@ -100,14 +100,14 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
 								type="email" class="form-control" name="email" value="<%=email %>"
-								placeholder="E-mail">
+								placeholder="E-mail" autofocus required>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
 								type="password" class="form-control" name="senha"
-								placeholder="Senha">
+								placeholder="Senha" required>
 						</div>
 
 						<div style="margin-top: 10px" class="form-group">
@@ -123,7 +123,7 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Não tenho uma conta! <a href=exibirCadastrarCliente>
+									Não tenho uma conta! <a href=cadastroCliente>
 										Cadastre-se Aqui </a>
 								</div>
 							</div>

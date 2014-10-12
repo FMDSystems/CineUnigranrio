@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAcessoCliente
+ * Servlet implementation class ServletExibirCentralControle
  */
-@WebServlet("/acessoCliente")
-public class ServletExibirAcessoCliente extends HttpServlet {
+@WebServlet("/centralControle")
+public class ServletCentralControle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletExibirAcessoCliente() {
+    public ServletCentralControle() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +28,9 @@ public class ServletExibirAcessoCliente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispachante = request
-				.getRequestDispatcher("login.jsp");
-		dispachante.forward(request, response);
+		RequestDispatcher menuRestrito = request
+				.getRequestDispatcher("menuRestrito.jsp");
+		menuRestrito.forward(request, response);
 	}
 
 	/**

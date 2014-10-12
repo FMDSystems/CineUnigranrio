@@ -102,7 +102,8 @@
 				Autentica&ccedil;&atilde;o.</strong>
 			<form action="/cineunigranrio" method="post">
 			<%
-					request.getSession(true).removeAttribute("usuario");
+					request.getSession(false).removeAttribute("usuario");
+					request.getSession(false).invalidate();
 				%>
 				<button type="submit" class="btn btn-warning">Sem
 					Autentica&ccedil;&atilde;o</button>

@@ -49,7 +49,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><img
+				<a class="navbar-brand" href="centralControle"><img
 					src="img/logo_nome.png" width="220px"></a>
 			</div>
 			<!-- /.navbar-header -->
@@ -87,9 +87,9 @@
 								</span>
 							</div> <!-- /input-group -->
 						</li>
-						<li><a class="active" href="index.html"><i
+						<li><a class="active" href="centralControle"><i
 								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
-						<li><a href="#"><i class="fa fa-video-camera fa-fw"></i>
+						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
 								Filmes<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
@@ -143,7 +143,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="#">
+						<a href="filmes">
 							<div class="panel-footer">
 								<span class="pull-left">Ver Filmes</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

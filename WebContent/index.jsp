@@ -66,7 +66,7 @@
 
 								if ((session == null) || (session.getAttribute("usuario") == null)) {
 							%>
-							<li><a href="exibirCadastrarCliente">Cadastrar</a></li>
+							<li><a href="cadastroCliente">Cadastrar</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Acessar <b class="caret"></b></a>
 								<ul class="dropdown-menu"
@@ -117,7 +117,7 @@
 									class="glyphicon glyphicon-list-alt"></span> &nbsp;Alterar Informações </a></li>
 									<li role="presentation" class="divider"></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="encerrarSessao" style="color: red;"> <span
+										href="encerrarAcessoCliente" style="color: red;"> <span
 									class="glyphicon glyphicon-off"></span> &nbsp;Encerrar Sessão</a></li>
 								</ul></li>
 
@@ -145,7 +145,7 @@
 						</ol>
 						<div class="carousel-inner">
 							<div class="item active">
-								<a href="exibirCadastrarCliente"><img src="img/banner1.jpg"
+								<a href="cadastroCliente"><img src="img/banner1.jpg"
 									alt="First slide"></a>
 							</div>
 							<div class="item">

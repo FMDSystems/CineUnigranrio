@@ -19,14 +19,14 @@ import model.Filme;
 /**
  * Servlet implementation class ServletExibirFilmes
  */
-@WebServlet("/exibirFilmesExibicao")
-public class ServletExibirFilmes extends HttpServlet {
+@WebServlet("/exibirFilmes/exibicao")
+public class ServletExibirFilmesExibicao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ServletExibirFilmes() {
+	public ServletExibirFilmesExibicao() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
