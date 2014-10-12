@@ -117,6 +117,21 @@ public class Filme implements Comparable<Filme>{
 	public Set<Genero> getGenero() {
 		return listaGeneros;
 	}
+	
+	public void addGenero(Genero novo){
+		if(this.listaGeneros.contains(novo))
+			return;
+		this.listaGeneros.add(novo);
+		novo.addFilme(this);
+	}
+	
+	public void removeGenero(Genero antigo){
+		if(! this.listaGeneros.contains(antigo))
+			return;
+		
+		this.listaGeneros.remove(antigo);
+		antigo.removeFilme(this);
+	}
 
 	@Override
 	public String toString() {

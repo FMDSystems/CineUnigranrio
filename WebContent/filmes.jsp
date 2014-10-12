@@ -1,6 +1,13 @@
-<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Funcionario"%>
+<%@page import="model.Filme"%>
+<%@page import="model.Genero"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.TreeSet"%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -28,6 +35,7 @@
 <body>
 	<%
 		java.util.Date now = new java.util.Date();
+		Funcionario usuario = (Funcionario) session.getAttribute("usuario");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
@@ -42,8 +50,8 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="centralControle"><img src="img/logo_nome.png"
-					width="220px"></a>
+				<a class="navbar-brand" href="centralControle"><img
+					src="img/logo_nome.png" width="220px"></a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -51,7 +59,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						Nome do Usuário &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -80,8 +88,8 @@
 								</span>
 							</div> <!-- /input-group -->
 						</li>
-						<li><a href="centralControle"><i class="fa fa-dashboard fa-fw"></i>
-								Central de Controle</a></li>
+						<li><a href="centralControle"><i
+								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
 						<li><a class="active" href="filmes"><i
 								class="fa fa-video-camera fa-fw"></i> Filmes<span
 								class="fa arrow"></span></a>
@@ -118,52 +126,50 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Filmes</h1>
+					<h1 class="page-header">
+						<i class="fa fa-video-camera fa-fw"></i>Filmes
+					</h1>
+				</div>
+				<div align="right" style="margin-bottom: 10px; margin-top: -4px;">
+					<button class="btn btn-success">
+						<i class="fa fa-plus"></i> Cadastrar Novo Filme
+					</button>
 				</div>
 				<!-- /.col-lg-12 -->
-				<table class="table table-hover" >
+				<table class="table table-hover">
 					<tr>
-						<th>Nome</th>
-						<th>Duração</th>
-						<th>Data</th>
-						<th>Faixa etária</th>
-						<th>Tipo</th>
+						<td align="center"><strong>T&iacute;tulo</strong></td>
+						<td align="center"><strong>Dura&ccedil;&atilde;o</strong></td>
+						<td align="center"><strong>Faixa Et&aacute;ria</strong></td>
+						<td align="center"><strong>Diretor</strong></td>
+						<td align="center"><strong>Tipo</strong></td>
+						<td align="center"><strong>G&ecirc;nero</strong></td>
+						<td align="center"><strong>Status</strong></td>
+						<td align="center"><strong>A&ccedil;&otilde;es</strong></td>
 					</tr>
-					<tr>
-						<td>Maze Runner</td>
-						<td>2:12</td>
-						<td>14/11</td>
-						<td>11 anos</td>
-						<td>3D</td>
-					</tr>
-					<tr>
-						<td>Lucy</td>
-						<td>1:45</td>
-						<td>14/09</td>
-						<td>18 anos</td>
-						<td>3D</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<%
+						Set<Filme> listaFilmes = (Set<Filme>) request
+								.getAttribute("listaFilmes");
+
+						for (Filme filme : listaFilmes) {
+							out.print("<tr valign='bottom'>");
+							out.print("<td align='center'>" + filme.getTitulo() + "</td>");
+							out.print("<td align='center'>" + filme.getDuracao().getHours()
+									+ ":" + filme.getDuracao().getMinutes() + "</td>");
+							out.print("<td align='center'>" + filme.getFaixaEtaria()
+									+ "</td>");
+							out.print("<td align='center'>" + filme.getDiretor() + "</td>");
+							out.print("<td align='center'>" + filme.getTipo() + "</td>");
+							out.print("<td align='center'>");
+							for (Genero genero : filme.getGenero()) {
+								out.print(genero.getDescricao() + " ");
+							}
+							out.print("</td>");
+							out.print("<td align='center'>" + filme.getStatus() + "</td>");
+							out.print("<td align='center'><a href='#'><i class='fa fa-edit'></i></a></td>");
+							out.print("</tr>");
+						}
+					%>
 				</table>
 			</div>
 			<!-- /.row -->

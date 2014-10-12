@@ -1,6 +1,7 @@
-<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Funcionario"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -28,6 +29,7 @@
 <body>
 	<%
 		java.util.Date now = new java.util.Date();
+		Funcionario usuario = (Funcionario) session.getAttribute("usuario");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
@@ -46,12 +48,12 @@
 					src="img/logo_nome.png" width="220px"></a>
 			</div>
 			<!-- /.navbar-header -->
-			
+
 			<ul class="nav navbar-top-links navbar-right">
-				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now) %></a></li>
+				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						Nome do Usuário &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getNome() %> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar

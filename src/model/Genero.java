@@ -29,7 +29,23 @@ public class Genero implements Comparable<Genero>{
 	public Set<Filme> getFilme() {
 		return this.listaFilmes;
 	}
+	
+	public void addFilme(Filme novo){
+		if(this.listaFilmes.contains(novo))
+			return;
+		
+		this.listaFilmes.add(novo);
+		novo.addGenero(this);
+	}
 
+	public void removeFilme(Filme antigo){
+		if(! this.listaFilmes.contains(antigo))
+			return;
+		
+		this.listaFilmes.remove(antigo);
+		antigo.removeGenero(this);
+	}
+	
 	@Override
 	public int compareTo(Genero g) {
 		return this.descricao.compareTo(g.getDescricao());
