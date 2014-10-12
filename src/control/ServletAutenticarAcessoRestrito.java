@@ -89,8 +89,12 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		if (error) {
 			acessoRestrito.forward(request, response);
 		} else {
-			HttpSession sessao = request.getSession(true);
-			sessao.setAttribute("usuario", func1);
+			if (request.getSession() != null) {
+				HttpSession sessao = request.getSession(true);
+				sessao.setAttribute("usuario", func1);
+			}else{
+				request.getSession(false).invalidate();
+			}
 			menuRestrito.forward(request, response);
 		}
 

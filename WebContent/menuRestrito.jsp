@@ -12,6 +12,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
 <meta name="author" content="FMD Systems">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
 
 <title>Cine Unigranrio - &Aacute;rea Restrita</title>
 
@@ -28,6 +31,8 @@
 
 <body>
 	<%
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
 		Funcionario usuario = (Funcionario) session.getAttribute("usuario");
 		java.util.Date now = new java.util.Date();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -44,7 +49,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/cineunigranrio"><img
+				<a class="navbar-brand" href="#"><img
 					src="img/logo_nome.png" width="220px"></a>
 			</div>
 			<!-- /.navbar-header -->
@@ -53,7 +58,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome() %> &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar

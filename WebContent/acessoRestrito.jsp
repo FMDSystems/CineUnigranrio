@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="model.Pessoa"%>
+<%@page session="false"%>
+
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -18,7 +20,10 @@
 </head>
 
 <body>
-
+	<%
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+	%>
 	<div class="container">
 		<div class="row">
 			<div class="header">
@@ -76,13 +81,14 @@
 				<div style="padding-top: 30px" class="panel-body">
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
-					<form id="loginform" class="form-horizontal" method="post" action="autenticarAcessoRestrito" role="form">
+					<form id="loginform" class="form-horizontal" method="post"
+						action="autenticarAcessoRestrito" role="form">
 						<%
 							String matricula = (String) request.getAttribute("matricula");
 
 							if (matricula == null)
 								matricula = "";
-							
+
 							String mensagem = (String) request.getAttribute("mensagem");
 
 							if (mensagem != null) {
@@ -95,15 +101,15 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="text" class="form-control" name="matricula" value="<%=matricula %>"
-								placeholder="Matricula">
+								type="text" class="form-control" name="matricula"
+								value="<%=matricula%>" placeholder="Matricula" required>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
 								type="password" class="form-control" name="senha"
-								placeholder="Senha">
+								placeholder="Senha" required>
 						</div>
 
 						<div style="margin-top: 10px" class="form-group">
@@ -119,8 +125,8 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Esqueci minha senha! <a href=recuperarSenhaRestrito>
-										Clique Aqui para Recuperar </a>
+									Esqueci minha senha! <a href=recuperarSenhaRestrito> Clique
+										Aqui para Recuperar </a>
 								</div>
 							</div>
 						</div>
@@ -172,7 +178,8 @@
 				2014</p>
 			<p class="text-muted" align="right">
 				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a> &amp; <a href="http://www.twitter.com/mxxxrcos" target="blank">M.Boscolo</a>
+					Systems</a> &amp; <a href="http://www.twitter.com/mxxxrcos"
+					target="blank">M.Boscolo</a>
 			</p>
 		</div>
 	</div>

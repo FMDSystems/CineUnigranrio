@@ -42,7 +42,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/cineunigranrio"><img
+				<a class="navbar-brand" href="#"><img
 					src="img/logo_nome.png" width="220px"></a>
 			</div>
 			<!-- /.navbar-header -->
