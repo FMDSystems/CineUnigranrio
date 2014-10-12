@@ -42,7 +42,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><img src="img/logo_nome.png"
+				<a class="navbar-brand" href="centralControle"><img src="img/logo_nome.png"
 					width="220px"></a>
 			</div>
 			<!-- /.navbar-header -->
@@ -59,7 +59,7 @@
 						<li><a href="#"><i class="fa fa-gear fa-fw"></i> Ajustes</a>
 						</li>
 						<li class="divider"></li>
-						<li><a href="login.html" style="color: red;"><i
+						<li><a href="encerrarAcessoRestrito" style="color: red;"><i
 								class="fa fa-sign-out fa-fw"></i> Encerrar Sessão</a></li>
 					</ul> <!-- /.dropdown-user --></li>
 				<!-- /.dropdown -->
@@ -80,7 +80,7 @@
 								</span>
 							</div> <!-- /input-group -->
 						</li>
-						<li><a href=".html"><i class="fa fa-dashboard fa-fw"></i>
+						<li><a href="centralControle"><i class="fa fa-dashboard fa-fw"></i>
 								Central de Controle</a></li>
 						<li><a class="active" href="filmes"><i
 								class="fa fa-video-camera fa-fw"></i> Filmes<span
