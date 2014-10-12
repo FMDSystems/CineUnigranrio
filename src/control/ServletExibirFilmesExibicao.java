@@ -19,7 +19,7 @@ import model.Filme;
 /**
  * Servlet implementation class ServletExibirFilmes
  */
-@WebServlet("/exibirFilmes/exibicao")
+@WebServlet("/exibirfilmesexibicao")
 public class ServletExibirFilmesExibicao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -52,9 +52,9 @@
 							<li><a href="#">Sessões</a></li>
 							<li class="dropdown active"><a href="#"
 								class="dropdown-toggle" data-toggle="dropdown">Filmes <b
-									class="caret"></b></a>
+									class="caret active"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Em Exibição</a></li>
+									<li><a href="exibirfilmesexibicao">Em Exibição</a></li>
 									<li><a href="#">Em Breve</a></li>
 								</ul></li>
 						</ul>
