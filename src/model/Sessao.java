@@ -4,25 +4,23 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Sessao implements Comparable<Sessao>{
+public class Sessao implements Comparable<Sessao> {
 	private Date data;
-	private int tempoInicio;
-	private int tempoFim;
+	private Date horarioInicio;
 	private float valor;
 	private Sala sala;
 	private Set<Ingresso> listaIngressos;
 	private Filme filme;
-	
-	public Sessao(){
+
+	public Sessao() {
 		super();
 	}
 
-	public Sessao(Date data, int tempoInicio, int tempoFim, float valor,
-			Sala sala, Set<Ingresso> ingresso, Filme filme) {
+	public Sessao(Date data, Date horarioInicio, float valor, Sala sala,
+			Set<Ingresso> ingresso, Filme filme) {
 		super();
 		this.setData(data);
-		this.setTempoInicio(tempoInicio);
-		this.setTempoFim(tempoFim);
+		this.setHorarioInicio(horarioInicio);
 		this.setValor(valor);
 		this.setSala(sala);
 		this.listaIngressos = new TreeSet<Ingresso>();
@@ -37,20 +35,12 @@ public class Sessao implements Comparable<Sessao>{
 		this.data = data;
 	}
 
-	public int getTempoInicio() {
-		return tempoInicio;
+	public Date getHorarioInicio() {
+		return this.horarioInicio;
 	}
 
-	public void setTempoInicio(int tempoInicio) {
-		this.tempoInicio = tempoInicio;
-	}
-
-	public int getTempoFim() {
-		return tempoFim;
-	}
-
-	public void setTempoFim(int tempoFim) {
-		this.tempoFim = tempoFim;
+	public void setHorarioInicio(Date horarioInicio) {
+		this.horarioInicio = horarioInicio;
 	}
 
 	public float getValor() {
@@ -64,11 +54,13 @@ public class Sessao implements Comparable<Sessao>{
 	public Sala getSala() {
 		return sala;
 	}
+
 	// Alterar o método setSala para a códificação correta
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-	//Criar métodos add e remove da lista de Generos
+
+	// Criar métodos add e remove da lista de Generos
 	public Set<Ingresso> getIngresso() {
 		return listaIngressos;
 	}
@@ -76,6 +68,7 @@ public class Sessao implements Comparable<Sessao>{
 	public Filme getFilme() {
 		return filme;
 	}
+
 	// Alterar o método setFilme para a códificação correta
 	public void setFilme(Filme filme) {
 		this.filme = filme;
@@ -83,7 +76,19 @@ public class Sessao implements Comparable<Sessao>{
 
 	@Override
 	public int compareTo(Sessao s) {
-		return this.sala.compareTo(s.getSala());
+		int filme = this.filme.compareTo(s.getFilme());
+
+		if (filme == 0) {
+			int sala = this.sala.compareTo(s.getSala());
+			if (sala == 0) {
+				return this.horarioInicio.compareTo(s.getHorarioInicio());
+
+			}else{
+				return sala;
+			}
+		} else {
+			return filme;
+		}
 	}
-	
+
 }
