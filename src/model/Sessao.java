@@ -82,8 +82,7 @@ public class Sessao implements Comparable<Sessao> {
 			int sala = this.sala.compareTo(s.getSala());
 			if (sala == 0) {
 				return this.horarioInicio.compareTo(s.getHorarioInicio());
-
-			}else{
+			} else {
 				return sala;
 			}
 		} else {

@@ -2,14 +2,14 @@ package model;
 
 public class Lugar implements Comparable<Lugar> {
 	private Character fila;
-	private Integer numero;
+	private int numero;
 	private Sala sala;
 
 	public Lugar() {
 		super();
 	}
 
-	public Lugar(Character fila, Integer numero, Sala sala) {
+	public Lugar(Character fila, int numero, Sala sala) {
 		super();
 		this.setFila(fila);
 		this.setNumero(numero);
@@ -28,7 +28,7 @@ public class Lugar implements Comparable<Lugar> {
 		return this.numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(int numero) {
 		this.numero = numero;
 	}
 
@@ -43,12 +43,12 @@ public class Lugar implements Comparable<Lugar> {
 
 	@Override
 	public int compareTo(Lugar l) {
-		int valor = this.fila.compareTo(l.getFila());
+		int fila = this.fila.compareTo(l.getFila());
 		
-		if (valor == 0) {
-			return this.numero.compareTo(l.getNumero());
+		if (fila == 0) {
+			return this.numero - l.getNumero();
 		} else {
-			return valor;
+			return fila;
 		}
 	}
 
