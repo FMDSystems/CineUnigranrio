@@ -2,7 +2,7 @@ package model;
 
 import java.security.MessageDigest;
 
-public abstract class Pessoa {
+public abstract class Pessoa implements Comparable<Pessoa>{
 	private String cpf;
 	private String nome;
 	private String email;
@@ -64,6 +64,11 @@ public abstract class Pessoa {
 		}
 		String senhaCP = hexString.toString();
 		this.senha = senhaCP;
+	}
+	
+	@Override
+	public int compareTo(Pessoa p){
+		return this.cpf.compareTo(p.getCpf());
 	}
 
 }
