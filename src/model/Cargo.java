@@ -1,6 +1,6 @@
 package model;
 
-public class Cargo {
+public class Cargo implements Comparable<Cargo>{
 
 	private int nivel;
 	private String nome;
@@ -45,6 +45,11 @@ public class Cargo {
 	@Override
 	public String toString() {
 		return this.nivel + " - " + this.nome;
+	}
+	
+	@Override
+	public int compareTo(Cargo c){
+		return this.nivel - c.getNivel();
 	}
 
 }
