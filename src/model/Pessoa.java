@@ -55,15 +55,15 @@ public abstract class Pessoa {
 
 	public void criptografarSenha(String senha) throws Exception {
 
-		 MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-		 byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
-		
-		 StringBuilder hexString = new StringBuilder();
-		 for (byte b : messageDigest) {
-		 hexString.append(String.format("%02X", 0xFF & b));
-		 }
-		 String senhaCP = hexString.toString();
-		 this.senha = senhaCP;
+		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+		byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+
+		StringBuilder hexString = new StringBuilder();
+		for (byte b : messageDigest) {
+			hexString.append(String.format("%02X", 0xFF & b));
+		}
+		String senhaCP = hexString.toString();
+		this.senha = senhaCP;
 	}
 
 }

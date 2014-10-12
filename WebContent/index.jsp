@@ -117,7 +117,7 @@
 									class="glyphicon glyphicon-list-alt"></span> &nbsp;Alterar Informações </a></li>
 									<li role="presentation" class="divider"></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#" style="color: red;"> <span
+										href="encerrarSessao" style="color: red;"> <span
 									class="glyphicon glyphicon-off"></span> &nbsp;Encerrar Sessão</a></li>
 								</ul></li>
 
