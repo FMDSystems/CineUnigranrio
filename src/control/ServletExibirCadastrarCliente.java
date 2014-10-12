@@ -32,7 +32,7 @@ public class ServletExibirCadastrarCliente extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispachante = request
-				.getRequestDispatcher("cadastrocliente.jsp");
+				.getRequestDispatcher("cadastroCliente.jsp");
 		dispachante.forward(request, response);
 	}
 
