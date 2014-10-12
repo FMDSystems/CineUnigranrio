@@ -50,7 +50,7 @@
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Filmes <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Em Exibição</a></li>
+									<li><a href="exibirFilmesExibicao">Em Exibição</a></li>
 									<li><a href="#">Em Breve</a></li>
 								</ul></li>
 						</ul>

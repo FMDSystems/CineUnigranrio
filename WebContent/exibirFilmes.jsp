@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="model.Pessoa"%>
+<%@page import="model.Filme"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.TreeSet"%>
+
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -118,7 +122,7 @@
 											&nbsp;Alterar Informações </a></li>
 									<li role="presentation" class="divider"></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#" style="color: red;"> <span
+										href="encerrarSessao" style="color: red;"> <span
 											class="glyphicon glyphicon-off"></span> &nbsp;Encerrar Sessão
 									</a></li>
 								</ul></li>
@@ -139,18 +143,27 @@
 		</div>
 
 		<div class="row">
-			<div class="col-sm-4 col-md-2">
-				<div class="thumbnail">
-					<img src="img/filmes/em-exibicao/as-tartarugas-ninja.jpg">
-					<div class="caption">
-						<h3>Nome do Filme</h3>
-						<p>Sinopse do Filme</p>
-						<p>
-							<a href="#" class="btn btn-default" role="button">Saiba mais</a>
-						</p>
-					</div>
-				</div>
-			</div>
+			<%
+				Set<Filme> listaFilmesExibicao = (TreeSet<Filme>) request
+						.getAttribute("filmesExibicao");
+				for (Filme filme : listaFilmesExibicao) {
+					out.print("<div class='col-sm-4 col-md-3'>");
+					out.print("<div class='thumbnail'>");
+					out.print("<img src=>");
+					out.print("<div class='caption'>");
+					out.print("<h3>" + filme.getTitulo() + "</h3>");
+					String palavras[] = filme.getSinopse().split(" ");
+					out.print("<p>");
+					for (int i = 0; i <= 20; i++) {
+						out.print(palavras[i].toString() + " ");
+					}
+					out.print("...");
+					out.print("</p>");
+
+					out.print("<p><a href='#' class='btn btn-default' role='button'>Saiba mais</a></p>");
+					out.print("</div></div></div>");
+				}
+			%>
 
 		</div>
 
@@ -197,7 +210,8 @@
 				2014</p>
 			<p class="text-muted" align="right">
 				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a> &amp; <a href="http://www.twitter.com/mxxxrcos" target="blank">M.Boscolo</a>
+					Systems</a> &amp; <a href="http://www.twitter.com/mxxxrcos"
+					target="blank">M.Boscolo</a>
 			</p>
 		</div>
 	</div>
