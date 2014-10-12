@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.security.MessageDigest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 
 import model.Cliente;
 
@@ -39,9 +39,20 @@ public class ServletAutenticarAcessoCliente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean error = false;
-		Cliente cli1 = new Cliente("111.111.111-11", "Administrador", "admin@cineuni.com.br", "admin", null);
+		Cliente cli1 = null;
+		try {
+			cli1 = new Cliente("111.111.111-11", "Administrador", "admin@cineuni.com.br", "admin", null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String email = request.getParameter("email");
-		String senha = request.getParameter("senha");
+		String senha = null;
+		try {
+			senha = this.criptografarSenha(request.getParameter("senha"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		RequestDispatcher login = request.getRequestDispatcher("login.jsp");
 		
 		if (email == null)
@@ -71,6 +82,19 @@ public class ServletAutenticarAcessoCliente extends HttpServlet {
 			response.sendRedirect("/cineunigranrio");
 		}
 		
+	}
+	
+	public String criptografarSenha(String senha) throws Exception {
+
+		 MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+		 byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+		
+		 StringBuilder hexString = new StringBuilder();
+		 for (byte b : messageDigest) {
+		 hexString.append(String.format("%02X", 0xFF & b));
+		 }
+		 String senhaCP = hexString.toString();
+		 return senhaCP;
 	}
 
 }

@@ -132,7 +132,7 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
-								type="password" class="form-control" name="password"
+								type="password" class="form-control" name="senha"
 								placeholder="Senha" required>
 						</div>
 

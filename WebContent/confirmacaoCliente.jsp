@@ -101,6 +101,9 @@
 			Ir para o in&iacute;cio do site <strong>Sem
 				Autentica&ccedil;&atilde;o.</strong>
 			<form action="/cineunigranrio" method="post">
+			<%
+					request.getSession(true).removeAttribute("usuario");
+				%>
 				<button type="submit" class="btn btn-warning">Sem
 					Autentica&ccedil;&atilde;o</button>
 			</form>

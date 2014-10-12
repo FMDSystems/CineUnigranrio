@@ -10,7 +10,7 @@ public class Cliente extends Pessoa{
 		super();
 	}
 
-	public Cliente(String cpf, String nome, String email, String senha, Date dataNascimento) {
+	public Cliente(String cpf, String nome, String email, String senha, Date dataNascimento) throws Exception {
 		super(cpf, nome, email, senha);
 		this.setDataNascimento(dataNascimento);
 	}

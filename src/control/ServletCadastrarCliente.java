@@ -58,7 +58,13 @@ public class ServletCadastrarCliente extends HttpServlet {
 		}
 		
 		
-		Cliente cliente = new Cliente(cpf,nome,email,senha,data);
+		Cliente cliente = null;
+		try {
+			cliente = new Cliente(cpf,nome,email,senha,data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("cliente", cliente);
 		dispachante.forward(request, response);
 		

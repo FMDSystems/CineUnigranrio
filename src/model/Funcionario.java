@@ -9,7 +9,7 @@ public class Funcionario extends Pessoa {
 	}
 
 	public Funcionario(String cpf, String nome, String email, String senha,
-			int matricula) {
+			int matricula) throws Exception {
 		super(cpf, nome, email, senha);
 		this.setMatricula(matricula);
 	}
