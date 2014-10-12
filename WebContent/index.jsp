@@ -66,7 +66,7 @@
 
 								if ((session == null) || (session.getAttribute("usuario") == null)) {
 							%>
-							<li><a href="cadastrarCliente">Cadastrar</a></li>
+							<li><a href="exibirCadastrarCliente">Cadastrar</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Acessar <b class="caret"></b></a>
 								<ul class="dropdown-menu"
@@ -74,7 +74,7 @@
 									<li>
 										<div class="row">
 											<div class="col-md-12">
-												<form class="form" role="form" method="post" action="login"
+												<form class="form" role="form" method="post" action="autenticarAcessoCliente"
 													accept-charset="UTF-8" id="login-nav">
 													<div class="form-group">
 														<input type="email" class="form-control" name="email"
@@ -103,22 +103,22 @@
 								} else {
 									usuario = (Pessoa) session.getAttribute("usuario");
 							%>
-							<li class="dropdown"><a class="dropdown-toggle"
+							<li class="dropdown"><a href="" class="dropdown-toggle"
 								data-toggle="dropdown"> <%=usuario.getNome()%> <span
 									class="glyphicon glyphicon-cog"></span>
 							</a>
 								<ul class="dropdown-menu" role="menu"
 									style="padding: 15px; min-width: 250px;">
 									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">Meus Ingressos <span
-									class="glyphicon glyphicon-tags"></span></a></li>
+										href="#"><span
+									class="glyphicon glyphicon-tags"></span> &nbsp;Meus Ingressos</a></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">Alterar Informações <span
-									class="glyphicon glyphicon-list-alt"></span></a></li>
+										href="#"><span
+									class="glyphicon glyphicon-list-alt"></span> &nbsp;Alterar Informações </a></li>
 									<li role="presentation" class="divider"></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#" style="color: red;">Encerrar Sessão <span
-									class="glyphicon glyphicon-off"></span></a></li>
+										href="#" style="color: red;"> <span
+									class="glyphicon glyphicon-off"></span> &nbsp;Encerrar Sessão</a></li>
 								</ul></li>
 
 							<%
@@ -145,7 +145,7 @@
 						</ol>
 						<div class="carousel-inner">
 							<div class="item active">
-								<a href="cadastrarCliente"><img src="img/banner1.jpg"
+								<a href="exibirCadastrarCliente"><img src="img/banner1.jpg"
 									alt="First slide"></a>
 							</div>
 							<div class="item">
@@ -165,7 +165,7 @@
 				</div>
 			</div>
 			<div class="col-md-3"></div>
-		</div>
+		</div> <!-- Fim Letreiro -->
 
 		<div class="page-header">
 			<h1>Em Exibi&ccedil;&atilde;o</h1>
@@ -404,7 +404,7 @@
 				2014</p>
 			<p class="text-muted" align="right">
 				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a> & <a href="http://www.twitter.com/mxxxrcos"
+					Systems</a> &amp; <a href="http://www.twitter.com/mxxxrcos"
 					target="blank">M.Boscolo</a>
 			</p>
 		</div>

@@ -14,6 +14,7 @@
 
 <link href="css/style.css" rel="stylesheet">
 <link href="css/index.css" rel="stylesheet">
+<link href="css/datepicker.css" rel="stylesheet">
 
 </head>
 
@@ -66,27 +67,24 @@
 		</div>
 		<!-- Fim da barra -->
 
+
+
 		<div id="loginbox"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<div class="panel panel-info">
+			<div class="panel panel-success">
 				<div class="panel-heading">
-					<div class="panel-title">Acesso ao Sistema</div>
+					<div class="panel-title">Cadastro</div>
 					<div
 						style="float: right; font-size: 80%; position: relative; top: -10px">
-						<a href="#">Esqueceu sua Senha?</a>
+						Todos os campos são <strong>Obrigat&oacute;rios</strong>
 					</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
-					<form id="loginform" class="form-horizontal" method="post" action="autenticarAcessoCliente" role="form">
+					<form id="loginform" class="form-horizontal" role="form" method="post" action="cadastrarCliente">
 						<%
-							String email = (String) request.getAttribute("email");
-
-							if (email == null)
-								email = "";
-							
 							String mensagem = (String) request.getAttribute("mensagem");
 
 							if (mensagem != null) {
@@ -98,22 +96,57 @@
 						%>
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-certificate"></i></span> <input
+								id="login-username" type="text" class="form-control" name="cpf"
+								value="" placeholder="CPF" onkeypress="javascript: mascara(this, cpf_mask);" autofocus required maxlength="14">
+						</div>
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="email" class="form-control" name="email" value="<%=email %>"
-								placeholder="E-mail">
+								type="text" class="form-control" name="nome" value=""
+								placeholder="Nome Completo" required>
+						</div>
+						<div style="margin-bottom: 25px" class="input-group">
+							<div class='input-group date' id='datetimepicker5'>
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span></span> <input type='text'
+									class="form-control" name="data" data-date-format="dd/mm/yyyy"
+									placeholder="dd/mm/aaaa" required
+									onkeyup="
+											var v = this.value;
+											if (v.match(/^\d{2}$/) !== null) {
+												this.value = v + '/';
+											} else if (v.match(/^\d{2}\/\d{2}$/) !== null) {
+												this.value = v + '/';
+											}"
+									maxlength="10">
+							</div>
+						</div>
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-envelope"></i></span> <input
+								id="login-username" type="email" class="form-control"
+								name="email" value="" placeholder="E-mail" required>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
-								type="password" class="form-control" name="senha"
-								placeholder="Senha">
+								type="password" class="form-control" name="password"
+								placeholder="Senha" required>
+						</div>
+
+						<div style="margin-bottom: 25px" class="input-group">
+							<div class="checkbox">
+								<label><input type="checkbox" value=""> Desejo
+									receber informações por email. </label>
+							</div>
 						</div>
 
 						<div style="margin-top: 10px" class="form-group">
 							<!-- Button -->
 							<div class="col-sm-12 controls">
-								<button type="submit" class="btn btn-primary btn-block">Confirmar</button>
+								<button type="submit" class="btn btn-success btn-block">Cadastrar</button>
 
 							</div>
 						</div>
@@ -123,8 +156,7 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Não tenho uma conta! <a href=exibirCadastrarCliente>
-										Cadastre-se Aqui </a>
+									Já tenho uma conta! <a href="acessoCliente"> Acesse Aqui </a>
 								</div>
 							</div>
 						</div>
@@ -132,9 +164,9 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<!-- /container -->
+
 	<hr>
 	<div class="footer">
 		<div class="container">
@@ -181,8 +213,19 @@
 		</div>
 	</div>
 
-	<!-- Colocado no final do documento para caregar a pÃ¡gina mais rÃ¡pido -->
+	<!-- Colocado no final do documento para caregar a pagina mais rapido -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/script.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-datepicker.pt-BR.js"></script>
+	<script type="text/javascript">
+		$('#datetimepicker5').datepicker({
+			format : "dd/mm/yyyy",
+			todayBtn : true,
+			language : "pt-BR",
+			autoclose : true,
+			todayHighlight : true
+		});
+	</script>
 </body>
 </html>

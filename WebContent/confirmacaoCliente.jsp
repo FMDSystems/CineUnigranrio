@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@page import="model.Pessoa"%>
+<%@page import="model.Cliente"%>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -44,7 +44,7 @@
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="/cineunigranrio">Home</a></li>
+							<li><a href="/cineunigranrio">Home</a></li>
 							<li><a href="#">Sessões</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Filmes <b class="caret"></b></a>
@@ -66,103 +66,44 @@
 			</div>
 		</div>
 		<!-- Fim da barra -->
+		<%
+			Cliente cliente = null;
+			String nome = null;
+			String email = null;
+			if (request.getAttribute("cliente") != null) {
+				cliente = (Cliente) request.getAttribute("cliente");
+				nome = cliente.getNome();
+				email = cliente.getEmail();
+			} else {
+				nome = "";
+				email = "";
+			}
+		%>
 
+		<div class="alert alert-success" align="center">
+			<span class="glyphicon glyphicon-ok"></span> &nbsp;<strong>Parab&eacute;ns,
+				<%=nome%> !
+			</strong> Suas informa&ccedil;&otilde;es foram cadastradas com sucesso!<br />
+			Voc&ecirc; receber&aacute; um e-mail em <i><%=email%></i> confirmando
+			seu cadastro e suas informa&ccedil;&otilde;es.
+			<p></p>
+		</div>
+		<div class="" align="center">
+			Ir para o in&iacute;cio do site j&aacute; <strong>Autenticado.</strong>
+			<form action="/cineunigranrio" method="post">
+				<%
+					HttpSession sessao = request.getSession(true);
+					sessao.setAttribute("usuario", cliente);
+				%>
+				<button type="submit" class="btn btn-primary">Autenticado</button>
+			</form>
 
-
-		<div id="loginbox"
-			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<div class="panel panel-success">
-				<div class="panel-heading">
-					<div class="panel-title">Cadastro</div>
-					<div
-						style="float: right; font-size: 80%; position: relative; top: -10px">
-						Todos os campos são <strong>Obrigat&oacute;rios</strong>
-					</div>
-				</div>
-
-				<div style="padding-top: 30px" class="panel-body">
-					<div style="display: none" id="login-alert"
-						class="alert alert-danger col-sm-12"></div>
-					<form id="loginform" class="form-horizontal" role="form">
-						<%
-							String mensagem = (String) request.getAttribute("mensagem");
-
-							if (mensagem != null) {
-								out.print("<div class='alert alert-danger' role='alert'>");
-								out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
-								out.print(mensagem);
-								out.print("</div>");
-							}
-						%>
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-certificate"></i></span> <input
-								id="login-username" type="text" class="form-control" name="cpf"
-								value="" placeholder="CPF" onkeypress="javascript: mascara(this, cpf_mask);" autofocus required maxlength="14">
-						</div>
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="text" class="form-control" name="nome" value=""
-								placeholder="Nome Completo" required>
-						</div>
-						<div style="margin-bottom: 25px" class="input-group">
-							<div class='input-group date' id='datetimepicker5'>
-								<span class="input-group-addon"> <span
-									class="glyphicon glyphicon-calendar"></span></span> <input type='text'
-									class="form-control" data-date-format="dd/mm/yyyy"
-									placeholder="dd/mm/aaaa" required
-									onkeyup="
-											var v = this.value;
-											if (v.match(/^\d{2}$/) !== null) {
-												this.value = v + '/';
-											} else if (v.match(/^\d{2}\/\d{2}$/) !== null) {
-												this.value = v + '/';
-											}"
-									maxlength="10">
-							</div>
-						</div>
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-envelope"></i></span> <input
-								id="login-username" type="email" class="form-control"
-								name="email" value="" placeholder="E-mail" required>
-						</div>
-
-						<div style="margin-bottom: 25px" class="input-group">
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
-								type="password" class="form-control" name="password"
-								placeholder="Senha" required>
-						</div>
-
-						<div style="margin-bottom: 25px" class="input-group">
-							<div class="checkbox">
-								<label><input type="checkbox" value=""> Desejo
-									receber informações por email. </label>
-							</div>
-						</div>
-
-						<div style="margin-top: 10px" class="form-group">
-							<!-- Button -->
-							<div class="col-sm-12 controls">
-								<button type="submit" class="btn btn-success btn-block">Cadastrar</button>
-
-							</div>
-						</div>
-
-
-						<div class="form-group">
-							<div class="col-md-12 control">
-								<div
-									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Já tenho uma conta! <a href="acessoCliente"> Acesse Aqui </a>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
+			Ir para o in&iacute;cio do site <strong>Sem
+				Autentica&ccedil;&atilde;o.</strong>
+			<form action="/cineunigranrio" method="post">
+				<button type="submit" class="btn btn-warning">Sem
+					Autentica&ccedil;&atilde;o</button>
+			</form>
 		</div>
 	</div>
 	<!-- /container -->
@@ -208,7 +149,8 @@
 				2014</p>
 			<p class="text-muted" align="right">
 				by <a href="http://www.fmdsystems.com.br/" target="_blank">FMD
-					Systems</a> & <a href="http://www.twitter.com/mxxxrcos" target="blank">M.Boscolo</a>
+					Systems</a> &amp; <a href="http://www.twitter.com/mxxxrcos"
+					target="blank">M.Boscolo</a>
 			</p>
 		</div>
 	</div>
