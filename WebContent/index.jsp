@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@page import="model.Pessoa"%>
+<%@page import="model.Cliente"%>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -62,9 +62,10 @@
 						</form>
 						<ul class="nav navbar-nav navbar-right">
 							<%
-								Pessoa usuario = null;
+								Cliente usuario = null;
+								HttpSession sessao = request.getSession(false);
 
-								if ((session == null) || (session.getAttribute("usuario") == null)) {
+								if ((sessao==null)||(sessao.getAttribute("usuario") == null)) {
 							%>
 							<li><a href="cadastroCliente">Cadastrar</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -101,7 +102,7 @@
 
 							<%
 								} else {
-									usuario = (Pessoa) session.getAttribute("usuario");
+									usuario = (Cliente) sessao.getAttribute("usuario");
 							%>
 							<li class="dropdown"><a href="" class="dropdown-toggle"
 								data-toggle="dropdown"> <%=usuario.getNome()%> <span

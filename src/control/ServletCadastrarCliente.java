@@ -45,10 +45,10 @@ public class ServletCadastrarCliente extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Date data = null;
 		RequestDispatcher dispachante = request.getRequestDispatcher("confirmacaoCliente.jsp");
-		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 		String cpf = request.getParameter("cpf");
 		String nome = request.getParameter("nome");
-		String nascimento = request.getParameter("data").replace("/", "");
+		String nascimento = request.getParameter("data");
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
 		try {

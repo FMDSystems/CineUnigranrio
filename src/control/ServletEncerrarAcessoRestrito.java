@@ -30,10 +30,10 @@ public class ServletEncerrarAcessoRestrito extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		HttpSession sessao = request.getSession(false);
 
-		if (session != null) {
-			session.invalidate();
+		if (sessao != null) {
+			sessao.invalidate();
 		}
 		
 		response.sendRedirect("acessoRestrito");

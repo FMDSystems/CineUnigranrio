@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="model.Cliente"%>
+<%@page import="java.util.Date"%>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -14,7 +15,6 @@
 
 <link href="css/style.css" rel="stylesheet">
 <link href="css/index.css" rel="stylesheet">
-<link href="css/datepicker.css" rel="stylesheet">
 
 </head>
 
@@ -100,10 +100,8 @@
 
 			Ir para o in&iacute;cio do site <strong>Sem
 				Autentica&ccedil;&atilde;o.</strong>
-			<form action="/cineunigranrio" method="post">
-			<%
-					request.getSession(false).removeAttribute("usuario");
-					request.getSession(false).invalidate();
+			<form action="encerrarAcessoCliente" method="get">
+				<%
 				%>
 				<button type="submit" class="btn btn-warning">Sem
 					Autentica&ccedil;&atilde;o</button>
@@ -162,16 +160,5 @@
 	<!-- Colocado no final do documento para caregar a pagina mais rapido -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/script.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/bootstrap-datepicker.pt-BR.js"></script>
-	<script type="text/javascript">
-		$('#datetimepicker5').datepicker({
-			format : "dd/mm/yyyy",
-			todayBtn : true,
-			language : "pt-BR",
-			autoclose : true,
-			todayHighlight : true
-		});
-	</script>
 </body>
 </html>

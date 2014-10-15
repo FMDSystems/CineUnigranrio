@@ -20,10 +20,6 @@
 </head>
 
 <body>
-	<%
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
-	%>
 	<div class="container">
 		<div class="row">
 			<div class="header">
