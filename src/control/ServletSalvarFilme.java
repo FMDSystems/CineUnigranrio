@@ -1,7 +1,6 @@
 package control;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import model.Filme;
 import model.Genero;
@@ -50,7 +48,6 @@ public class ServletSalvarFilme extends HttpServlet {
 		String titulo = request.getParameter("titulo");
 		String diretor = request.getParameter("diretor");
 		String duracaoString = request.getParameter("duracao");
-		InputStream image =null;
 		
 		try {
 			duracao = TIME_FORMAT.parse(duracaoString);
@@ -73,15 +70,6 @@ public class ServletSalvarFilme extends HttpServlet {
 					filme.addGenero(g);
 				}
 			}	
-		}
-		
-		Part imagePart = request.getPart("imagem");
-		if (imagePart != null){
-			System.out.println(imagePart.getName());
-			System.out.println(imagePart.getSize());
-			System.out.println(imagePart.getContentType());
-			
-			image = imagePart.getInputStream();
 		}
 		
 		request.setAttribute("mensagem", "<span class='glyphicon glyphicon-ok'></span>&nbsp;Filme Cadastrado com Sucesso!!!");

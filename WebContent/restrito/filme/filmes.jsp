@@ -166,7 +166,7 @@
 								}
 								out.print("</td>");
 								out.print("<td align='center'>" + filme.getStatus() + "</td>");
-								out.print("<td align='center'><div class='tooltip-demo'><a href='#' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a>&nbsp; <a href='#' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a></div></td>");
+								out.print("<td align='center'><div class='tooltip-demo'><a href='' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a>&nbsp; <a href='#' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a></div></td>");
 								out.print("</tr>");
 							}
 						%>

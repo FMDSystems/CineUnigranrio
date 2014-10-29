@@ -341,7 +341,7 @@
 							infoText : '{0}',
 							filterPlaceHolder : 'Filtro',
 							selectedListLabel : 'Selecionados',
-							nonSelectedListLabel : 'Gêneros',
+							nonSelectedListLabel : '<i class="fa fa-certificate fa-fw"></i>Gêneros',
 							infoTextFiltered : '<span class="label label-warning">Filtrado</span> {0} de {1}'
 						});
 
