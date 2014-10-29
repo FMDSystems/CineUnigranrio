@@ -1,7 +1,9 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="model.Funcionario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Funcionario"%>
+<%@page import="model.Filme"%>
+<%@page import="model.Genero"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,29 +14,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
 <meta name="author" content="FMD Systems">
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
 
 <title>Cine Unigranrio - &Aacute;rea Restrita</title>
 
 <link href="css/style.css" rel="stylesheet">
-
-<link href="css/plugins/metisMenu.min.css" rel="stylesheet">
-
+<link href="css/plugins/metismenu.min.css" rel="stylesheet">
 <link href="css/menurestrito.css" rel="stylesheet">
-
 <link href="css/plugins/font.min.css" rel="stylesheet" type="text/css">
-
 
 </head>
 
 <body>
 	<%
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
-		Funcionario usuario = (Funcionario) session.getAttribute("usuario");
 		java.util.Date now = new java.util.Date();
+		Funcionario usuario = (Funcionario) session
+				.getAttribute("usuarioRestrito");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
@@ -58,7 +52,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getNome()%>&nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -81,20 +75,23 @@
 								<input type="text" class="form-control"
 									placeholder="Pesquisar..."> <span
 									class="input-group-btn"></span> <span class="input-group-btn">
-										<button class="btn btn-default" type="button">
-											<i class="fa fa-search"></i>
-										</button>
+									<button class="btn btn-default" type="button">
+										<i class="fa fa-search"></i>
+									</button>
 								</span>
 							</div> <!-- /input-group -->
 						</li>
-						<li><a class="active" href="centralControle"><i
+						<li><a href="centralControle"><i
 								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
-						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
-								Filmes<span class="fa arrow"></span></a>
+						<li><a href="filmes" class="active"><i
+								class="fa fa-video-camera fa-fw"></i> Filmes<span
+								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="generos"><i class="fa fa-certificate fa-fw"></i>
+								G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
@@ -123,117 +120,89 @@
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">Central de Controle</h1>
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-			<div class="row">
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa  fa-video-camera fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge">26</div>
-									<div>Filmes</div>
-								</div>
+				<%
+					String mensagem = (String) request.getAttribute("mensagem");
+
+					if (mensagem != null) {
+						out.print("<br/><div class='alert alert-success' role='alert'>");
+						out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
+						out.print(mensagem);
+						out.print("</div>");
+					}
+
+					Filme filme = (Filme) request.getAttribute("filme");
+				%>
+				<h1 class="page-header">
+					<i class="fa fa-file-video-o fa-fw"></i><%=filme.getTitulo()%>
+				</h1>
+				<div class="panel-body">
+
+					<div class="row">
+						<div class="col-xs-6 col-md-4 form-group" align="center">
+							<div class="form-group">
+								<img src="img/filmes/em-exibicao/livrai-nos-do-mal.jpg"
+									width="200px" class="img-thumbnail">
 							</div>
 						</div>
-						<a href="filmes">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Filmes</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-green">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa fa-film fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge">12</div>
-									<div>Sessões</div>
-								</div>
-							</div>
+						<div class=" col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Sinopse</strong><br />
+							<%=filme.getSinopse()%></div>
+						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Diretor</strong> &nbsp;
+							<%=filme.getDiretor()%>
 						</div>
-						<a href="#">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Sessões</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-yellow">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa fa-institution fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge">124</div>
-									<div>Salas</div>
-								</div>
-							</div>
+						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Dura&ccedil;&atilde;o</strong> &nbsp;
+							<%=filme.getDuracao().getHours() + ":"
+					+ filme.getDuracao().getMinutes()%>
 						</div>
-						<a href="#">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Salas</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-red">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa fa-group fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge">13</div>
-									<div>Funcion&aacute;rios</div>
-								</div>
-							</div>
+						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Generos</strong> &nbsp;
+							<%
+								for (Genero genero : filme.getGenero()) {
+									out.print(genero.getDescricao() + "");
+								}
+							%>
 						</div>
-						<a href="#">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Funcion&aacute;rios</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
+						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Faixa Et&aacute;ria</strong> &nbsp;
+							<%=filme.getFaixaEtaria()%>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Tipo</strong> &nbsp;
+							<%=filme.getTipo()%>
+							&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
+ 	if (filme.isLegendado())
+ 		out.print("Legendado");
+ 	else
+ 		out.print("Dublado");
+ %>
+							</strong>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<strong>Status</strong> &nbsp;
+							<%=filme.getStatus()%>
+						</div>
 					</div>
 				</div>
 			</div>
 
-
+			<div align="center">
+				<button type="submit" class="btn btn-success">
+					<i class="glyphicon glyphicon-plus"></i> Cadastrar Novo Filme
+				</button>
+				<button type="submit" class="btn btn-warning">
+					<i class="fa fa-undo fa-fw"></i>Filmes
+				</button>
+			</div>
 		</div>
-		<!-- /#page-wrapper -->
-
 	</div>
-	<!-- /#wrapper -->
 
 	<script src="js/jquery.min.js"></script>
-
 	<script src="js/script.js"></script>
-
 	<script src="js/plugins/metisMenu.min.js"></script>
-
 	<script src="js/menuRestrito.js"></script>
+
 </body>
 
 </html>

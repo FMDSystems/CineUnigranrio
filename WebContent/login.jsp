@@ -123,7 +123,7 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Não tenho uma conta! <a href=cadastroCliente>
+									Não tenho uma conta! <a href=cadastrarCliente>
 										Cadastre-se Aqui </a>
 								</div>
 							</div>

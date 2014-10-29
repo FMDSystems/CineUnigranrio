@@ -35,7 +35,7 @@ public class ServletCentralControle extends HttpServlet {
 		if (sessao != null) {
 
 			RequestDispatcher menuRestrito = request
-					.getRequestDispatcher("menuRestrito.jsp");
+					.getRequestDispatcher("restrito/menuRestrito.jsp");
 			menuRestrito.forward(request, response);
 		}else{
 			request.setAttribute("mensagem", "Sessão Expirada!");

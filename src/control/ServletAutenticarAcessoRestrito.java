@@ -65,7 +65,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 			e.printStackTrace();
 		}
 		RequestDispatcher acessoRestrito = request
-				.getRequestDispatcher("acessoRestrito.jsp");
+				.getRequestDispatcher("restrito/acessoRestrito.jsp");
 
 		if (senha == null)
 			senha = "";
@@ -89,7 +89,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		} else {
 			if (request.getSession() != null) {
 				HttpSession sessao = request.getSession(true);
-				sessao.setAttribute("usuario", func1);
+				sessao.setAttribute("usuarioRestrito", func1);
 			}else{
 				request.getSession(false).invalidate();
 			}

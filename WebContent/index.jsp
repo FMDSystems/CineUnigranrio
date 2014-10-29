@@ -67,7 +67,7 @@
 
 								if ((sessao==null)||(sessao.getAttribute("usuario") == null)) {
 							%>
-							<li><a href="cadastroCliente">Cadastrar</a></li>
+							<li><a href="cadastrarCliente">Cadastrar</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Acessar <b class="caret"></b></a>
 								<ul class="dropdown-menu"
@@ -146,7 +146,7 @@
 						</ol>
 						<div class="carousel-inner">
 							<div class="item active">
-								<a href="cadastroCliente"><img src="img/banner1.jpg"
+								<a href="cadastrarCliente"><img src="img/banner1.jpg"
 									alt="First slide"></a>
 							</div>
 							<div class="item">

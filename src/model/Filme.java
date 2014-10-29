@@ -16,7 +16,7 @@ public class Filme implements Comparable<Filme>{
 
 	private boolean legendado;
 
-	private int faixaEtaria;
+	private String faixaEtaria;
 
 	private String status;
 
@@ -27,7 +27,7 @@ public class Filme implements Comparable<Filme>{
 	private Set<Genero> listaGeneros;
 
 	public Filme(String titulo, Date duracao, String sinopse, String diretor,
-			boolean legendado, int faixaEtaria, String status, String tipo) {
+			boolean legendado, String faixaEtaria, String status, String tipo) {
 		super();
 		this.setTitulo(titulo);
 		this.setDuracao(duracao);
@@ -85,11 +85,11 @@ public class Filme implements Comparable<Filme>{
 		this.legendado = legendado;
 	}
 
-	public int getFaixaEtaria() {
+	public String getFaixaEtaria() {
 		return faixaEtaria;
 	}
 
-	public void setFaixaEtaria(int faixaEtaria) {
+	public void setFaixaEtaria(String faixaEtaria) {
 		this.faixaEtaria = faixaEtaria;
 	}
 

@@ -35,7 +35,7 @@
 <body>
 	<%
 		java.util.Date now = new java.util.Date();
-		Funcionario usuario = (Funcionario) session.getAttribute("usuario");
+		Funcionario usuario = (Funcionario) session.getAttribute("usuarioRestrito");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
@@ -82,9 +82,9 @@
 								<input type="text" class="form-control"
 									placeholder="Pesquisar..."> <span
 									class="input-group-btn"></span> <span class="input-group-btn">
-										<button class="btn btn-default" type="button">
-											<i class="fa fa-search"></i>
-										</button>
+									<button class="btn btn-default" type="button">
+										<i class="fa fa-search"></i>
+									</button>
 								</span>
 							</div> <!-- /input-group -->
 						</li>
@@ -97,6 +97,8 @@
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="generos"><i class="fa fa-certificate fa-fw"></i>
+								G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
@@ -131,45 +133,44 @@
 					</h1>
 				</div>
 				<div align="right" style="margin-bottom: 10px; margin-top: -4px;">
-					<button class="btn btn-success">
-						<i class="fa fa-plus"></i> Cadastrar Novo Filme
-					</button>
+					<a class="btn btn-success" href="cadastrarFilme"> <i
+						class="fa fa-plus"></i> Cadastrar Novo Filme
+					</a>
 				</div>
 				<!-- /.col-lg-12 -->
 				<table class="table table-hover">
+					<thead>
 					<tr>
-						<td align="center"><strong>T&iacute;tulo</strong></td>
-						<td align="center"><strong>Dura&ccedil;&atilde;o</strong></td>
-						<td align="center"><strong>Faixa Et&aacute;ria</strong></td>
-						<td align="center"><strong>Diretor</strong></td>
-						<td align="center"><strong>Tipo</strong></td>
-						<td align="center"><strong>G&ecirc;nero</strong></td>
-						<td align="center"><strong>Status</strong></td>
-						<td align="center"><strong>A&ccedil;&otilde;es</strong></td>
+						<th class="text-center">T&iacute;tulo</th>
+						<th class="text-center"><strong>Dura&ccedil;&atilde;o</strong></th>
+						<th class="text-center"><strong>Tipo</strong></th>
+						<th class="text-center"><strong>G&ecirc;nero</strong></th>
+						<th class="text-center"><strong>Status</strong></th>
+						<th class="text-center"><strong>A&ccedil;&otilde;es</strong></th>
 					</tr>
-					<%
-						Set<Filme> listaFilmes = (Set<Filme>) request
-								.getAttribute("listaFilmes");
+					</thead>
+					
+						<%
+							Set<Filme> listaFilmes = (Set<Filme>) request.getAttribute("listaFilmes");
 
-						for (Filme filme : listaFilmes) {
-							out.print("<tr valign='bottom'>");
-							out.print("<td align='center'>" + filme.getTitulo() + "</td>");
-							out.print("<td align='center'>" + filme.getDuracao().getHours()
-									+ ":" + filme.getDuracao().getMinutes() + "</td>");
-							out.print("<td align='center'>" + filme.getFaixaEtaria()
-									+ "</td>");
-							out.print("<td align='center'>" + filme.getDiretor() + "</td>");
-							out.print("<td align='center'>" + filme.getTipo() + "</td>");
-							out.print("<td align='center'>");
-							for (Genero genero : filme.getGenero()) {
-								out.print(genero.getDescricao() + " ");
+							for (Filme filme : listaFilmes) {
+								out.print("<tr valign='bottom'>");
+								out.print("<td align='center'>" + filme.getTitulo() + "</td>");
+								out.print("<td align='center'>" + filme.getDuracao().getHours()
+								+ ":" + filme.getDuracao().getMinutes() + "</td>");
+								out.print("<td align='center'>" + filme.getTipo() + "</td>");
+								out.print("<td align='center'>");
+								
+								for (Genero genero : filme.getGenero()) {
+									out.print(genero.getDescricao() + " ");
+								}
+								out.print("</td>");
+								out.print("<td align='center'>" + filme.getStatus() + "</td>");
+								out.print("<td align='center'><div class='tooltip-demo'><a href='#' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a>&nbsp; <a href='#' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a></div></td>");
+								out.print("</tr>");
 							}
-							out.print("</td>");
-							out.print("<td align='center'>" + filme.getStatus() + "</td>");
-							out.print("<td align='center'><a href='#'><i class='fa fa-edit'></i></a></td>");
-							out.print("</tr>");
-						}
-					%>
+						%>
+						
 				</table>
 			</div>
 			<!-- /.row -->
@@ -188,6 +189,19 @@
 	<script src="js/plugins/metisMenu.min.js"></script>
 
 	<script src="js/menuRestrito.js"></script>
+		
+	<script>
+    // tooltip demo
+    $('.tooltip-demo').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    })
+
+    // popover demo
+    $("[data-toggle=popover]")
+        .popover()
+    </script>
+	
 </body>
 
 </html>

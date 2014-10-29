@@ -36,7 +36,7 @@ public class ServletAcessoRestrito extends HttpServlet {
 		}
 
 		RequestDispatcher despachante = request
-				.getRequestDispatcher("acessoRestrito.jsp");
+				.getRequestDispatcher("restrito/acessoRestrito.jsp");
 		despachante.forward(request, response);
 	}
 

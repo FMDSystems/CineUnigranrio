@@ -1,7 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Funcionario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.text.SimpleDateFormat"%>
-<%@page import="model.Funcionario"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,6 +12,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
 <meta name="author" content="FMD Systems">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
 
 <title>Cine Unigranrio - &Aacute;rea Restrita</title>
 
@@ -28,8 +31,11 @@
 
 <body>
 	<%
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		Funcionario usuario = (Funcionario) session
+				.getAttribute("usuarioRestrito");
 		java.util.Date now = new java.util.Date();
-		Funcionario usuario = (Funcionario) session.getAttribute("usuario");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
@@ -53,7 +59,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome() %> &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -75,14 +81,14 @@
 							<div class="input-group custom-search-form">
 								<input type="text" class="form-control"
 									placeholder="Pesquisar..."> <span
-									class="input-group-btn"> </span><span class="input-group-btn">
-										<button class="btn btn-default" type="button">
-											<i class="fa fa-search"></i>
-										</button>
+									class="input-group-btn"></span> <span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+										<i class="fa fa-search"></i>
+									</button>
 								</span>
 							</div> <!-- /input-group -->
 						</li>
-						<li><a href="centralControle"><i
+						<li><a class="active" href="centralControle"><i
 								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
 						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
 								Filmes<span class="fa arrow"></span></a>
@@ -90,6 +96,8 @@
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="generos"><i class="fa fa-certificate fa-fw"></i>
+								G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
@@ -119,11 +127,103 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Blank</h1>
+					<h1 class="page-header">Central de Controle</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa  fa-video-camera fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">26</div>
+									<div>Filmes</div>
+								</div>
+							</div>
+						</div>
+						<a href="filmes">
+							<div class="panel-footer">
+								<span class="pull-left">Ver Filmes</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-film fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">12</div>
+									<div>Sessões</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">Ver Sessões</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-yellow">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-institution fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">124</div>
+									<div>Salas</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">Ver Salas</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-red">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-group fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">13</div>
+									<div>Funcion&aacute;rios</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">Ver Funcion&aacute;rios</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 		<!-- /#page-wrapper -->
 

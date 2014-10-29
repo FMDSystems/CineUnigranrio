@@ -70,7 +70,7 @@
 
 								if ((session == null) || (session.getAttribute("usuario") == null)) {
 							%>
-							<li><a href="cadastroCliente">Cadastrar</a></li>
+							<li><a href="cadastrarCliente">Cadastrar</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Acessar <b class="caret"></b></a>
 								<ul class="dropdown-menu"

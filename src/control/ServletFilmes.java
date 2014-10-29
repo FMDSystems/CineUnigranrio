@@ -63,7 +63,7 @@ public class ServletFilmes extends HttpServlet {
 				"Livrai-nos do Mal",
 				duracao1,
 				"O policial Ralph Sarchie (Eric Bana) tem uma intuição especial, que sempre o leva a combater casos extremos e perigosos. Em uma mesma semana ele se depara com um bebê jogado no lixo e uma mãe que atira seu filho na jaula dos leões em um zoológico. Intrigado pelos acontecimentos, ele começa a investigar as pessoas responsáveis, suspeitando que alguma força sobrenatural esteja por trás das histórias. Com a ajuda de um padre especializado em demonologia (Edgar Ramírez), Sarchie descobre uma verdade assustadora, muito além do seu mundo cético e racional. ",
-				"Scott Derrickson", true, 16, "exibição", "3D");
+				"Scott Derrickson", true, "16 Anos", "exibição", "3D");
 		
 		filme1.addGenero(genero1);
 		filme1.addGenero(genero2);
@@ -72,7 +72,7 @@ public class ServletFilmes extends HttpServlet {
 				"Maze Runner Correr ou Morrer",
 				duracao2,
 				"Em um mundo pós-apocalíptico, o jovem Thomas é abandonado em uma comunidade formada por garotos após sua memória ter sido apagada. Logo ele se vê preso em um labirinto, onde será preciso unir forças com outros jovens para que possa escapar. ",
-				"Wes Ball", true, 14, "exibição", "3D");
+				"Wes Ball", true, "14 Anos", "exibição", "3D");
 		
 		filme2.addGenero(genero1);
 		filme2.addGenero(genero2);
@@ -85,7 +85,7 @@ public class ServletFilmes extends HttpServlet {
 		request.setAttribute("listaFilmes", listaFilmes);
 
 		RequestDispatcher dispachante = request
-				.getRequestDispatcher("filmes.jsp");
+				.getRequestDispatcher("restrito/filme/filmes.jsp");
 		dispachante.forward(request, response);
 	}
 

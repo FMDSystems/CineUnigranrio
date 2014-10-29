@@ -98,7 +98,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
 								type="text" class="form-control" name="matricula"
-								value="<%=matricula%>" placeholder="Matricula" required>
+								value="<%=matricula%>" placeholder="Matricula" required autofocus>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
