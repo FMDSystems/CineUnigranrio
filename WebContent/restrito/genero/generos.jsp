@@ -133,7 +133,7 @@
 					</h1>
 				</div>
 				<div align="right" style="margin-bottom: 10px; margin-top: -4px;">
-					<a class="btn btn-success" href="cadastroGenero"> <i
+					<a class="btn btn-success" href="cadastrarGenero"> <i
 						class="fa fa-plus"></i> Cadastrar Novo G&ecirc;nero
 					</a>
 				</div>

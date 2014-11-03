@@ -83,14 +83,14 @@
 						</li>
 						<li><a href="centralControle"><i
 								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
-						<li><a href="filmes" class="active"><i
+						<li><a href="filmes"><i
 								class="fa fa-video-camera fa-fw"></i> Filmes<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="generos"><i class="fa fa-certificate fa-fw"></i>
+						<li><a href="generos" class="active"><i class="fa fa-certificate fa-fw"></i>
 								G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
@@ -130,69 +130,18 @@
 						out.print("</div>");
 					}
 
-					Filme filme = (Filme) request.getAttribute("filme");
+					Genero genero = (Genero) request.getAttribute("genero");
 				%>
 				<h1 class="page-header">
-					<i class="fa fa-file-video-o fa-fw"></i><%=filme.getTitulo()%>
+					<i class="fa fa-certificate fa-fw"></i><%=genero.toString()%>
 				</h1>
-				<div class="panel-body">
-
-					<div class="row">
-						<div class="col-xs-6 col-md-4 form-group" align="center">
-							<div class="form-group">
-								<img src="img/filmes/em-exibicao/livrai-nos-do-mal.jpg"
-									width="200px" class="img-thumbnail">
-							</div>
-						</div>
-						<div class=" col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Sinopse</strong><br />
-							<%=filme.getSinopse()%></div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Diretor</strong> &nbsp;
-							<%=filme.getDiretor()%>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Dura&ccedil;&atilde;o</strong> &nbsp;
-							<%=filme.getDuracao().getHours() + ":"
-					+ filme.getDuracao().getMinutes()%>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Generos</strong> &nbsp;
-							<%
-								for (Genero genero : filme.getGenero()) {
-									out.print(genero.getDescricao() + "");
-								}
-							%>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Faixa Et&aacute;ria</strong> &nbsp;
-							<%=filme.getFaixaEtaria()%>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Tipo</strong> &nbsp;
-							<%=filme.getTipo()%>
-							&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
- 	if (filme.isLegendado())
- 		out.print("Legendado");
- 	else
- 		out.print("Dublado");
- %>
-							</strong>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<strong>Status</strong> &nbsp;
-							<%=filme.getStatus()%>
-						</div>
-					</div>
-				</div>
-			</div>
 
 			<div align="center">
-				<a href="cadastrarFilme" class="btn btn-success">
-					<i class="glyphicon glyphicon-plus"></i> Cadastrar Novo Filme
+				<a href="cadastrarGenero" class="btn btn-success">
+					<i class="glyphicon glyphicon-plus"></i> Cadastrar Novo G&ecirc;nero
 				</a>
-				<a href="filmes" class="btn btn-warning">
-					<i class="fa fa-undo fa-fw"></i>Filmes
+				<a href="generos" class="btn btn-warning">
+					<i class="fa fa-undo fa-fw"></i>G&ecirc;neros
 				</a>
 			</div>
 		</div>

@@ -51,4 +51,8 @@ public class Genero implements Comparable<Genero>{
 		return this.descricao.compareTo(g.getDescricao());
 	}
 	
+	public String toString(){
+		return this.getDescricao();
+	}
+	
 }

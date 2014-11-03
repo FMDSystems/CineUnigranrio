@@ -131,8 +131,8 @@
 				<form action="salvarGenero" method="post">
 					<div class="form-group">
 						<br /> <label>Descri&ccedil;&atilde;o</label> <input type="text"
-							name="titulo" class="form-control"
-							placeholder="Descri&ccedil;&atilde;o" autofocus required>
+							name="descricao" class="form-control"
+							placeholder="Descri&ccedil;&atilde;o" autofocus required="required">
 					</div>
 					<div class="form-group" align="center">
 						<button type="submit" class="btn btn-success">

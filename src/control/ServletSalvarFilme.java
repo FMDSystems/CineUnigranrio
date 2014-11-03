@@ -74,7 +74,7 @@ public class ServletSalvarFilme extends HttpServlet {
 		
 		request.setAttribute("mensagem", "<span class='glyphicon glyphicon-ok'></span>&nbsp;Filme Cadastrado com Sucesso!!!");
 		request.setAttribute("filme", filme);
-		request.getRequestDispatcher("restrito/filme/confirmacaoFilme.jsp").forward(request, response);;
+		request.getRequestDispatcher("restrito/filme/confirmacaoFilme.jsp").forward(request, response);
 		
 	}
 
