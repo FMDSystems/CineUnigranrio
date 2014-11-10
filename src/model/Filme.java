@@ -1,30 +1,44 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
-public class Filme implements Comparable<Filme>{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class Filme implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(generator = "Filme_ID", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "Filme_ID", sequenceName = "Seq_Filme", allocationSize = 1)
+	private Long id;
 
 	private String titulo;
-
 	private Date duracao;
-
 	private String sinopse;
-
 	private String diretor;
-
 	private boolean legendado;
-
 	private String faixaEtaria;
-
 	private String status;
-
 	private String tipo;
+	
+	@Lob
+	private byte[] imagem;
+	
+//	private List<Sessao> sessoes;
+	
+	@ManyToMany(mappedBy="filmes")
+	private List<Genero> generos;
 
-	private Set<Sessao> listaSessoes;
-
-	private Set<Genero> listaGeneros;
 
 	public Filme(String titulo, Date duracao, String sinopse, String diretor,
 			boolean legendado, String faixaEtaria, String status, String tipo) {
@@ -37,14 +51,20 @@ public class Filme implements Comparable<Filme>{
 		this.setFaixaEtaria(faixaEtaria);
 		this.setStatus(status);
 		this.setTipo(tipo);
-		this.listaSessoes = new TreeSet<Sessao>();
-		this.listaGeneros = new TreeSet<Genero>();
 	}
 	
 	public Filme() {
 		super();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getTitulo() {
 		return titulo;
 	}
@@ -109,38 +129,61 @@ public class Filme implements Comparable<Filme>{
 		this.tipo = tipo;
 	}
 	
-	//Criar métodos add e remove da lista de Sessoes
-	public Set<Sessao> getSessao() {
-		return listaSessoes;
-	}
-	//Criar métodos add e remove da lista de Generos
-	public Set<Genero> getGenero() {
-		return listaGeneros;
-	}
-	
-	public void addGenero(Genero novo){
-		if(this.listaGeneros.contains(novo))
-			return;
-		this.listaGeneros.add(novo);
-		novo.addFilme(this);
-	}
-	
-	public void removeGenero(Genero antigo){
-		if(! this.listaGeneros.contains(antigo))
-			return;
-		
-		this.listaGeneros.remove(antigo);
-		antigo.removeFilme(this);
+	public byte[] getImagem() {
+		return imagem;
 	}
 
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
+	}
+
+//	public List<Sessao> getListaSessoes() {
+//		return sessoes;
+//	}
+//	
+//	public void setListaSessoes(List<Sessao> listaSessoes) {
+//		this.sessoes = listaSessoes;
+//	}
+	
+	public List<Genero> getListaGeneros() {
+		return generos;
+	}
+	
+	public void setListaGeneros(List<Genero> listaGeneros) {
+		this.generos = listaGeneros;
+	}
+	
 	@Override
 	public String toString() {
 		return this.titulo + " - " + this.tipo + " : " + this.duracao;
 	}
 
 	@Override
-	public int compareTo(Filme f) {
-		return this.titulo.compareTo(f.getTitulo());
+	public int hashCode() {
+		if (this.id == null)
+			return 0;
+
+		return this.id.hashCode();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Filme other = (Filme) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	
+
 
 }

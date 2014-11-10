@@ -5,8 +5,7 @@
 <%@page import="model.Funcionario"%>
 <%@page import="model.Filme"%>
 <%@page import="model.Genero"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -151,7 +150,7 @@
 					</thead>
 					
 						<%
-							Set<Filme> listaFilmes = (Set<Filme>) request.getAttribute("listaFilmes");
+							List<Filme> listaFilmes = (List<Filme>) request.getAttribute("listaFilmes");
 
 							for (Filme filme : listaFilmes) {
 								out.print("<tr valign='bottom'>");
@@ -161,7 +160,7 @@
 								out.print("<td align='center'>" + filme.getTipo() + "</td>");
 								out.print("<td align='center'>");
 								
-								for (Genero genero : filme.getGenero()) {
+								for (Genero genero : filme.getListaGeneros()) {
 									out.print(genero.getDescricao() + " ");
 								}
 								out.print("</td>");

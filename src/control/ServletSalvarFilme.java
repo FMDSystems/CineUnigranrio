@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Filme;
-import model.Genero;
 
 /**
  * Servlet implementation class ServletCadastrarFilme
@@ -43,12 +41,13 @@ public class ServletSalvarFilme extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		Date duracao = null;
 		SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm");
 		String titulo = request.getParameter("titulo");
 		String diretor = request.getParameter("diretor");
 		String duracaoString = request.getParameter("duracao");
-		
+        
 		try {
 			duracao = TIME_FORMAT.parse(duracaoString);
 		} catch (ParseException e) {
@@ -61,16 +60,15 @@ public class ServletSalvarFilme extends HttpServlet {
 		String sinopse = request.getParameter("sinopse");
 		Filme filme = new Filme(titulo, duracao, sinopse, diretor, Boolean.parseBoolean(legendaS), faixaEtaria, status, tipo);
 		
-		String[] generos = request.getParameterValues("listaGeneros");
-		Set<Genero> todosGeneros = (Set<Genero>) request.getAttribute("todosGeneros");
-		
-		for(Genero g : todosGeneros){
-			for(int i=0;i<=generos.length;i++){
-				if(g.getDescricao().compareTo(generos[i]) == 0){
-					filme.addGenero(g);
-				}
-			}	
-		}
+//		String[] generos = request.getParameterValues("listaGeneros");
+//		Set<Genero> todosGeneros = (Set<Genero>) request.getAttribute("todosGeneros");
+//		for(Genero g : todosGeneros){
+//			for(int i=0;i<=generos.length;i++){
+//				if(g.getDescricao().compareTo(generos[i]) == 0){
+//					filme.addGenero(g);
+//				}
+//			}	
+//		}
 		
 		request.setAttribute("mensagem", "<span class='glyphicon glyphicon-ok'></span>&nbsp;Filme Cadastrado com Sucesso!!!");
 		request.setAttribute("filme", filme);

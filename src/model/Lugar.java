@@ -1,8 +1,15 @@
 package model;
 
-public class Lugar implements Comparable<Lugar> {
+import java.io.Serializable;
+
+public class Lugar implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private Long id;
+	
 	private Character fila;
 	private int numero;
+	
 	private Sala sala;
 
 	public Lugar() {
@@ -14,6 +21,14 @@ public class Lugar implements Comparable<Lugar> {
 		this.setFila(fila);
 		this.setNumero(numero);
 		this.setSala(sala);
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Character getFila() {
@@ -36,20 +51,38 @@ public class Lugar implements Comparable<Lugar> {
 		return this.sala;
 	}
 
-	// Alterar o método setSala para a códificação correta
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
 
 	@Override
-	public int compareTo(Lugar l) {
-		int fila = this.fila.compareTo(l.getFila());
-		
-		if (fila == 0) {
-			return this.numero - l.getNumero();
-		} else {
-			return fila;
-		}
+	public String toString(){
+		return this.getFila().toString() + this.getNumero();
+	}
+	
+	@Override
+	public int hashCode() {
+		if (this.id == null)
+			return 0;
+
+		return this.id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Lugar other = (Lugar) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

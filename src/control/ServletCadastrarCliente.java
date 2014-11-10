@@ -31,6 +31,7 @@ public class ServletCadastrarCliente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		RequestDispatcher dispachante = request
 				.getRequestDispatcher("cliente/cadastrarCliente.jsp");
 		dispachante.forward(request, response);

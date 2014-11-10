@@ -34,6 +34,7 @@ public class ServletCadastrarFilme extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		if (request.getSession(false) != null) {
 
 			Genero genero1 = new Genero("Ação");

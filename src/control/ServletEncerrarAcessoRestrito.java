@@ -31,7 +31,7 @@ public class ServletEncerrarAcessoRestrito extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessao = request.getSession(false);
-
+		request.setCharacterEncoding("UTF-8");
 		if (sessao != null) {
 			sessao.invalidate();
 		}

@@ -43,6 +43,7 @@ public class ServletSalvarCliente extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		Date data = null;
 		RequestDispatcher dispachante = request.getRequestDispatcher("cliente/confirmacaoCliente.jsp");
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");

@@ -1,18 +1,18 @@
+<%@page import="javax.persistence.UniqueConstraint"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Funcionario"%>
 <%@page import="model.Genero"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
 
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
@@ -33,10 +33,12 @@
 
 <body>
 	<%
-			java.util.Date now = new java.util.Date();
+		java.util.Date now = new java.util.Date();
 			Funcionario usuario = (Funcionario) session.getAttribute("usuarioRestrito");
 			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-			Set<Genero> generosCadastrados = (Set<Genero>) request.getAttribute("generosCadastrados");
+	
+			@SuppressWarnings("unchecked")
+			List<Genero> generosCadastrados = (List<Genero>) request.getAttribute("generosCadastrados");
 	%>
 	<div id="wrapper">
 
@@ -90,15 +92,14 @@
 						</li>
 						<li><a href="centralControle"><i
 								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
-						<li><a href="filmes"><i
-								class="fa fa-video-camera fa-fw"></i> Filmes<span
-								class="fa arrow"></span></a>
+						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
+								Filmes<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="generos" class="active"><i class="fa fa-certificate fa-fw"></i>
-								G&ecirc;neros</a></li>
+						<li><a href="generos" class="active"><i
+								class="fa fa-certificate fa-fw"></i> G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
@@ -132,46 +133,115 @@
 						<i class="fa fa-certificate fa-fw"></i>G&ecirc;neros
 					</h1>
 				</div>
-				<div align="right" style="margin-bottom: 10px; margin-top: -4px;">
-					<a class="btn btn-success" href="cadastrarGenero"> <i
-						class="fa fa-plus"></i> Cadastrar Novo G&ecirc;nero
-					</a>
+				<div class="row">
+					<div class="col-xs-6" align="left" style="left:10px;">
+						<%
+							if(!generosCadastrados.isEmpty()){
+								out.print("Total de G&ecirc;neros: " + generosCadastrados.size());
+							}
+						%>
+						
+					</div>
+					<div class="col-xs-6" align="right" style="right: 10px; margin-bottom: 10px;">
+						<a class="btn btn-success" href="cadastrarGenero"> <i
+							class="fa fa-plus"></i> Novo G&ecirc;nero
+						</a>
+					</div>
 				</div>
+				
 				<!-- /.col-lg-12 -->
 				<table class="table table-hover">
 					<thead>
-					<tr>
-						<th class="text-center"><strong>Descri&ccedil;&atilde;o</strong></th>
-						<th class="text-center"><strong>Filmes</strong></th>
-						<th class="text-center"><strong>A&ccedil;&otilde;es</strong></th>
-					</tr>
+						<tr>
+							<th class="text-center"><strong>Descri&ccedil;&atilde;o</strong></th>
+							<th class="text-center"><strong>Filmes</strong></th>
+							<th class="text-center"><strong>A&ccedil;&otilde;es</strong></th>
+						</tr>
 					</thead>
 					<%
-						for(Genero genero : generosCadastrados){
-							out.print("<tr><td align='center'>" + genero.getDescricao() + "</td><td align='center'>" + genero.getFilme().size() + "</td>");
-							out.print("<td align='center'><div class='tooltip-demo'><a href='#' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a>&nbsp; <a href='#' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a></div></td>");
+						if(generosCadastrados.isEmpty()){
+							out.print("<tr>");
+							out.print("<td colspan='3' align='center'><strong> N&atilde;o h&aacute; g&ecirc;neros cadastrados! </strong></td>");
 							out.print("</tr>");
+						}else{
+					
+						for(Genero genero : generosCadastrados){
+							Long id = genero.getId();
+							out.print("<tr><td align='center' style='vertical-align:middle;'>" + genero.getDescricao() + "</td><td style='vertical-align:middle;' align='center'>" + genero.getListaFilmes().size() + "</td>");
+							out.print("<td align='left' width='10%'><div class='tooltip-demo row'>");
+																		
+							//Alterar Genero
+							out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
+							out.print("<a href='alterarGenero?id="+id.byteValue()+"' class='btn btn-xs btn-info' data-toggle='tooltip' data-placement='top' title='Alterar'><i class='fa fa-edit'></i></a>");
+							out.print("</div>");
+							
+							//Detalhar Genero
+							out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
+							out.print("<a href='detalharGenero?id="+id.byteValue()+"'class='btn btn-xs btn-warning' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a>");
+							out.print("</div>");
+							
+							//Excluir Genero
+							out.print("<div class='col-md-1'>");
+							out.print("<a class='btn btn-xs btn-danger confirm-delete' data-id="+id.byteValue()+" data-toggle='tooltip' data-placement='top' title='Excluir'><i class='glyphicon glyphicon-trash'></i></a>");
+							out.print("</div>");
+							out.print("</div></td>");
+							out.print("</tr>");
+						}
 						}
 					%>
 				</table>
 			</div>
 			<!-- /.row -->
 		</div>
-		<!-- /#page-wrapper -->
 
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Excluir G&ecirc;nero </h4>
+					</div>
+					<div class="modal-body">
+					Deseja realmente excluir o g&ecirc;nero selecionado?
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo fa-fw"></i>Cancelar</a>
+						<a id="btn-excluir" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Excluir G&ecirc;nero</a>
+					<form action="#" method="get" name="excluir"><input type="hidden" name="id" id="txtExcluir"></form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
 
 
 	</div>
 	<!-- /#wrapper -->
 
 	<script src="js/jquery.min.js"></script>
-
 	<script src="js/script.js"></script>
-
 	<script src="js/plugins/metisMenu.min.js"></script>
-
 	<script src="js/menuRestrito.js"></script>
+	
+	<script type="text/javascript">
+	$('.confirm-delete').on('click', function(e) {
+	    e.preventDefault();
 
+	    var id = $(this).data('id');
+	    $('#myModal').data('id', id).modal('show');
+	});
+	
+	$('#btn-excluir').click(function() {
+		var id = $('#myModal').data('id');
+
+  		document.getElementById("txtExcluir").value = id;
+		document.forms['excluir'].action = "excluirGenero?id='"+id+"'";
+		document.forms['excluir'].submit();  
+		
+	});
+    </script>
+	
 	<script>
 		// tooltip demo
 		$('.tooltip-demo').tooltip({
@@ -182,6 +252,7 @@
 		// popover demo
 		$("[data-toggle=popover]").popover()
 	</script>
+
 </body>
 
 </html>

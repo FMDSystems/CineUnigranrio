@@ -1,13 +1,18 @@
 package model;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.Serializable;
+import java.util.List;
 
-public class Sala implements Comparable<Sala>{
+public class Sala implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	
 	private int numero;
 	private int capacidade;
+	
 	private Sessao sessao;
-	private Set<Lugar> listaLugares;
+	private List<Lugar> listaLugares;
 	
 	public Sala(){
 		super();
@@ -18,7 +23,14 @@ public class Sala implements Comparable<Sala>{
 		this.setNumero(numero);
 		this.setCapacidade(capacidade);
 		this.setSessao(sessao);
-		this.listaLugares = new TreeSet<Lugar>();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getNumero() {
@@ -40,19 +52,47 @@ public class Sala implements Comparable<Sala>{
 	public Sessao getSessao() {
 		return this.sessao;
 	}
-	// Alterar o método setSessao para a códificação correta
+
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
 	}
+	
+	public List<Lugar> getListaLugares() {
+		return listaLugares;
+	}
 
-	//Criar métodos add e remove da lista de Lugares
-	public Set<Lugar> getLugar() {
-		return this.listaLugares;
+	public void setListaLugares(List<Lugar> listaLugares) {
+		this.listaLugares = listaLugares;
+	}
+	
+	@Override
+	public String toString(){
+		return "Num.: " + this.getNumero() + " - Capacidade: " + this.getCapacidade();
+	}
+	
+	@Override
+	public int hashCode() {
+		if (this.id == null)
+			return 0;
+
+		return this.id.hashCode();
 	}
 
 	@Override
-	public int compareTo(Sala o) {
-		return this.numero - o.getNumero();
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sala other = (Sala) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-	
+
 }

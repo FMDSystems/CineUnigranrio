@@ -159,7 +159,7 @@
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 							<strong>Generos</strong> &nbsp;
 							<%
-								for (Genero genero : filme.getGenero()) {
+								for (Genero genero : filme.getListaGeneros()) {
 									out.print(genero.getDescricao() + "");
 								}
 							%>
@@ -171,12 +171,13 @@
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 							<strong>Tipo</strong> &nbsp;
 							<%=filme.getTipo()%>
-							&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
- 	if (filme.isLegendado())
- 		out.print("Legendado");
- 	else
- 		out.print("Dublado");
- %>
+							&nbsp;&nbsp;&nbsp;&nbsp; <strong> 
+							<%
+						 	if (filme.isLegendado())
+						 		out.print("Legendado");
+						 	else
+						 		out.print("Dublado");
+						 	%>
 							</strong>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
@@ -188,12 +189,26 @@
 			</div>
 
 			<div align="center">
-				<a href="cadastrarFilme" class="btn btn-success">
-					<i class="glyphicon glyphicon-plus"></i> Cadastrar Novo Filme
-				</a>
-				<a href="filmes" class="btn btn-warning">
-					<i class="fa fa-undo fa-fw"></i>Filmes
-				</a>
+			<!-- Cadastrar Novo -->
+					<a href="cadastrarFilme" class="btn btn-success"> <i
+						class="glyphicon glyphicon-plus"></i> Novo Filme
+					</a>
+
+					<!-- Alterar -->
+					<a href="alterarFilme" class="btn btn-info"> <i
+						class="glyphicon glyphicon-edit"></i> Alterar Filme
+					</a>
+
+					<!-- Excluir -->
+					<a href="excluirFilme" class="btn btn-danger"> <i
+						class="glyphicon glyphicon-remove"></i> Excluir Filme
+					</a>
+
+
+					<!-- Voltar -->
+					<a href="filmes" class="btn btn-warning"> <i
+						class="fa fa-undo fa-fw"></i>Filmes
+					</a>
 			</div>
 		</div>
 	</div>

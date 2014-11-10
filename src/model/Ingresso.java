@@ -1,8 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ingresso implements Comparable<Ingresso> {
+public class Ingresso implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	
 	private Date dataCompra;
 	private String tipoDesconto;
 	private Cliente cliente;
@@ -21,6 +26,14 @@ public class Ingresso implements Comparable<Ingresso> {
 		this.setCliente(cliente);
 		this.setSessao(sessao);
 		this.setLugar(Lugar);
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Date getDataCompra() {
@@ -43,7 +56,6 @@ public class Ingresso implements Comparable<Ingresso> {
 		return cliente;
 	}
 
-	// Alterar o método setCliente para a códificação correta
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -52,7 +64,6 @@ public class Ingresso implements Comparable<Ingresso> {
 		return sessao;
 	}
 
-	// Alterar o método setSessao para a códificação correta
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
 	}
@@ -61,24 +72,40 @@ public class Ingresso implements Comparable<Ingresso> {
 		return lugar;
 	}
 
-	// Alterar o método setLugar para a códificação correta
 	public void setLugar(Lugar lugar) {
 		this.lugar = lugar;
 	}
 
 	@Override
-	public int compareTo(Ingresso i) {
-		int data = this.dataCompra.compareTo(i.getDataCompra());
-		if (data == 0) {
-			int sessao = this.sessao.compareTo(i.getSessao());
-			if (sessao == 0) {
-				return this.lugar.compareTo(i.getLugar());
-			} else {
-				return sessao;
-			}
-		} else {
-			return data;
-		}
+	public String toString(){
+		return "Sessão: " + this.getSessao().toString()
+				+ "Data Compra: " + this.getDataCompra().toString()
+				+ "Lugar: " + this.getLugar().toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		if (this.id == null)
+			return 0;
+
+		return this.id.hashCode();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ingresso other = (Ingresso) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
 }

@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@page import="model.Pessoa"%>
 <%@page import="model.Filme"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.List"%>
 
 <html lang="pt-br">
 <head>
@@ -49,12 +48,12 @@
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
 							<li><a href="/cineunigranrio">Home</a></li>
-							<li><a href="#">Sessıes</a></li>
+							<li><a href="#">Sess√µes</a></li>
 							<li class="dropdown active"><a href="#"
 								class="dropdown-toggle" data-toggle="dropdown">Filmes <b
 									class="caret active"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="exibirfilmesexibicao">Em ExibiÁ„o</a></li>
+									<li><a href="exibirfilmesexibicao">Em Exibi√ß√£o</a></li>
 									<li><a href="#">Em Breve</a></li>
 								</ul></li>
 						</ul>
@@ -96,7 +95,7 @@
 											</div>
 										</div>
 									</li>
-									<!-- 									 Em breve inclus„o de cadastro com redes sociais -->
+									<!-- 									 Em breve inclus√£o de cadastro com redes sociais -->
 									<!-- 																		<li class="divider"></li> -->
 									<!-- 																		<li><input class="btn btn-primary btn-block" type="button" -->
 									<!-- 																			id="sign-in-google" value="Sign In with Google"> <input -->
@@ -119,11 +118,11 @@
 											&nbsp;Meus Ingressos</a></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
 										href="#"><span class="glyphicon glyphicon-list-alt"></span>
-											&nbsp;Alterar InformaÁıes </a></li>
+											&nbsp;Alterar Informa√ß√µes </a></li>
 									<li role="presentation" class="divider"></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1"
 										href="encerrarAcessoCliente" style="color: red;"> <span
-											class="glyphicon glyphicon-off"></span> &nbsp;Encerrar Sess„o
+											class="glyphicon glyphicon-off"></span> &nbsp;Encerrar Sess√£o
 									</a></li>
 								</ul></li>
 
@@ -144,7 +143,8 @@
 
 		<div class="row">
 			<%
-				Set<Filme> listaFilmesExibicao = (TreeSet<Filme>) request
+			@SuppressWarnings("unchecked")
+				List<Filme> listaFilmesExibicao = (List<Filme>) request
 						.getAttribute("filmesExibicao");
 				for (Filme filme : listaFilmesExibicao) {
 					out.print("<div class='col-sm-4 col-md-3'>");
@@ -216,7 +216,7 @@
 		</div>
 	</div>
 
-	<!-- Colocado no final do documento para caregar a p√°gina mais r√°pido -->
+	<!-- Colocado no final do documento para caregar a p√É¬°gina mais r√É¬°pido -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/script.js"></script>
 </body>

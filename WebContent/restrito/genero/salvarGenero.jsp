@@ -2,12 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Funcionario"%>
+<%@page import="model.Genero"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
 
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
@@ -125,16 +126,45 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">
-						<i class="fa fa-certificate fa-fw"></i>Salvar G&ecirc;neros
+						<i class="fa fa-certificate fa-fw"></i>Salvar G&ecirc;nero
 					</h1>
 				</div>
+				<%
+						String mensagem = (String) request.getAttribute("mensagem");
+
+						String descricao= "";
+						String id = "";
+						
+						if (request.getAttribute("genero") != null){
+							Genero g = (Genero) request.getAttribute("genero");
+							
+							descricao = g.getDescricao();
+							id = String.valueOf(g.getId());
+							
+						}
+						
+						if (mensagem != null) {
+							out.print("<div class='alert alert-danger' role='alert'>");
+							out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
+							out.print(mensagem);
+							out.print("</div>");
+						}
+					%>
 				<form action="salvarGenero" method="post">
 					<div class="form-group">
-						<br /> <label>Descri&ccedil;&atilde;o</label> <input type="text"
-							name="descricao" class="form-control"
+						<br /> 
+						
+						<!--  ID -->
+						<input type="hidden" name="id" value="<%=id%>">
+
+						<div class="col-lg-12" style="margin-bottom: 10px;">											
+						<!--  Descricao -->
+						<label>Descri&ccedil;&atilde;o</label> 
+						<input type="text" name="descricao" class="form-control" value="<%=descricao%>"
 							placeholder="Descri&ccedil;&atilde;o" autofocus required="required">
+						</div>
 					</div>
-					<div class="form-group" align="center">
+					<div class="form-group" style="margin-top: 10px;" align="center">
 						<button type="submit" class="btn btn-success">
 							<i class="glyphicon glyphicon-ok"></i> Gravar
 						</button>

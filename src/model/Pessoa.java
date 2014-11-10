@@ -1,8 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 
-public abstract class Pessoa implements Comparable<Pessoa>{
+public abstract class Pessoa implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
+	private Long matricula;
+	
 	private String cpf;
 	private String nome;
 	private String email;
@@ -21,6 +27,14 @@ public abstract class Pessoa implements Comparable<Pessoa>{
 		this.setSenha(senha);
 	}
 
+	public Long getId() {
+		return matricula;
+	}
+	
+	public void setId(Long id) {
+		this.matricula = id;
+	}
+	
 	public String getCpf() {
 		return this.cpf;
 	}
@@ -67,8 +81,32 @@ public abstract class Pessoa implements Comparable<Pessoa>{
 	}
 	
 	@Override
-	public int compareTo(Pessoa p){
-		return this.cpf.compareTo(p.getCpf());
+	public int hashCode()
+	{
+		if (this.matricula == null)
+			return 0;
+
+		return this.matricula.hashCode();
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		if (matricula == null)
+		{
+			if (other.matricula != null)
+				return false;
+		} else if (!matricula.equals(other.matricula))
+			return false;
+		return true;
+	}
+
+	
 }

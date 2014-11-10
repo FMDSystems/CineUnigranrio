@@ -4,8 +4,7 @@
 <%@page import="model.Funcionario"%>
 <%@page import="model.Filme"%>
 <%@page import="model.Genero"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date;"%>
 <!DOCTYPE html>
@@ -38,7 +37,8 @@
 		Funcionario usuario = (Funcionario) session
 		.getAttribute("usuarioRestrito");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		Set<Genero> generosCadastrados = (Set<Genero>) request.getAttribute("generosCadastrados");
+		@SuppressWarnings("unchecked")
+		List<Genero> generosCadastrados = (List<Genero>) request.getAttribute("generosCadastrados");
 	%>
 	<div id="wrapper">
 
@@ -171,21 +171,31 @@
 					enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
+						
+						<!-- Imagem -->
 							<div class="col-xs-6 col-md-4 form-group" align="center">
 								<strong>Imagem</strong>
 								<div class="form-group">
 									<input id="file-3" type="file" name="imagem">
 								</div>
 							</div>
+						<!-- /Imagem -->
+						
+						<!-- Titulo -->
 							<div class=" col-xs-12 col-sm-6 col-md-8 form-group">
 								<br /> <label>T&iacute;tulo</label> <input type="text"
 									name="titulo" value="<%=titulo%>"  class="form-control" placeholder="T&iacute;tulo"
 									autofocus required>
 							</div>
+						<!-- /Titulo -->
+						
+						<!-- Diretor -->
 							<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 								<label>Diretor</label> <input type="text" name="diretor"
 									class="form-control"  value="<%=diretor%>"  placeholder="Diretor" required>
 							</div>
+						<!-- /Titulo -->	
+						
 							<div class="col-xs-12 col-sm-6 col-md-8 row">
 								<div class="form-group col-xs-7">
 									<label>Dura&ccedil;&atilde;o</label>

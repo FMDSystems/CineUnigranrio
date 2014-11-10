@@ -1,8 +1,7 @@
 package control;
 
 import java.io.IOException;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Genero;
+import model.DAO.GeneroDAO;
 
 /**
  * Servlet implementation class ServletGeneros
@@ -31,20 +31,10 @@ public class ServletGeneros extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Genero genero1 = new Genero("Ação");
-		Genero genero2 = new Genero("Suspense");
-		Genero genero3 = new Genero("Terror");
-		Genero genero4 = new Genero("Drama");
-		Genero genero5 = new Genero("Comédia");
-		Genero genero6 = new Genero("Romance");
-
-		Set<Genero> listaGeneros = new TreeSet<Genero>();
-		listaGeneros.add(genero1);
-		listaGeneros.add(genero2);
-		listaGeneros.add(genero3);
-		listaGeneros.add(genero4);
-		listaGeneros.add(genero5);
-		listaGeneros.add(genero6);
+		request.setCharacterEncoding("UTF-8");
+		GeneroDAO dao = new GeneroDAO();
+		
+		List<Genero> listaGeneros = dao.lerTodos();
 		
 		request.setAttribute("generosCadastrados", listaGeneros);
 		

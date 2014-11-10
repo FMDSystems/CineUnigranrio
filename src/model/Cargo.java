@@ -1,22 +1,36 @@
 package model;
 
-public class Cargo implements Comparable<Cargo>{
+import java.io.Serializable;
 
+public class Cargo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	
 	private int nivel;
 	private String nome;
+	
 	private Funcionario funcionario;
 
 	public Cargo() {
 		super();
 	}
 
-	public Cargo(int nivel, String nome, Funcionario funcionario) {
+	public Cargo(int nivel, String nome) {
 		super();
 		this.setNivel(nivel);
 		this.setNome(nome);
-		this.setFuncionario(funcionario);
 	}
 
+	public Long getID(){
+		return this.id;
+	}
+	
+	public void setID(Long idNovo){
+		this.id = idNovo;
+	}
+	
 	public int getNivel() {
 		return nivel;
 	}
@@ -37,10 +51,10 @@ public class Cargo implements Comparable<Cargo>{
 		return funcionario;
 	}
 	
-	// Alterar o método setFuncionário para a códificação correta
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -48,8 +62,31 @@ public class Cargo implements Comparable<Cargo>{
 	}
 	
 	@Override
-	public int compareTo(Cargo c){
-		return this.nivel - c.getNivel();
+	public int hashCode()
+	{
+		if (this.id == null)
+			return 0;
+
+		return this.id.hashCode();
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cargo other = (Cargo) obj;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
 }

@@ -1,10 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CartaoCredito {
+public class CartaoCredito implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-	private int numero;
+	private Long id;
+	
+	private Integer numero;
 
 	private String nome;
 
@@ -20,7 +24,7 @@ public class CartaoCredito {
 		super();
 	}
 
-	public CartaoCredito(int numero, String nome, Date validade,
+	public CartaoCredito(Integer numero, String nome, Date validade,
 			String operadora, int cvc, Cliente cliente) {
 		super();
 		this.setNumero(numero);
@@ -31,11 +35,19 @@ public class CartaoCredito {
 		this.setCliente(cliente);
 	}
 	
-	public int getNumero() {
+	public Long getID(){
+		return this.id;
+	}
+	
+	public void setID(Long novoID){
+		this.id = novoID;
+	}
+	
+	public Integer getNumero() {
 		return this.numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 
@@ -81,7 +93,40 @@ public class CartaoCredito {
 
 	@Override
 	public String toString() {
-		return this.operadora + " - " + this.numero;
+		return this.operadora + " - " 
+				+ "**** **** ****"
+				+ this.numero.toString().charAt(12)
+				+ this.numero.toString().charAt(13)
+				+ this.numero.toString().charAt(14)
+				+ this.numero.toString().charAt(15);
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		if (this.id == null)
+			return 0;
+
+		return this.id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CartaoCredito other = (CartaoCredito) obj;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

@@ -8,10 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
-import model.Sessao;
 
 /**
  * Servlet implementation class ServletAcessoRestrito
@@ -34,7 +31,7 @@ public class ServletAcessoRestrito extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
 			if (request.getAttribute("mensagem") != null) {
 				String mensagem = (String) request.getAttribute("mensagem");
 				request.setAttribute(mensagem, "mensagem");

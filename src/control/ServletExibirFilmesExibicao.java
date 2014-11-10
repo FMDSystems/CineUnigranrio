@@ -43,7 +43,7 @@ public class ServletExibirFilmesExibicao extends HttpServlet {
 		 * 
 		 * Depois Forward
 		 */
-
+		request.setCharacterEncoding("UTF-8");
 		Date duracao1 = null;
 		try {
 			duracao1 = new SimpleDateFormat("HH:mm:ss").parse("02:38:00");
