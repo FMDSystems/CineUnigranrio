@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.security.MessageDigest;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Funcionario;
+import model.DAO.FuncionarioDAO;
+import control.util.JPAUtil;
 
 /**
  * Servlet implementation class ServletAutenticarAcessoRestrito
@@ -44,53 +47,60 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		EntityManager manager = JPAUtil.getEntityManager();
+		FuncionarioDAO dao = new FuncionarioDAO(manager);
 		boolean error = false;
-		Funcionario func1 = null;
-		try {
-			func1 = new Funcionario("111.111.111-11", "Administrador",
-					"admin@cineuni.com.br", "admin", 1234);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String Smatricula = request.getParameter("matricula");
-		int matricula;
-		if (Smatricula == null)
-			matricula = 0;
-		else
-			matricula = Integer.parseInt(Smatricula);
-		String senha = null;
-		try {
-			senha = this.criptografarSenha(request.getParameter("senha"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		RequestDispatcher acessoRestrito = request
-				.getRequestDispatcher("restrito/acessoRestrito.jsp");
-
-		if (senha == null)
-			senha = "";
-
-		if (matricula == func1.getMatricula()) {
-			if (senha.equals(func1.getSenha())) {
-				error = false;
-			} else {
-				request.setAttribute("mensagem",
-						"Matricula correta porém senha inválida!");
-				request.setAttribute("matricula", matricula);
-				error = true;
-			}
-		} else {
-			request.setAttribute("mensagem", "Matricula inválido!");
+		String msg = "Erro:";
+		Funcionario func = null;
+		RequestDispatcher acessoRestrito = request.getRequestDispatcher("restrito/acessoRestrito.jsp");
+		
+		String sMatricula = request.getParameter("matricula");
+		Long matricula;
+		String senha = request.getParameter("senha");
+		
+		//verificar se matricula passada pelo request está vazia
+		if (sMatricula == null || sMatricula == ""){
+			matricula = null;
+			msg += " Matricula inválida!";
 			error = true;
+		}else{ //senão está vazia converte String para Long
+			matricula = Long.parseLong(sMatricula);
+			
+			//verificar se senha passada pelo request está vazia
+			if(senha == null ||  senha == ""){
+				msg += " Senha inválida!";
+				error = true;
+			}else{ //senão criptografa senha
+				try {
+					senha = this.criptografarSenha(senha);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				func = dao.lerPorId(matricula); //busca o objeto funcionario pelo dao
+				
+				if(func == null){ //verifica se achou o funcionario
+					msg += " Matricula inexistente!";
+					error = true;
+				}else{
+					if(senha.equals(func.getPessoa().getSenha())){ //compara a senha digitada com a senha do funcionario cadastrado
+						error = false;
+					}else{
+						msg += " Senha está incorreta!";
+						request.setAttribute("matricula", matricula);
+						error = true;
+					}
+				}
+			}
 		}
-
+		
 		if (error) {
+			request.setAttribute("mensagem", msg);
 			acessoRestrito.forward(request, response);
 		} else {
 			if (request.getSession() != null) {
 				HttpSession sessao = request.getSession(true);
-				sessao.setAttribute("usuarioRestrito", func1);
+				sessao.setAttribute("usuarioRestrito", func);
 			}else{
 				request.getSession(false).invalidate();
 			}
@@ -111,5 +121,4 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		String senhaCP = hexString.toString();
 		return senhaCP;
 	}
-
 }

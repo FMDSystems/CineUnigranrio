@@ -3,26 +3,41 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Salas")
 public class Sala implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@GeneratedValue(generator = "Sala_ID", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "Sala_ID", sequenceName = "Seq_Sala", allocationSize = 1)
 	private Long id;
 	
 	private int numero;
 	private int capacidade;
 	
-	private Sessao sessao;
-	private List<Lugar> listaLugares;
+	@OneToMany(mappedBy = "sala")
+	private List<Sessao> sessoes;
+	
+	@OneToMany(mappedBy = "sala")
+	private List<Lugar> lugares;
 	
 	public Sala(){
 		super();
 	}
 	
-	public Sala(int numero, int capacidade, Sessao sessao) {
+	public Sala(int numero, int capacidade) {
 		super();
 		this.setNumero(numero);
 		this.setCapacidade(capacidade);
-		this.setSessao(sessao);
 	}
 
 	public Long getId() {
@@ -49,20 +64,33 @@ public class Sala implements Serializable{
 		this.capacidade = capacidade;
 	}
 
-	public Sessao getSessao() {
-		return this.sessao;
+	/**
+	 * Métodos do relacionamento
+	 * @return
+	 */
+	
+	public List<Sessao> getSessoes() {
+		return this.sessoes;
 	}
 
-	public void setSessao(Sessao sessao) {
-		this.sessao = sessao;
+	public void addSessao(Sessao s){
+		this.getSessoes().add(s);
 	}
 	
-	public List<Lugar> getListaLugares() {
-		return listaLugares;
+	public void removeSessao(Sessao s){
+		this.getSessoes().remove(s);
 	}
-
-	public void setListaLugares(List<Lugar> listaLugares) {
-		this.listaLugares = listaLugares;
+	
+	public List<Lugar> getLugares() {
+		return lugares;
+	}
+	
+	public void addLugar(Lugar l){
+		this.getLugares().add(l);
+	}
+	
+	public void removeLugar(Lugar l){
+		this.getLugares().remove(l);
 	}
 	
 	@Override

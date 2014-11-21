@@ -3,21 +3,38 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="CartoesCredito")
 public class CartaoCredito implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(generator = "Cartao_ID", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "Cartao_ID", sequenceName = "Seq_Cartao", allocationSize = 1)
 	private Long id;
 	
 	private Integer numero;
 
 	private String nome;
 
+	@Temporal(TemporalType.DATE)
 	private Date validade;
 
 	private String operadora;
 
 	private int cvc;
 
+	@OneToOne(mappedBy="cartao")
 	private Cliente cliente;
 
 	public CartaoCredito() {
@@ -82,6 +99,11 @@ public class CartaoCredito implements Serializable{
 	public void setCVC(int cvc) {
 		this.cvc = cvc;
 	}
+	
+	/**
+	 * Métodos do Relacionamento
+	 * @return
+	 */
 
 	public Cliente getCliente() {
 		return this.cliente;

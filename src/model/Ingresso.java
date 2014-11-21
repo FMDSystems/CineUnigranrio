@@ -3,15 +3,38 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="Ingressos")
 public class Ingresso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(generator = "Ingresso_ID", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "Ingresso_ID", sequenceName = "Seq_Ingresso", allocationSize = 1)
 	private Long id;
 	
+	@Temporal(TemporalType.DATE)
 	private Date dataCompra;
 	private String tipoDesconto;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Cliente cliente;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Sessao sessao;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Lugar lugar;
 
 	public Ingresso() {

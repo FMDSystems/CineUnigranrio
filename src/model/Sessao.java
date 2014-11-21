@@ -4,16 +4,44 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+@Entity
+@Table(name="Sessoes")
 public class Sessao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(generator = "Sessao_ID", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "Sessao_ID", sequenceName = "Seq_Sessao", allocationSize = 1)
 	private Long id;
 	
+	@Temporal(TemporalType.DATE)
 	private Date data;
+	
+	@Temporal(TemporalType.TIME)
 	private Date horarioInicio;
+	
 	private float valor;
+	
+	@ManyToOne
 	private Sala sala;
-	private List<Ingresso> listaIngressos;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sessao")
+	private List<Ingresso> ingressos;
+	
+	@ManyToOne
 	private Filme filme;
 
 	public Sessao() {
@@ -61,6 +89,10 @@ public class Sessao implements Serializable {
 		this.valor = valor;
 	}
 
+	/**
+	 * Métodos do relacionamento 
+	 * @return
+	 */
 	public Sala getSala() {
 		return sala;
 	}
@@ -77,14 +109,18 @@ public class Sessao implements Serializable {
 		this.filme = filme;
 	}
 
-	public List<Ingresso> getListaIngressos() {
-		return listaIngressos;
+	public List<Ingresso> getIngressos() {
+		return ingressos;
 	}
 
-	public void setListaIngressos(List<Ingresso> listaIngressos) {
-		this.listaIngressos = listaIngressos;
+	public void addIngresso(Ingresso i){
+		this.getIngressos().add(i);
 	}
-
+	
+	public void removeIngresso(Ingresso i){
+		this.getIngressos().remove(i);
+	}
+	
 	@Override
 	public String toString(){
 		return 	"Filme: " + this.getFilme().toString()

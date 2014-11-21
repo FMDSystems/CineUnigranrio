@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Generos")
 public class Genero implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -22,7 +24,7 @@ public class Genero implements Serializable{
 	
 	private String descricao;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy="generos")
 	private List<Filme> filmes;
 	
 	public Genero(){
@@ -50,14 +52,22 @@ public class Genero implements Serializable{
 		this.descricao = descricao;
 	}
 
-	public List<Filme> getListaFilmes() {
+	/**
+	 * Métodos do relacionamento 
+	 * @return
+	 */
+	public List<Filme> getFilmes() {
 		return filmes;
 	}
 
-	public void setListaFilmes(List<Filme> listaFilmes) {
-		this.filmes = listaFilmes;
+	public void addFilme (Filme f){
+		this.getFilmes().add(f);
 	}
 
+	public void removeFilme (Filme f){
+		this.getFilmes().remove(f);
+	}
+	
 	
 	@Override
 	public String toString(){

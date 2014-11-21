@@ -105,7 +105,7 @@
 									usuario = (Cliente) sessao.getAttribute("usuario");
 							%>
 							<li class="dropdown"><a href="" class="dropdown-toggle"
-								data-toggle="dropdown"> <%=usuario.getNome()%> <span
+								data-toggle="dropdown"> <%=usuario.getPessoa()%> <span
 									class="glyphicon glyphicon-cog"></span>
 							</a>
 								<ul class="dropdown-menu" role="menu"

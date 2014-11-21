@@ -5,16 +5,22 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-public class Filme implements Serializable{
-	
+@Table(name = "Filmes")
+public class Filme implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,15 +36,19 @@ public class Filme implements Serializable{
 	private String faixaEtaria;
 	private String status;
 	private String tipo;
-	
+	private String trailer;
+
 	@Lob
 	private byte[] imagem;
-	
-//	private List<Sessao> sessoes;
-	
-	@ManyToMany(mappedBy="filmes")
-	private List<Genero> generos;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Sessao> sessoes;
+
+	@ManyToMany
+	@JoinTable(name = "filme_generos", 
+	joinColumns = { @JoinColumn(name = "filme_id") }, 
+	inverseJoinColumns = { @JoinColumn(name = "genero_id") })
+	private List<Genero> generos;
 
 	public Filme(String titulo, Date duracao, String sinopse, String diretor,
 			boolean legendado, String faixaEtaria, String status, String tipo) {
@@ -52,7 +62,7 @@ public class Filme implements Serializable{
 		this.setStatus(status);
 		this.setTipo(tipo);
 	}
-	
+
 	public Filme() {
 		super();
 	}
@@ -64,7 +74,7 @@ public class Filme implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getTitulo() {
 		return titulo;
 	}
@@ -128,7 +138,7 @@ public class Filme implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public byte[] getImagem() {
 		return imagem;
 	}
@@ -137,22 +147,42 @@ public class Filme implements Serializable{
 		this.imagem = imagem;
 	}
 
-//	public List<Sessao> getListaSessoes() {
-//		return sessoes;
-//	}
-//	
-//	public void setListaSessoes(List<Sessao> listaSessoes) {
-//		this.sessoes = listaSessoes;
-//	}
+	public String getTrailer() {
+		return trailer;
+	}
+
+	public void setTrailer(String trailer) {
+		this.trailer = trailer;
+	}
+
+	/**
+	 * Métodos do relacionamento
+	 * @return
+	 */
+	public List<Sessao> getSessoes() {
+		return sessoes;
+	}
 	
-	public List<Genero> getListaGeneros() {
+	public void addSessao(Sessao s){
+		this.getSessoes().add(s);
+	}
+
+	public void removeSessao(Sessao s){
+		this.getSessoes().remove(s);
+	}
+	
+	public List<Genero> getGeneros() {
 		return generos;
 	}
 	
-	public void setListaGeneros(List<Genero> listaGeneros) {
-		this.generos = listaGeneros;
+	public void addGenero (Genero g){
+		this.getGeneros().add(g);
 	}
 	
+	public void removeGenero (Genero g){
+		this.getGeneros().remove(g);
+	}
+
 	@Override
 	public String toString() {
 		return this.titulo + " - " + this.tipo + " : " + this.duracao;
@@ -182,8 +212,5 @@ public class Filme implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-
 
 }

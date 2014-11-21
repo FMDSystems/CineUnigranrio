@@ -3,16 +3,37 @@ package model;
 import java.io.Serializable;
 import java.security.MessageDigest;
 
-public abstract class Pessoa implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Pessoas")
+public class Pessoa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long matricula;
+	@Id
+	@GeneratedValue(generator = "Pessoa_ID", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "Pessoa_ID", sequenceName = "Seq_Pessoa", allocationSize = 1)
+	private Long id;
 	
+	@Column(name="cpf", unique=true)
 	private String cpf;
 	private String nome;
 	private String email;
 	private String senha;
+	
+	@OneToOne(mappedBy="pessoa")
+	private Cliente cliente;
+	
+	@OneToOne(mappedBy="pessoa")
+	private Funcionario funcionario;
 
 	public Pessoa() {
 		super();
@@ -20,7 +41,6 @@ public abstract class Pessoa implements Serializable{
 
 	public Pessoa(String cpf, String nome, String email, String senha)
 			throws Exception {
-		super();
 		this.setCpf(cpf);
 		this.setNome(nome);
 		this.setEmail(email);
@@ -28,11 +48,11 @@ public abstract class Pessoa implements Serializable{
 	}
 
 	public Long getId() {
-		return matricula;
+		return id;
 	}
 	
 	public void setId(Long id) {
-		this.matricula = id;
+		this.id = id;
 	}
 	
 	public String getCpf() {
@@ -80,13 +100,34 @@ public abstract class Pessoa implements Serializable{
 		this.senha = senhaCP;
 	}
 	
+	/**
+	 * Métodos do Relacionamento
+	 * @return
+	 */
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
 	@Override
 	public int hashCode()
 	{
-		if (this.matricula == null)
+		if (this.id == null)
 			return 0;
 
-		return this.matricula.hashCode();
+		return this.id.hashCode();
 	}
 
 	@Override
@@ -99,11 +140,11 @@ public abstract class Pessoa implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
-		if (matricula == null)
+		if (id == null)
 		{
-			if (other.matricula != null)
+			if (other.id != null)
 				return false;
-		} else if (!matricula.equals(other.matricula))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
