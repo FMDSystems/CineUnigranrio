@@ -2,36 +2,41 @@ package control;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Filme;
+import model.DAO.FilmeDAO;
+
 /**
- * Servlet implementation class ServletAcessoCliente
+ * Servlet implementation class ServletDetalharFilme
  */
-@WebServlet("/acessoCliente")
-public class ServletAcessoCliente extends HttpServlet {
+@WebServlet("/detalharFilme")
+public class ServletDetalharFilme extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletAcessoCliente() {
+    public ServletDetalharFilme() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		RequestDispatcher dispachante = request
-				.getRequestDispatcher("cliente/login.jsp");
-		dispachante.forward(request, response);
+		String idS = (String) request.getParameter("id");
+		Long id = Long.valueOf(idS);
+		
+		FilmeDAO dao = new FilmeDAO();
+		Filme f1 = dao.lerPorId(id);
+		
+		request.setAttribute("filme", f1);
+		request.getRequestDispatcher("restrito/filme/confirmacaoFilme.jsp").forward(request, response);;
 	}
 
 	/**

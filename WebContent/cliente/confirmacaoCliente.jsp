@@ -72,8 +72,8 @@
 			String email = null;
 			if (request.getAttribute("cliente") != null) {
 				cliente = (Cliente) request.getAttribute("cliente");
-				nome = cliente.getNome();
-				email = cliente.getEmail();
+				nome = cliente.getPessoa().getNome();
+				email = cliente.getPessoa().getEmail();
 			} else {
 				nome = "";
 				email = "";

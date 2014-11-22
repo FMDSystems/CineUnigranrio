@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +24,8 @@ import javax.persistence.Table;
 public class Filme implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
 	@Id
 	@GeneratedValue(generator = "Filme_ID", strategy = GenerationType.SEQUENCE)
@@ -61,6 +65,7 @@ public class Filme implements Serializable {
 		this.setFaixaEtaria(faixaEtaria);
 		this.setStatus(status);
 		this.setTipo(tipo);
+		this.generos = new ArrayList<Genero>();
 	}
 
 	public Filme() {
@@ -89,6 +94,10 @@ public class Filme implements Serializable {
 
 	public void setDuracao(Date duracao) {
 		this.duracao = duracao;
+	}
+	
+	public String getDuracaoFormatada(){
+		return TIME_FORMAT.format(getDuracao());
 	}
 
 	public String getSinopse() {

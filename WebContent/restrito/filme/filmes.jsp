@@ -36,6 +36,8 @@
 		java.util.Date now = new java.util.Date();
 		Funcionario usuario = (Funcionario) session.getAttribute("usuarioRestrito");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		@SuppressWarnings("unchecked")
+		List<Filme> listaFilmes = (List<Filme>) request.getAttribute("listaFilmes");
 	%>
 	<div id="wrapper">
 
@@ -58,7 +60,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getPessoa().getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -131,10 +133,20 @@
 						<i class="fa fa-video-camera fa-fw"></i>Filmes
 					</h1>
 				</div>
-				<div align="right" style="margin-bottom: 10px; margin-top: -4px;">
-					<a class="btn btn-success" href="cadastrarFilme"> <i
-						class="fa fa-plus"></i> Cadastrar Novo Filme
-					</a>
+				<div class="row">
+					<div class="col-xs-6" align="left" style="left:10px;">
+						<%
+							if(!listaFilmes.isEmpty()){
+								out.print("Total de Filmes: " + listaFilmes.size());
+							}
+						%>
+						
+					</div>
+					<div class="col-xs-6" align="right" style="margin-bottom: 10px; margin-top: -4px;">
+						<a class="btn btn-success" href="cadastrarFilme"> <i
+							class="fa fa-plus"></i> Novo Filme
+						</a>
+					</div>
 				</div>
 				<!-- /.col-lg-12 -->
 				<table class="table table-hover">
@@ -150,29 +162,71 @@
 					</thead>
 					
 						<%
-							List<Filme> listaFilmes = (List<Filme>) request.getAttribute("listaFilmes");
-
+						if(listaFilmes.isEmpty()){
+							out.print("<tr>");
+							out.print("<td colspan='6' align='center'><strong> N&atilde;o h&aacute; filmes cadastrados! </strong></td>");
+							out.print("</tr>");
+						}else{
 							for (Filme filme : listaFilmes) {
+								Long id = filme.getId();
 								out.print("<tr valign='bottom'>");
-								out.print("<td align='center'>" + filme.getTitulo() + "</td>");
-								out.print("<td align='center'>" + filme.getDuracao().getHours()
-								+ ":" + filme.getDuracao().getMinutes() + "</td>");
-								out.print("<td align='center'>" + filme.getTipo() + "</td>");
-								out.print("<td align='center'>");
+								out.print("<td align='center' style='vertical-align:middle;'>" + filme.getTitulo() + "</td>");
+								out.print("<td align='center' style='vertical-align:middle;'>" + filme.getDuracaoFormatada()+ "</td>");
+								out.print("<td align='center' style='vertical-align:middle;'>" + filme.getTipo() + "</td>");
+								out.print("<td align='center' style='vertical-align:middle;'>");
 								
-								for (Genero genero : filme.getListaGeneros()) {
-									out.print(genero.getDescricao() + " ");
+								for (Genero genero : filme.getGeneros()) {
+									out.print(genero.getDescricao() + ". ");
 								}
 								out.print("</td>");
-								out.print("<td align='center'>" + filme.getStatus() + "</td>");
-								out.print("<td align='center'><div class='tooltip-demo'><a href='' data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit'></i></a>&nbsp; <a href='#' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a></div></td>");
+								out.print("<td align='center' style='vertical-align:middle;'>" + filme.getStatus() + "</td>");
+								
+								out.print("<td align='left' width='10%'><div class='tooltip-demo row'>");
+								
+								//Alterar
+								out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
+								out.print("<a href='alterarFilme?id="+id.longValue()+"' class='btn btn-xs btn-info' data-toggle='tooltip' data-placement='top' title='Alterar'><i class='fa fa-edit'></i></a>");
+								out.print("</div>");
+								
+								//Detalhar
+								out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
+								out.print("<a href='detalharFilme?id="+id.longValue()+"'class='btn btn-xs btn-warning' data-toggle='tooltip' data-placement='top' title='Detalhar'><i class='glyphicon glyphicon-list-alt'></i></a>");
+								out.print("</div>");
+								
+								//Excluir
+								out.print("<div class='col-md-1'>");
+								out.print("<a class='btn btn-xs btn-danger confirm-delete' data-id="+id.longValue()+" data-toggle='tooltip' data-placement='top' title='Excluir'><i class='glyphicon glyphicon-trash'></i></a>");
+								out.print("</div>");
+								out.print("</div></td>");
 								out.print("</tr>");
 							}
+						}
 						%>
-						
 				</table>
 			</div>
 			<!-- /.row -->
+			
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Excluir Filme </h4>
+					</div>
+					<div class="modal-body">
+					Deseja realmente excluir o filme selecionado?
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo fa-fw"></i>Cancelar</a>
+						<a id="btn-excluir" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Excluir Filme</a>
+					<form action="#" method="get" name="excluir"><input type="hidden" name="id" id="txtExcluir"></form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+			
 		</div>
 		<!-- /#page-wrapper -->
 
@@ -188,6 +242,24 @@
 	<script src="js/plugins/metisMenu.min.js"></script>
 
 	<script src="js/menuRestrito.js"></script>
+	
+	<script type="text/javascript">
+	$('.confirm-delete').on('click', function(e) {
+	    e.preventDefault();
+
+	    var id = $(this).data('id');
+	    $('#myModal').data('id', id).modal('show');
+	});
+	
+	$('#btn-excluir').click(function() {
+		var id = $('#myModal').data('id');
+
+  		document.getElementById("txtExcluir").value = id;
+		document.forms['excluir'].action = "excluirFilme?id='"+id+"'";
+		document.forms['excluir'].submit();  
+		
+	});
+    </script>
 		
 	<script>
     // tooltip demo

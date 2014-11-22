@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Pessoa"%>
 <%@page import="model.Funcionario"%>
 <%@page import="model.Filme"%>
 <%@page import="model.Genero"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date;"%>
+<%@page import="java.util.Date"%>
+<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -34,8 +36,7 @@
 <body>
 	<%
 		java.util.Date now = new java.util.Date();
-		Funcionario usuario = (Funcionario) session
-		.getAttribute("usuarioRestrito");
+		Funcionario usuario = (Funcionario) session.getAttribute("usuarioRestrito");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		@SuppressWarnings("unchecked")
 		List<Genero> generosCadastrados = (List<Genero>) request.getAttribute("generosCadastrados");
@@ -61,7 +62,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome()%>&nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getPessoa().getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -134,24 +135,30 @@
 						String mensagem = (String) request.getAttribute("mensagem");
 						request.setAttribute("todosGeneros", generosCadastrados);
 
+						String id 		   = "";
 						String titulo      = "";
 						String diretor	   = "";
-						Date   duracao 	   = null;
+						String duracao 	   = "";
 						String faixaEtaria = "";
 						String tipo		   = "";
 						String status	   = "";
+						String sinopse	   = "";
 						boolean legenda    = false;
+						String imagem = "";
 						
 						if (request.getAttribute("filme") != null){
-							Filme f = (Filme) request.getAttribute("fime");
+							Filme f = (Filme) request.getAttribute("filme");
 							
+							id			 = String.valueOf(f.getId());
 							titulo		 = f.getTitulo();
 							diretor		 = f.getDiretor();
-							duracao		 = f.getDuracao();
+							duracao		 = f.getDuracaoFormatada();
 							faixaEtaria  = f.getFaixaEtaria();
 							tipo 		 = f.getTipo();
 							status 		 = f.getStatus();
 							legenda 	 = f.isLegendado();
+							sinopse		 = f.getSinopse();
+							imagem = Base64.encodeBase64String(f.getImagem());
 							
 						}
 						
@@ -167,16 +174,28 @@
 					%>
 					<i class="fa fa-video-camera fa-fw"></i>Salvar Filme
 				</h1>
-				<form role="form" action="salvarFilme" method="post"
-					enctype="multipart/form-data">
+				<form role="form" action="salvarFilme" method="post" enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
+						
+						<!--  ID -->
+						<input type="hidden" name="id" value="<%=id%>">
+						<!-- /ID -->
+						
 						
 						<!-- Imagem -->
 							<div class="col-xs-6 col-md-4 form-group" align="center">
 								<strong>Imagem</strong>
 								<div class="form-group">
-									<input id="file-3" type="file" name="imagem">
+									<img src=<%= (imagem == "" ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %> 
+									id="prev-img" style='width:180px;height:220px;' class='img-thumbnail' 
+									alt='Sem Imagem' title='Sem Imagem'>
+									<br/><br/>
+									<div class="fileUpload btn btn-primary btn-file">
+									<i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Selecionar
+									<input type="file" name="imagem" id="file-input"/>
+									</div>
+
 								</div>
 							</div>
 						<!-- /Imagem -->
@@ -196,6 +215,7 @@
 							</div>
 						<!-- /Titulo -->	
 						
+						<!--  Duracao -->
 							<div class="col-xs-12 col-sm-6 col-md-8 row">
 								<div class="form-group col-xs-7">
 									<label>Dura&ccedil;&atilde;o</label>
@@ -205,7 +225,7 @@
 											class="glyphicon glyphicon-time"></span></span> <input
 											class="form-control" type="text" style="width: 100px;"
 											required="required" placeholder="HH:MM" maxlength="5"
-											name="duracao"  value="<% String duracaoS = duracao == null ? "" : duracao.getHours() + ":" +duracao.getMinutes(); out.print(duracaoS); %>" pattern="[0-9]{2}:[0-9]{2}$"
+											name="duracao"  value="<%=duracao %>" pattern="[0-9]{2}:[0-9]{2}$"
 											onkeyup="
 											var v = this.value;
 											if (v.match(/^\d{2}$/) !== null) {
@@ -214,83 +234,91 @@
 
 									</div>
 								</div>
+						<!-- /Duracao -->
 
-
+						<!--  Faixa Etaria -->
 								<div class="form-group col-xs-5">
 									<label>Faixa Et&aacute;ria</label> 
 									<select class="form-control"
 										name="faixaEtaria" style="width: 100px;">
 										<%
 											out.print(
-												"<option"+(faixaEtaria == "Livre" ? "selected" : "")+">Livre</option>"+
-												"<option"+(faixaEtaria == "12 Anos" ? "selected" : "")+">12 Anos</option>" +
-												"<option"+(faixaEtaria == "14 Anos" ? "selected" : "")+">14 Anos</option>" +
-												"<option"+(faixaEtaria == "16 Anos" ? "selected" : "")+">16 Anos</option>" +
-												"<option"+(faixaEtaria == "18 Anos" ? "selected" : "")+">18 Anos</option>");
+												"<option value='Livre' "+(faixaEtaria.equals("Livre") ? "selected" : "")+">Livre</option>"+
+												"<option value='12 Anos' "+(faixaEtaria.equals("12 Anos") ? "selected" : "")+">12 Anos</option>" +
+												"<option value='14 Anos' " +(faixaEtaria.equals("14 Anos")? "selected" : "")+">14 Anos</option>" +
+												"<option value='16 Anos' "+(faixaEtaria.equals("16 Anos") ? "selected" : "")+">16 Anos</option>" +
+												"<option value='18 Anos' "+(faixaEtaria.equals("18 Anos") ? "selected" : "")+">18 Anos</option>");
 										%>
 										
 									</select>
 								</div>
 							</div>
-
+						<!--  /Faixa Etaria -->
+						
+						
 							<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-								<div class="form-group col-xs-7">
+							<!--  Tipo -->
+								<div class="form-group col-xs-6">
 									<label>Tipo &nbsp;</label> 
 									
 									<%
 											out.print("<label class='radio-inline'>" +
-													"<input type='radio' name='tipo' id='2D' value='2D'"+(tipo == "2D" ? "checked" : "")+">2D"+
+													"<input type='radio' name='tipo' id='2D' value='2D'"+(tipo.equals("2D") ? "checked" : "")+">2D"+
 													"</label>");
 											out.print("<label class='radio-inline'> <input type='radio'"+
-													"name='tipo' id='3D' value='3D' "+(tipo =="3D" ? "checked": "")+">3D"+
+													"name='tipo' id='3D' value='3D' "+(tipo.equals("3D") ? "checked": "")+">3D"+
 													"</label>");
 									%>
 									 
 								</div>
+							<!--  /Tipo -->
+							
+							<!--  Legenda -->
 								<div class="form-group col-xs-5">
 									 
 									<%
-										if(legenda){
 											out.print("<label><input type='checkbox' name='legenda'"+
-													"value='legendado' checked> Legendado"+
+													"value='legendado'" +(legenda == true ? "checked" : "")+"> Legendado"+
 													"</label>");
-										}else{
-											out.print("<label><input type='checkbox' name='legenda'"+
-													"value='legendado'> Legendado"+
-													"</label>");
-										}
 									%>
 									
 								</div>
 							</div>
-
+							<!--  /Legenda -->
+							
+							<!--  Status -->
 							<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 								<label>Status</label> &nbsp;&nbsp;
 								
 								<%
+									out.print("<label class='radio-inline'>");
+									out.print("<input type='radio' name='status' id='lancamento' value='lancamento'"+(status.equals("lancamento")?"checked":"")+" >Lan&ccedil;amento");
+									out.print("</label>");
+									out.print("<label class='radio-inline'>");
+									out.print("<input type='radio' name='status' id='exibicao' value='exibicao'"+(status.equals("exibicao")?"checked":"")+">Exibi&ccedil;&atilde;o");
+									out.print("</label>");
 								%>
-								<label class="radio-inline">
-									<input type="radio" name="status" id="lancamento"
-									value="Lançamento" checked>Lan&ccedil;amento
-								</label><label class="radio-inline"> <input type="radio"
-									name="status" id="exibicao" value="Exibição">Exibi&ccedil;&atilde;o
-								</label>
 							</div>
 						</div>
+							<!-- /Status -->
+							
+							<!-- Generos -->
 						<div id="demoform">
 							<select multiple="multiple" size="3" style="overflow: scroll;"
 								name="listaGeneros">
 								<%for(Genero genero : generosCadastrados){
-									out.print("<option value='"+genero.getDescricao()+"'>"+genero.getDescricao()+"</option>");
+									out.print("<option value='"+genero.getId()+"'>"+genero.getDescricao()+"</option>");
 									} %>
 							</select><br />
 						</div>
-
+							<!-- /Generos -->
+							
 						<!-- Sinopse -->
 						<div class="form-group">
 							<label>Sinopse</label>
-							<textarea class="form-control" name="sinopse" rows="4" required></textarea>
+							<textarea class="form-control" name="sinopse" rows="4" required><%=sinopse %> </textarea>
 						</div>
+						<!-- /Sinopse -->
 					</div>
 
 					<div align="center">
@@ -314,32 +342,23 @@
 	<script src="js/menuRestrito.js"></script>
 	<script src="js/plugins/jquery.bootstrap-duallistbox.js"></script>
 	<script src="js/plugins/bootstrap-formhelpers.min.js"></script>
-	<script src="js/plugins/fileinput.js"></script>
 
 	<script type="text/javascript">
-		$("#file-3")
-				.fileinput(
-						{
-							initialPreview : [ "<img src='img/semimg.svg' class='file-preview-image' alt='Sem Imagem' title='Sem Imagem'>" ],
-							overwriteInitial : true,
-							maxFileSize : 2048,
-							showUpload : false,
-							showCaption : false,
-							browseClass : "btn btn-primary",
-							fileType : "image.*",
-							allowedFileExtensions : [ "jpg", "jpeg", "png" ],
-							showRemove : false,
-							msgSizeTooLarge : "Limite máximo atingido. Máximo permitido é de <b>{maxSize} KB</b>",
-							msgLoading : "Carregando",
-							msgProgress : "Carregando",
-							previewSettings : {
-								image : {
-									width : "134px",
-									height : "180px"
-								}
-							}
-						});
+	function pegarImagem(input){
+		var img = document.getElementById('prev-img');
+		var fileInput = document.getElementById('file-input');
+
+        var fileUrl = window.URL.createObjectURL(fileInput.files[0]);
+        img.src = fileUrl;
+	}
+	
+	$("#file-input").change(function(){
+	    pegarImagem(this);
+	});
+	
+	
 	</script>
+
 
 
 	<script type="text/javascript">

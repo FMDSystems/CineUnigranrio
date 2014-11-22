@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.DAO.FilmeDAO;
+import control.util.JPAUtil;
 
 /**
  * Servlet implementation class ServletExibirCentralControle
@@ -34,7 +38,12 @@ public class ServletCentralControle extends HttpServlet {
 		HttpSession sessao = request.getSession(false);
 		request.setCharacterEncoding("UTF-8");
 		if (sessao != null) {
-
+			EntityManager manager = JPAUtil.getEntityManager();
+			FilmeDAO daoFilme = new FilmeDAO(manager);
+			int qtdFilmes = daoFilme.lerTodos().size();
+			
+			request.setAttribute("qtdFilmes", qtdFilmes);
+			
 			RequestDispatcher menuRestrito = request
 					.getRequestDispatcher("restrito/menuRestrito.jsp");
 			menuRestrito.forward(request, response);

@@ -1,9 +1,15 @@
+<%@page import="java.io.OutputStream"%>
+<%@page
+	import="com.sun.xml.internal.messaging.saaj.util.ByteOutputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Funcionario"%>
 <%@page import="model.Filme"%>
 <%@page import="model.Genero"%>
+<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -27,9 +33,9 @@
 <body>
 	<%
 		java.util.Date now = new java.util.Date();
-		Funcionario usuario = (Funcionario) session
-				.getAttribute("usuarioRestrito");
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			Funcionario usuario = (Funcionario) session
+			.getAttribute("usuarioRestrito");
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
 
@@ -52,7 +58,8 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome()%>&nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getPessoa().getNome()%>&nbsp;<i
+						class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -123,14 +130,16 @@
 				<%
 					String mensagem = (String) request.getAttribute("mensagem");
 
-					if (mensagem != null) {
-						out.print("<br/><div class='alert alert-success' role='alert'>");
-						out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
-						out.print(mensagem);
-						out.print("</div>");
-					}
+							if (mensagem != null) {
+								out.print("<br/><div class='alert alert-success' role='alert'>");
+								out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
+								out.print(mensagem);
+								out.print("</div>");
+							}
 
-					Filme filme = (Filme) request.getAttribute("filme");
+							Filme filme = (Filme) request.getAttribute("filme");
+							Long id = filme.getId();
+							String imagem = Base64.encodeBase64String(filme.getImagem());
 				%>
 				<h1 class="page-header">
 					<i class="fa fa-file-video-o fa-fw"></i><%=filme.getTitulo()%>
@@ -140,8 +149,8 @@
 					<div class="row">
 						<div class="col-xs-6 col-md-4 form-group" align="center">
 							<div class="form-group">
-								<img src="img/filmes/em-exibicao/livrai-nos-do-mal.jpg"
-									width="200px" class="img-thumbnail">
+								<img style="width: 180px; height: 220px;"
+									src="data:image/jpg;base64,<%=imagem%>" class="img-thumbnail">
 							</div>
 						</div>
 						<div class=" col-xs-12 col-sm-6 col-md-8 form-group">
@@ -153,15 +162,14 @@
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 							<strong>Dura&ccedil;&atilde;o</strong> &nbsp;
-							<%=filme.getDuracao().getHours() + ":"
-					+ filme.getDuracao().getMinutes()%>
+							<%=filme.getDuracaoFormatada()%>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 							<strong>Generos</strong> &nbsp;
 							<%
-								for (Genero genero : filme.getListaGeneros()) {
-									out.print(genero.getDescricao() + "");
-								}
+								for (Genero genero : filme.getGeneros()) {
+														out.print(genero.getDescricao() + ". ");
+													}
 							%>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
@@ -171,13 +179,12 @@
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
 							<strong>Tipo</strong> &nbsp;
 							<%=filme.getTipo()%>
-							&nbsp;&nbsp;&nbsp;&nbsp; <strong> 
-							<%
-						 	if (filme.isLegendado())
-						 		out.print("Legendado");
-						 	else
-						 		out.print("Dublado");
-						 	%>
+							&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
+ 	if (filme.isLegendado())
+ 				 		out.print("Legendado");
+ 				 	else
+ 				 		out.print("Dublado");
+ %>
 							</strong>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
@@ -189,34 +196,76 @@
 			</div>
 
 			<div align="center">
-			<!-- Cadastrar Novo -->
-					<a href="cadastrarFilme" class="btn btn-success"> <i
-						class="glyphicon glyphicon-plus"></i> Novo Filme
-					</a>
+				<!-- Cadastrar Novo -->
+				<a href="cadastrarFilme" class="btn btn-success"> <i
+					class="glyphicon glyphicon-plus"></i> Novo Filme
+				</a>
 
-					<!-- Alterar -->
-					<a href="alterarFilme" class="btn btn-info"> <i
-						class="glyphicon glyphicon-edit"></i> Alterar Filme
-					</a>
+				<!-- Alterar -->
+				<a href="alterarFilme?id=<%=id%>" class="btn btn-info"> <i
+					class="glyphicon glyphicon-edit"></i> Alterar Filme
+				</a>
 
-					<!-- Excluir -->
-					<a href="excluirFilme" class="btn btn-danger"> <i
-						class="glyphicon glyphicon-remove"></i> Excluir Filme
-					</a>
+				<!-- Excluir -->
+				<a href="excluirFilme" data-id="<%=id%>" class="btn btn-danger confirm-delete">
+					<i class="glyphicon glyphicon-remove"></i> Excluir Filme
+				</a>
 
 
-					<!-- Voltar -->
-					<a href="filmes" class="btn btn-warning"> <i
-						class="fa fa-undo fa-fw"></i>Filmes
-					</a>
+				<!-- Voltar -->
+				<a href="filmes" class="btn btn-warning"> <i
+					class="fa fa-undo fa-fw"></i>Filmes
+				</a>
 			</div>
 		</div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Excluir Filme</h4>
+					</div>
+					<div class="modal-body">Deseja realmente excluir o filme
+						selecionado?</div>
+					<div class="modal-footer">
+						<a class="btn btn-warning" data-dismiss="modal"><i
+							class="fa fa-undo fa-fw"></i>Cancelar</a> <a id="btn-excluir"
+							class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Excluir
+							Filme</a>
+						<form action="#" method="get" name="excluir">
+							<input type="hidden" name="id" id="txtExcluir">
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
 	</div>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/script.js"></script>
 	<script src="js/plugins/metisMenu.min.js"></script>
 	<script src="js/menuRestrito.js"></script>
+
+	<script type="text/javascript">
+		$('.confirm-delete').on('click', function(e) {
+			e.preventDefault();
+
+			var id = $(this).data('id');
+			$('#myModal').data('id', id).modal('show');
+		});
+
+		$('#btn-excluir').click(function() {
+			var id = $('#myModal').data('id');
+
+			document.getElementById("txtExcluir").value = id;
+			document.forms['excluir'].action = "excluirFilme?id='" + id + "'";
+			document.forms['excluir'].submit();
+
+		});
+	</script>
 
 </body>
 

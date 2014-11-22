@@ -30,7 +30,7 @@ public class ServletAlterarGenero extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		String idS = (String) request.getParameter("id");
 		Long id = Long.valueOf(idS);
 				

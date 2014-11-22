@@ -70,7 +70,7 @@ public abstract class GenericDAO<T> implements IGenericDAO<T>
 		if (!transacaoAtiva)
 			this.abrirTransacao();
 
-		this.getEntityManager().merge(objeto);
+		objeto = this.getEntityManager().merge(objeto);
 
 		if (!transacaoAtiva)
 			this.gravarTransacao();

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import javax.persistence.TemporalType;
 @Table(name="Clientes")
 public class Cliente implements Serializable{
 
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -38,6 +41,8 @@ public class Cliente implements Serializable{
 	
 	@OneToOne(fetch=FetchType.LAZY)
 	private CartaoCredito cartao;
+	
+	
 	
 	public Cliente() {
 		super();
@@ -62,6 +67,10 @@ public class Cliente implements Serializable{
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public String getDataFormatada(){
+		return DATE_FORMAT.format(getDataNascimento());
 	}
 	
 	/**

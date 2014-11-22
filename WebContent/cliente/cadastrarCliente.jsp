@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="model.Pessoa"%>
+<%@page import="model.Cliente"%>
+<%@page import="java.util.Date"%>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -87,6 +89,19 @@
 						<%
 							String mensagem = (String) request.getAttribute("mensagem");
 
+							String nome = "";
+							String cpf = "";
+							String email = "";
+							String data = "";
+							
+							if(request.getAttribute("cliente") != null){
+								Cliente cliente = (Cliente) request.getAttribute("cliente");
+								nome = cliente.getPessoa().getNome();
+								cpf = cliente.getPessoa().getCpf();
+								data = cliente.getDataFormatada();
+								email = cliente.getPessoa().getEmail();
+							}
+							
 							if (mensagem != null) {
 								out.print("<div class='alert alert-danger' role='alert'>");
 								out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
@@ -98,12 +113,12 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-certificate"></i></span> <input
 								id="login-username" type="text" class="form-control" name="cpf"
-								value="" placeholder="CPF" onkeypress="javascript: mascara(this, cpf_mask);" autofocus required maxlength="14">
+								value="<%=cpf %>" placeholder="CPF" onkeypress="javascript: mascara(this, cpf_mask);" autofocus required maxlength="14">
 						</div>
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="text" class="form-control" name="nome" value=""
+								type="text" class="form-control" name="nome" value="<%=nome %>"
 								placeholder="Nome Completo" required>
 						</div>
 						<div style="margin-bottom: 25px" class="input-group">
@@ -111,7 +126,7 @@
 								<span class="input-group-addon"> <span
 									class="glyphicon glyphicon-calendar"></span></span> <input type='text'
 									class="form-control" name="data" data-date-format="dd/mm/yyyy"
-									placeholder="dd/mm/aaaa" required
+									placeholder="dd/mm/aaaa" required value="<%=data %>"
 									onkeyup="
 											var v = this.value;
 											if (v.match(/^\d{2}$/) !== null) {
@@ -126,7 +141,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-envelope"></i></span> <input
 								id="login-username" type="email" class="form-control"
-								name="email" value="" placeholder="E-mail" required>
+								name="email" value="<%=email %>" placeholder="E-mail" required>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">

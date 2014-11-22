@@ -20,7 +20,7 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 	public Pessoa lerPorCPF(String cpf){
 		Pessoa p1;
 		
-		Query consulta = this.getEntityManager().createNamedQuery("from Pessoa p where p.cpf =:cpf");
+		Query consulta = this.getEntityManager().createQuery("from Pessoa p where p.cpf =:cpf");
 		consulta.setParameter("cpf", cpf);
 		
 		try{
@@ -32,11 +32,11 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 		return p1;
 	}
 	
-	public Pessoa lerPorNome(String nome){
+	public Pessoa lerPorEmail(String email){
 		Pessoa p1;
 		
-		Query consulta = this.getEntityManager().createNamedQuery("from Pessoa p where p.nome =:nome");
-		consulta.setParameter("nome", nome);
+		Query consulta = this.getEntityManager().createQuery("from Pessoa p where p.email =:email");
+		consulta.setParameter("email", email);
 		
 		try{
 			p1 = (Pessoa) consulta.getSingleResult();

@@ -61,7 +61,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getPessoa().getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -160,34 +160,34 @@
 					</thead>
 					<%
 						if(generosCadastrados.isEmpty()){
-							out.print("<tr>");
-							out.print("<td colspan='3' align='center'><strong> N&atilde;o h&aacute; g&ecirc;neros cadastrados! </strong></td>");
-							out.print("</tr>");
-						}else{
-					
-						for(Genero genero : generosCadastrados){
-							Long id = genero.getId();
-							out.print("<tr><td align='center' style='vertical-align:middle;'>" + genero.getDescricao() + "</td><td style='vertical-align:middle;' align='center'>" + genero.getListaFilmes().size() + "</td>");
-							out.print("<td align='left' width='10%'><div class='tooltip-demo row'>");
-																		
-							//Alterar Genero
-							out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
-							out.print("<a href='alterarGenero?id="+id.byteValue()+"' class='btn btn-xs btn-info' data-toggle='tooltip' data-placement='top' title='Alterar'><i class='fa fa-edit'></i></a>");
-							out.print("</div>");
-							
-							//Detalhar Genero
-							out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
-							out.print("<a href='detalharGenero?id="+id.byteValue()+"'class='btn btn-xs btn-warning' data-toggle='tooltip' data-placement='top' title='Detalhes'><i class='glyphicon glyphicon-list-alt'></i></a>");
-							out.print("</div>");
-							
-							//Excluir Genero
-							out.print("<div class='col-md-1'>");
-							out.print("<a class='btn btn-xs btn-danger confirm-delete' data-id="+id.byteValue()+" data-toggle='tooltip' data-placement='top' title='Excluir'><i class='glyphicon glyphicon-trash'></i></a>");
-							out.print("</div>");
-							out.print("</div></td>");
-							out.print("</tr>");
-						}
-						}
+										out.print("<tr>");
+										out.print("<td colspan='3' align='center'><strong> N&atilde;o h&aacute; g&ecirc;neros cadastrados! </strong></td>");
+										out.print("</tr>");
+									}else{
+								
+									for(Genero genero : generosCadastrados){
+										Long id = genero.getId();
+										out.print("<tr><td align='center' style='vertical-align:middle;'>" + genero.getDescricao() + "</td><td style='vertical-align:middle;' align='center'>" + genero.getFilmes().size() + "</td>");
+										out.print("<td align='left' width='10%'><div class='tooltip-demo row'>");
+																					
+										//Alterar Genero
+										out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
+										out.print("<a href='alterarGenero?id="+id.longValue()+"' class='btn btn-xs btn-info' data-toggle='tooltip' data-placement='top' title='Alterar'><i class='fa fa-edit'></i></a>");
+										out.print("</div>");
+										
+										//Detalhar Genero
+										out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
+										out.print("<a href='detalharGenero?id="+id.longValue()+"'class='btn btn-xs btn-warning' data-toggle='tooltip' data-placement='top' title='Detalhar'><i class='glyphicon glyphicon-list-alt'></i></a>");
+										out.print("</div>");
+										
+										//Excluir Genero
+										out.print("<div class='col-md-1'>");
+										out.print("<a class='btn btn-xs btn-danger confirm-delete' data-id="+id.longValue()+" data-toggle='tooltip' data-placement='top' title='Excluir'><i class='glyphicon glyphicon-trash'></i></a>");
+										out.print("</div>");
+										out.print("</div></td>");
+										out.print("</tr>");
+									}
+									}
 					%>
 				</table>
 			</div>

@@ -1,10 +1,10 @@
 package control;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Cliente;
+import model.Pessoa;
+import model.DAO.ClienteDAO;
+import model.DAO.PessoaDAO;
+import control.util.JPAUtil;
 
 /**
  * Servlet implementation class ServletCadastrarCliente
@@ -42,32 +46,92 @@ public class ServletSalvarCliente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		EntityManager manager = JPAUtil.getEntityManager();
+		PessoaDAO daoPessoa = new PessoaDAO(manager);
+		ClienteDAO daoCliente = new ClienteDAO(manager);
+		Pessoa pessoa = null;
+		Cliente cliente = null;
+		String msg = "Erro: ";
+		boolean error = false;
+		RequestDispatcher pagina = request
+				.getRequestDispatcher("cliente/confirmacaoCliente.jsp");
 		Date data = null;
-		RequestDispatcher dispachante = request.getRequestDispatcher("cliente/confirmacaoCliente.jsp");
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
 		String cpf = request.getParameter("cpf");
 		String nome = request.getParameter("nome");
-		String nascimento = request.getParameter("data");
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
-		try {
-			data = DATE_FORMAT.parse(nascimento);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		String nascimento = request.getParameter("data");
+
+		if (cpf == null || cpf == "") {
+			msg += "CPF Inválido!";
+			error = true;
+		} else {
+			pessoa = daoPessoa.lerPorCPF(cpf);
+		}
+
+		if (pessoa == null) {
+			if (nome == null || nome == "") {
+				msg += "Nome Inválido!";
+				error = true;
+			} else if (email == null || email == "") {
+				msg += "Email Inválido!";
+				error = true;
+			} else if (senha == null || senha == "") {
+				msg += "Senha Inválida!";
+				error = true;
+			} else if (nascimento == null || nascimento == "") {
+				msg += "Data de Nascimento Inválida!";
+				error = true;
+			} else {
+				try {
+					pessoa = new Pessoa(cpf, nome, email, senha);
+					data = DATE_FORMAT.parse(nascimento);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				daoPessoa.abrirTransacao();
+				pessoa = daoPessoa.salvar(pessoa);
+				cliente = new Cliente(data, pessoa);
+				cliente = daoCliente.salvar(cliente);
+				daoCliente.gravarTransacao();
+				error = false;
+			}
+		} else {
+			cliente = daoCliente.verificarPessoa(pessoa);
+			if(cliente == null){
+				if (nascimento == null || nascimento == "") {
+					msg += "Data de Nascimento Inválida!";
+					error = true;
+				} else {
+					try {
+						data = DATE_FORMAT.parse(nascimento);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					cliente = new Cliente(data, pessoa);
+					cliente = daoCliente.salvar(cliente);
+					error = false;
+				}
+			}else{
+				msg+="Esses dados já foram cadastrados!";
+				error = true;
+			}
+		}
+
+		if(error){
+			request.setAttribute("mensagem", msg);
+			request.getRequestDispatcher("cliente/login.jsp").forward(request, response);
+		}else{
+			request.setAttribute("cliente", cliente);
+			pagina.forward(request, response);			
 		}
 		
-		
-		Cliente cliente = null;
-		try {
-			cliente = new Cliente(cpf,nome,email,senha,data);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		request.setAttribute("cliente", cliente);
-		dispachante.forward(request, response);
-		
+
 	}
 }

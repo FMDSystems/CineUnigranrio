@@ -52,7 +52,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 		boolean error = false;
 		String msg = "Erro:";
 		Funcionario func = null;
-		RequestDispatcher acessoRestrito = request.getRequestDispatcher("restrito/acessoRestrito.jsp");
+		RequestDispatcher acessoRestrito = request.getRequestDispatcher("/restrito/acessoRestrito.jsp");
 		
 		String sMatricula = request.getParameter("matricula");
 		Long matricula;
@@ -64,7 +64,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 			msg += " Matricula inválida!";
 			error = true;
 		}else{ //senão está vazia converte String para Long
-			matricula = Long.parseLong(sMatricula);
+			matricula = Long.valueOf(sMatricula);
 			
 			//verificar se senha passada pelo request está vazia
 			if(senha == null ||  senha == ""){
@@ -87,7 +87,7 @@ public class ServletAutenticarAcessoRestrito extends HttpServlet {
 						error = false;
 					}else{
 						msg += " Senha está incorreta!";
-						request.setAttribute("matricula", matricula);
+						request.setAttribute("matricula", sMatricula);
 						error = true;
 					}
 				}
