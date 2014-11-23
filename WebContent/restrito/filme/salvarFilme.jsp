@@ -1,3 +1,4 @@
+<%@page import="sun.misc.BASE64Decoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
@@ -8,7 +9,8 @@
 <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.apache.catalina.util.*"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -39,7 +41,7 @@
 		Funcionario usuario = (Funcionario) session.getAttribute("usuarioRestrito");
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		@SuppressWarnings("unchecked")
-		List<Genero> generosCadastrados = (List<Genero>) request.getAttribute("generosCadastrados");
+		List<Genero> todosGeneros = (List<Genero>) request.getAttribute("todosGeneros");
 	%>
 	<div id="wrapper">
 
@@ -133,7 +135,6 @@
 				<h1 class="page-header">
 					<%
 						String mensagem = (String) request.getAttribute("mensagem");
-						request.setAttribute("todosGeneros", generosCadastrados);
 
 						String id 		   = "";
 						String titulo      = "";
@@ -145,6 +146,8 @@
 						String sinopse	   = "";
 						boolean legenda    = false;
 						String imagem = "";
+						byte[] bytImg = null;						
+						List<Genero> generosCadastrados = null;
 						
 						if (request.getAttribute("filme") != null){
 							Filme f = (Filme) request.getAttribute("filme");
@@ -158,8 +161,13 @@
 							status 		 = f.getStatus();
 							legenda 	 = f.isLegendado();
 							sinopse		 = f.getSinopse();
-							imagem = Base64.encodeBase64String(f.getImagem());
+							generosCadastrados = f.getGeneros();
+							bytImg = f.getImagem();
+							imagem = Base64.encode(bytImg);
 							
+						}
+						if(generosCadastrados !=null){
+							todosGeneros.removeAll(generosCadastrados);
 						}
 						
 						
@@ -187,13 +195,12 @@
 							<div class="col-xs-6 col-md-4 form-group" align="center">
 								<strong>Imagem</strong>
 								<div class="form-group">
-									<img src=<%= (imagem == "" ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %> 
-									id="prev-img" style='width:180px;height:220px;' class='img-thumbnail' 
-									alt='Sem Imagem' title='Sem Imagem'>
+									<img src=<%= (imagem == "" ||imagem==null ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %> 
+									id="prev-img" style='width:180px;height:220px;' class='img-thumbnail'>
 									<br/><br/>
 									<div class="fileUpload btn btn-primary btn-file">
 									<i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Selecionar
-									<input type="file" name="imagem" id="file-input"/>
+									<input type="file" name="imagem" accept=".jpg,.jpeg" value="11.jpg" required="required" id="file-input"/>
 									</div>
 
 								</div>
@@ -240,7 +247,7 @@
 								<div class="form-group col-xs-5">
 									<label>Faixa Et&aacute;ria</label> 
 									<select class="form-control"
-										name="faixaEtaria" style="width: 100px;">
+										name="faixaEtaria" style="width: 100px;" required="required" >
 										<%
 											out.print(
 												"<option value='Livre' "+(faixaEtaria.equals("Livre") ? "selected" : "")+">Livre</option>"+
@@ -263,10 +270,10 @@
 									
 									<%
 											out.print("<label class='radio-inline'>" +
-													"<input type='radio' name='tipo' id='2D' value='2D'"+(tipo.equals("2D") ? "checked" : "")+">2D"+
+													"<input type='radio' name='tipo' required='required' id='2D' value='2D'"+(tipo.equals("2D") ? "checked" : "")+" >2D"+
 													"</label>");
 											out.print("<label class='radio-inline'> <input type='radio'"+
-													"name='tipo' id='3D' value='3D' "+(tipo.equals("3D") ? "checked": "")+">3D"+
+													"name='tipo' required='required' id='3D' value='3D' "+(tipo.equals("3D") ? "checked": "")+">3D"+
 													"</label>");
 									%>
 									 
@@ -292,10 +299,10 @@
 								
 								<%
 									out.print("<label class='radio-inline'>");
-									out.print("<input type='radio' name='status' id='lancamento' value='lancamento'"+(status.equals("lancamento")?"checked":"")+" >Lan&ccedil;amento");
+									out.print("<input type='radio' name='status' required='required'  id='Lançamento' value='Lançamento'"+(status.equals("Lançamento")?"checked":"")+" >Lan&ccedil;amento");
 									out.print("</label>");
 									out.print("<label class='radio-inline'>");
-									out.print("<input type='radio' name='status' id='exibicao' value='exibicao'"+(status.equals("exibicao")?"checked":"")+">Exibi&ccedil;&atilde;o");
+									out.print("<input type='radio' name='status' required='required id='Exibição' value='Exibição'"+(status.equals("Exibição")?"checked":"")+">Exibi&ccedil;&atilde;o");
 									out.print("</label>");
 								%>
 							</div>
@@ -303,20 +310,38 @@
 							<!-- /Status -->
 							
 							<!-- Generos -->
-						<div id="demoform">
-							<select multiple="multiple" size="3" style="overflow: scroll;"
-								name="listaGeneros">
-								<%for(Genero genero : generosCadastrados){
-									out.print("<option value='"+genero.getId()+"'>"+genero.getDescricao()+"</option>");
-									} %>
-							</select><br />
-						</div>
+							<div class="row" id="selecao_generos">
+							  <div class="col-xs-6">
+								<i class="fa fa-certificate fa-fw"></i><strong>Gêneros</strong>
+								<br/>
+								<select id="todos" multiple="multiple" class="form-control" size="5" style="overflow: scroll;">
+									<%for(Genero genero : todosGeneros){
+										out.print("<option value='"+genero.getId()+"' onclick='addGenero(this);'>"+genero.getDescricao()+"</option>");
+										} %>
+								</select>
+							  </div>
+							  
+							  
+							  <div class="col-xs-6">
+								<strong>Selecionados</strong>
+								<br/>
+								<select id="selecionados" multiple="multiple" class="form-control"  size="5" style="overflow: scroll;"
+									name="listaGeneros">
+									<%	if(generosCadastrados != null){
+										for(Genero genero : generosCadastrados){
+										out.print("<option value='"+genero.getId()+"' onclick='removeGenero(this);'>"+genero.getDescricao()+"</option>");
+										} }%>
+								</select>
+							  </div>
+							</div>
+							
+							
 							<!-- /Generos -->
 							
 						<!-- Sinopse -->
 						<div class="form-group">
 							<label>Sinopse</label>
-							<textarea class="form-control" name="sinopse" rows="4" required><%=sinopse %> </textarea>
+							<textarea class="form-control" name="sinopse" required="required" rows="5" required><%=sinopse %></textarea>
 						</div>
 						<!-- /Sinopse -->
 					</div>
@@ -343,6 +368,7 @@
 	<script src="js/plugins/jquery.bootstrap-duallistbox.js"></script>
 	<script src="js/plugins/bootstrap-formhelpers.min.js"></script>
 
+	<!-- Imagem -->
 	<script type="text/javascript">
 	function pegarImagem(input){
 		var img = document.getElementById('prev-img');
@@ -356,26 +382,35 @@
 	    pegarImagem(this);
 	});
 	
+	</script>
+	<!-- /Imagem -->
+
+	<!-- Generos -->
+	<script type="text/javascript">
+	function addGenero(g){
+		todos = document.getElementById('todos');
+		selecionados = document.getElementById('selecionados');
+		var opt = document.createElement('option');
+		opt.value = g.value;
+		opt.innerHTML = g.text;
+		selecionados.appendChild(opt);
+		todos.removeChild(g);
+		document.getElementById('selecao_generos').reload(true);
+	}
+	
+	function removeGenero(g){
+		todos = document.getElementById('todos');
+		selecionados = document.getElementById('selecionados');
+		var opt = document.createElement('option');
+		opt.value = g.value;
+		opt.innerHTML = g.text;
+		todos.appendChild(opt);
+		selecionados.removeChild(g);
+		document.getElementById('selecao_generos').reload(true);
+	}
 	
 	</script>
-
-
-
-	<script type="text/javascript">
-		var demo1 = $('select[name="listaGeneros"]')
-				.bootstrapDualListbox(
-						{
-							filterTextClear : 'Limpar',
-							infoTextEmpty : '',
-							infoText : '{0}',
-							filterPlaceHolder : 'Filtro',
-							selectedListLabel : 'Selecionados',
-							nonSelectedListLabel : '<i class="fa fa-certificate fa-fw"></i>Gêneros',
-							infoTextFiltered : '<span class="label label-warning">Filtrado</span> {0} de {1}'
-						});
-
-		$('select[name="listaGeneros"]').bootstrapDualListbox('refresh', true);
-	</script>
+	<!-- /Generos -->
 
 </body>
 

@@ -46,7 +46,7 @@ public class ServletAlterarFilme extends HttpServlet {
 		List<Genero> listaGeneros = daoGenero.lerTodos();
 		
 		request.setAttribute("filme", f1);
-		request.setAttribute("generosCadastrados", listaGeneros);
+		request.setAttribute("todosGeneros", listaGeneros);
 		request.getRequestDispatcher("restrito/filme/salvarFilme.jsp").forward(request, response);
 		
 	}

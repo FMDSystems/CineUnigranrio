@@ -7,7 +7,7 @@
 <%@page import="model.Funcionario"%>
 <%@page import="model.Filme"%>
 <%@page import="model.Genero"%>
-<%@page import="org.apache.tomcat.util.codec.binary.Base64"%>
+<%@page import="org.apache.catalina.util.*"%>
 
 
 <!DOCTYPE html>
@@ -139,7 +139,8 @@
 
 							Filme filme = (Filme) request.getAttribute("filme");
 							Long id = filme.getId();
-							String imagem = Base64.encodeBase64String(filme.getImagem());
+							
+							String imagem = Base64.encode(filme.getImagem());
 				%>
 				<h1 class="page-header">
 					<i class="fa fa-file-video-o fa-fw"></i><%=filme.getTitulo()%>
@@ -150,7 +151,8 @@
 						<div class="col-xs-6 col-md-4 form-group" align="center">
 							<div class="form-group">
 								<img style="width: 180px; height: 220px;"
-									src="data:image/jpg;base64,<%=imagem%>" class="img-thumbnail">
+									src=<%= (imagem == "" ||imagem==null ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %>
+									 class="img-thumbnail">
 							</div>
 						</div>
 						<div class=" col-xs-12 col-sm-6 col-md-8 form-group">

@@ -40,7 +40,7 @@ public class ServletCadastrarFilme extends HttpServlet {
 		
 		List<Genero> listaGeneros = daoGenero.lerTodos();
 		
-		request.setAttribute("generosCadastrados", listaGeneros);
+		request.setAttribute("todosGeneros", listaGeneros);
 		
 		RequestDispatcher despachante = request
 				.getRequestDispatcher("restrito/filme/salvarFilme.jsp");
