@@ -19,6 +19,7 @@ import model.Filme;
 import model.Genero;
 import model.DAO.FilmeDAO;
 import model.DAO.GeneroDAO;
+
 import control.util.JPAUtil;
 
 /**
@@ -57,6 +58,7 @@ public class ServletSalvarFilme extends HttpServlet {
 		GeneroDAO daoGenero = new GeneroDAO(manager);
 		FilmeDAO daoFilme = new FilmeDAO(manager);
 
+		String mensagem = "";
 		Date duracao = null;
 		SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm");
 		String idS = request.getParameter("id");
@@ -75,14 +77,24 @@ public class ServletSalvarFilme extends HttpServlet {
 		String status = request.getParameter("status");
 		String sinopse = request.getParameter("sinopse");
 		Filme filme = null;
+		String trailer = this.convertURL(request.getParameter("trailer"));
 		String[] generos = request.getParameterValues("listaGeneros");
 		Part imagem = request.getPart("imagem");
+		boolean legenda = false;
+		if(legendaS!= null){
+			if(legendaS.equals("legendado")){
+				legenda=true;
+			}else{
+				legenda=false;
+			}		
+		}
+		
 		
 		if (idS == null || idS.equals("")) {
 
-			filme = new Filme(titulo, duracao, sinopse, diretor,
-					Boolean.parseBoolean(legendaS), faixaEtaria, status, tipo);
+			filme = new Filme(titulo, duracao, sinopse, diretor,legenda, faixaEtaria, status, tipo);
 			filme.setImagem(this.uploadFoto(imagem));
+			filme.setTrailer(trailer);
 			Genero g = null;
 			for (int i = 0; i < generos.length; i++) {
 				Long idGenero = Long.parseLong(generos[i]);
@@ -90,6 +102,7 @@ public class ServletSalvarFilme extends HttpServlet {
 				filme.addGenero(g);
 			}
 			filme = daoFilme.salvar(filme);
+			mensagem = "<span class='glyphicon glyphicon-ok'></span>&nbsp;Filme Cadastrado com Sucesso!!!";
 		} else {
 			Long id = Long.valueOf(idS);
 			filme = daoFilme.lerPorId(id);
@@ -98,11 +111,19 @@ public class ServletSalvarFilme extends HttpServlet {
 			filme.setDuracao(duracao);
 			filme.setFaixaEtaria(faixaEtaria);
 			filme.setTipo(tipo);
-			filme.setLegendado(Boolean.parseBoolean(legendaS));
+			filme.setLegendado(legenda);
 			filme.setStatus(status);
 			filme.setSinopse(sinopse);
 			filme.getGeneros().removeAll(filme.getGeneros());
-			filme.setImagem(this.uploadFoto(imagem));
+			Long t = imagem.getSize();
+			
+			if(t!=0){
+				if(! filme.getImagem().equals(this.uploadFoto(imagem))){
+					filme.setImagem(this.uploadFoto(imagem));
+				}
+			}
+			
+			filme.setTrailer(trailer);
 
 			Genero g = null;
 			for (int i = 0; i < generos.length; i++) {
@@ -111,11 +132,11 @@ public class ServletSalvarFilme extends HttpServlet {
 				filme.addGenero(g);
 			}
 			filme = daoFilme.salvar(filme);
+			mensagem = "<span class='glyphicon glyphicon-ok'></span>&nbsp;Filme Alterado com Sucesso!!!";
 		}
 
 		request.setAttribute(
-				"mensagem",
-				"<span class='glyphicon glyphicon-ok'></span>&nbsp;Filme Cadastrado com Sucesso!!!");
+				"mensagem",mensagem);
 		request.setAttribute("filme", filme);
 		request.getRequestDispatcher("restrito/filme/confirmacaoFilme.jsp")
 				.forward(request, response);
@@ -144,6 +165,16 @@ public class ServletSalvarFilme extends HttpServlet {
 		inputStream.close();
 
 		return buffer;
+	}
+	
+	private String convertURL(final String trailer){
+		if(trailer.contains("=")){
+			String url = "https://www.youtube.com/embed/";
+			String[] separado = trailer.split("=");
+			url += separado[1];
+			return url;
+		}
+		return trailer;
 	}
 
 }

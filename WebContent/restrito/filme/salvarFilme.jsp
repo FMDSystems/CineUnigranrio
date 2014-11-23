@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="sun.misc.BASE64Decoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -27,9 +28,9 @@
 <link href="css/style.css" rel="stylesheet">
 <link href="css/plugins/metismenu.min.css" rel="stylesheet">
 <link href="css/menurestrito.css" rel="stylesheet">
-<link href="css/datepicker.css" rel="stylesheet">
 <link href="css/plugins/fileinput.css" rel="stylesheet">
 <link href="css/plugins/font.min.css" rel="stylesheet" type="text/css">
+<link href="css/plugins/bootstrap-multiselect.css" rel="stylesheet" type="text/css">
 <link href="css/plugins/bootstrap-formhelpers.min.css" rel="stylesheet"
 	type="text/css">
 
@@ -145,9 +146,11 @@
 						String status	   = "";
 						String sinopse	   = "";
 						boolean legenda    = false;
-						String imagem = "";
-						byte[] bytImg = null;						
+						String trailer     = "";
+						String imagem 	   = "";
+						byte[] bytImg 	   = null;						
 						List<Genero> generosCadastrados = null;
+						String re = "required";
 						
 						if (request.getAttribute("filme") != null){
 							Filme f = (Filme) request.getAttribute("filme");
@@ -162,14 +165,15 @@
 							legenda 	 = f.isLegendado();
 							sinopse		 = f.getSinopse();
 							generosCadastrados = f.getGeneros();
+							trailer 	 = f.getTrailer();
 							bytImg = f.getImagem();
 							imagem = Base64.encode(bytImg);
-							
-						}
-						if(generosCadastrados !=null){
-							todosGeneros.removeAll(generosCadastrados);
+							re = "";
 						}
 						
+						if(generosCadastrados==null){
+							generosCadastrados = new ArrayList<Genero>();
+						}
 						
 						if (mensagem != null) {
 							out.print("<div class='alert alert-danger' role='alert'>");
@@ -184,15 +188,13 @@
 				</h1>
 				<form role="form" action="salvarFilme" method="post" enctype="multipart/form-data">
 					<div class="panel-body">
-						<div class="row">
-						
 						<!--  ID -->
 						<input type="hidden" name="id" value="<%=id%>">
 						<!-- /ID -->
 						
-						
+						<div class="row">
 						<!-- Imagem -->
-							<div class="col-xs-6 col-md-4 form-group" align="center">
+							<div class="col-md-4 form-group" align="center">
 								<strong>Imagem</strong>
 								<div class="form-group">
 									<img src=<%= (imagem == "" ||imagem==null ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %> 
@@ -200,7 +202,7 @@
 									<br/><br/>
 									<div class="fileUpload btn btn-primary btn-file">
 									<i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Selecionar
-									<input type="file" name="imagem" accept=".jpg,.jpeg" value="11.jpg" required="required" id="file-input"/>
+									<input type="file" name="imagem" accept=".jpg,.jpeg" <%=re %> id="file-input"/> 
 									</div>
 
 								</div>
@@ -208,23 +210,23 @@
 						<!-- /Imagem -->
 						
 						<!-- Titulo -->
-							<div class=" col-xs-12 col-sm-6 col-md-8 form-group">
+							<div class="col-md-8 form-group">
 								<br /> <label>T&iacute;tulo</label> <input type="text"
 									name="titulo" value="<%=titulo%>"  class="form-control" placeholder="T&iacute;tulo"
 									autofocus required>
 							</div>
 						<!-- /Titulo -->
-						
+
 						<!-- Diretor -->
-							<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<div class="col-md-8 form-group">
 								<label>Diretor</label> <input type="text" name="diretor"
 									class="form-control"  value="<%=diretor%>"  placeholder="Diretor" required>
 							</div>
-						<!-- /Titulo -->	
+						<!-- /Diretor -->	
 						
+						<div class="col-md-8 row">
 						<!--  Duracao -->
-							<div class="col-xs-12 col-sm-6 col-md-8 row">
-								<div class="form-group col-xs-7">
+								<div class="form-group col-md-6">
 									<label>Dura&ccedil;&atilde;o</label>
 
 									<div class="input-group">
@@ -244,7 +246,7 @@
 						<!-- /Duracao -->
 
 						<!--  Faixa Etaria -->
-								<div class="form-group col-xs-5">
+								<div class="form-group col-md-6">
 									<label>Faixa Et&aacute;ria</label> 
 									<select class="form-control"
 										name="faixaEtaria" style="width: 100px;" required="required" >
@@ -262,10 +264,9 @@
 							</div>
 						<!--  /Faixa Etaria -->
 						
-						
-							<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-							<!--  Tipo -->
-								<div class="form-group col-xs-6">
+						<div class="col-md-8 row">
+						<!--  Tipo -->
+								<div class="form-group col-md-6">
 									<label>Tipo &nbsp;</label> 
 									
 									<%
@@ -281,21 +282,21 @@
 							<!--  /Tipo -->
 							
 							<!--  Legenda -->
-								<div class="form-group col-xs-5">
-									 
+								<div class="form-group col-md-6">
 									<%
-											out.print("<label><input type='checkbox' name='legenda'"+
-													"value='legendado'" +(legenda == true ? "checked" : "")+"> Legendado"+
+										out.print("<label><input type='checkbox' name='legenda'"+
+												"value='legendado'" +(legenda == true ? "checked" : "")+"> Legendado"+
 													"</label>");
 									%>
 									
 								</div>
-							</div>
 							<!--  /Legenda -->
+						</div>
 							
+						<div class="col-md-8 row">	
 							<!--  Status -->
-							<div class="col-xs-12 col-sm-6 col-md-8 form-group">
-								<label>Status</label> &nbsp;&nbsp;
+							<div class="col-md-6 form-group">
+								<label>Status &nbsp;</label>
 								
 								<%
 									out.print("<label class='radio-inline'>");
@@ -306,40 +307,32 @@
 									out.print("</label>");
 								%>
 							</div>
-						</div>
 							<!-- /Status -->
 							
 							<!-- Generos -->
-							<div class="row" id="selecao_generos">
-							  <div class="col-xs-6">
+							 <div class="col-md-6 form-group">
+
 								<i class="fa fa-certificate fa-fw"></i><strong>Gêneros</strong>
 								<br/>
-								<select id="todos" multiple="multiple" class="form-control" size="5" style="overflow: scroll;">
+								<select id="listaGeneros" multiple="multiple" name="listaGeneros" class="form-control" style="overflow: scroll;">
 									<%for(Genero genero : todosGeneros){
-										out.print("<option value='"+genero.getId()+"' onclick='addGenero(this);'>"+genero.getDescricao()+"</option>");
+										out.print("<option value='"+genero.getId()+"'"+(generosCadastrados.contains(genero)?"selected":"")+">"+genero.getDescricao()+"</option>");
 										} %>
 								</select>
 							  </div>
-							  
-							  
-							  <div class="col-xs-6">
-								<strong>Selecionados</strong>
-								<br/>
-								<select id="selecionados" multiple="multiple" class="form-control"  size="5" style="overflow: scroll;"
-									name="listaGeneros">
-									<%	if(generosCadastrados != null){
-										for(Genero genero : generosCadastrados){
-										out.print("<option value='"+genero.getId()+"' onclick='removeGenero(this);'>"+genero.getDescricao()+"</option>");
-										} }%>
-								</select>
-							  </div>
-							</div>
-							
-							
 							<!-- /Generos -->
+					  </div>
+							
+						<!-- Trailer -->
+							<div class="col-xs-12 form-group">
+								<br /> <label>Trailer</label> <input type="url"
+									name="trailer" value="<%=trailer%>"  class="form-control" placeholder="Cole aqui a URL do video">
+							</div>
+						<!-- /Trailer -->
+
 							
 						<!-- Sinopse -->
-						<div class="form-group">
+						<div class="col-xs-12 form-group">
 							<label>Sinopse</label>
 							<textarea class="form-control" name="sinopse" required="required" rows="5" required><%=sinopse %></textarea>
 						</div>
@@ -354,6 +347,7 @@
 							class="fa fa-undo fa-fw"></i>Voltar
 						</a>
 					</div>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -365,8 +359,8 @@
 	<script src="js/script.js"></script>
 	<script src="js/plugins/metisMenu.min.js"></script>
 	<script src="js/menuRestrito.js"></script>
-	<script src="js/plugins/jquery.bootstrap-duallistbox.js"></script>
 	<script src="js/plugins/bootstrap-formhelpers.min.js"></script>
+	<script src="js/plugins/bootstrap-multiselect.js"></script>
 
 	<!-- Imagem -->
 	<script type="text/javascript">
@@ -387,28 +381,11 @@
 
 	<!-- Generos -->
 	<script type="text/javascript">
-	function addGenero(g){
-		todos = document.getElementById('todos');
-		selecionados = document.getElementById('selecionados');
-		var opt = document.createElement('option');
-		opt.value = g.value;
-		opt.innerHTML = g.text;
-		selecionados.appendChild(opt);
-		todos.removeChild(g);
-		document.getElementById('selecao_generos').reload(true);
-	}
-	
-	function removeGenero(g){
-		todos = document.getElementById('todos');
-		selecionados = document.getElementById('selecionados');
-		var opt = document.createElement('option');
-		opt.value = g.value;
-		opt.innerHTML = g.text;
-		todos.appendChild(opt);
-		selecionados.removeChild(g);
-		document.getElementById('selecao_generos').reload(true);
-	}
-	
+    $(document).ready(function() {
+        $('#listaGeneros').multiselect({
+        	includeSelectAllOption: true
+        });
+    });
 	</script>
 	<!-- /Generos -->
 

@@ -80,18 +80,18 @@
     border-radius: 5px;
     border: 1px solid #ddd;
     padding: 5px;
-    width: 180px;
+    width: 100%;
     margin-bottom: 5px;
 }
 
 .file-preview-frame {
     display: table;
     margin: 8px;
-    height: 134px;
+    height: 160px;
     border: 1px solid #ddd;
     box-shadow: 1px 1px 5px 0px #a2958a;
     padding: 6px;
-    float: center;
+    float: left;
     text-align: center;
 }
 

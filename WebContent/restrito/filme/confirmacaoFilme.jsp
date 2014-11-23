@@ -1,6 +1,3 @@
-<%@page import="java.io.OutputStream"%>
-<%@page
-	import="com.sun.xml.internal.messaging.saaj.util.ByteOutputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
@@ -148,25 +145,36 @@
 				<div class="panel-body">
 
 					<div class="row">
-						<div class="col-xs-6 col-md-4 form-group" align="center">
+						<div class="col-md-4 form-group" align="center">
+							<strong>Imagem</strong>
 							<div class="form-group">
-								<img style="width: 180px; height: 220px;"
-									src=<%= (imagem == "" ||imagem==null ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %>
-									 class="img-thumbnail">
+								<img style="width: 250px; height: 320px;"
+									src=<%= (imagem == "" || imagem==null ? "img/semimg.jpg":"data:image/jpg;base64,"+imagem) %>
+									 class="img-thumbnail" name="imgC">
 							</div>
 						</div>
-						<div class=" col-xs-12 col-sm-6 col-md-8 form-group">
+						
+						<div class="col-md-8 form-group">
+							<strong>Trailer</strong>
+							<div class="embed-responsive embed-responsive-16by9">
+	  							<iframe class="embed-responsive-item form-control" style="height: 90%;" src="<%=filme.getTrailer()%>"></iframe>
+							</div>
+						</div>
+					</div>	
+					
+						<div class=" col-xs-12 form-group">
 							<strong>Sinopse</strong><br />
-							<%=filme.getSinopse()%></div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+							<%=filme.getSinopse()%>
+						</div>
+						<div class="col-xs-12 form-group">
 							<strong>Diretor</strong> &nbsp;
 							<%=filme.getDiretor()%>
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+						<div class="col-xs-12 form-group">
 							<strong>Dura&ccedil;&atilde;o</strong> &nbsp;
 							<%=filme.getDuracaoFormatada()%>
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+						<div class="col-xs-12 form-group">
 							<strong>Generos</strong> &nbsp;
 							<%
 								for (Genero genero : filme.getGeneros()) {
@@ -174,52 +182,60 @@
 													}
 							%>
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+						<div class="col-xs-12 form-group">
 							<strong>Faixa Et&aacute;ria</strong> &nbsp;
 							<%=filme.getFaixaEtaria()%>
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+						<div class="col-xs-12 form-group">
 							<strong>Tipo</strong> &nbsp;
 							<%=filme.getTipo()%>
 							&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
- 	if (filme.isLegendado())
- 				 		out.print("Legendado");
- 				 	else
- 				 		out.print("Dublado");
- %>
+ 							if (filme.isLegendado())
+ 				 			out.print("Legendado");
+ 				 			else
+ 				 			out.print("Dublado");
+ 							%>
 							</strong>
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+						<div class="col-xs-12 form-group">
 							<strong>Status</strong> &nbsp;
 							<%=filme.getStatus()%>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div align="center">
+			<div align="center" class="row">
+				<div class="col-md-3" style="margin-bottom: 10px;">
 				<!-- Cadastrar Novo -->
 				<a href="cadastrarFilme" class="btn btn-success"> <i
 					class="glyphicon glyphicon-plus"></i> Novo Filme
 				</a>
+				</div>
 
+				<div class="col-md-3" style="margin-bottom: 10px;">
 				<!-- Alterar -->
 				<a href="alterarFilme?id=<%=id%>" class="btn btn-info"> <i
 					class="glyphicon glyphicon-edit"></i> Alterar Filme
 				</a>
+				</div>
 
+				<div class="col-md-3" style="margin-bottom: 10px;">
 				<!-- Excluir -->
 				<a href="excluirFilme" data-id="<%=id%>" class="btn btn-danger confirm-delete">
 					<i class="glyphicon glyphicon-remove"></i> Excluir Filme
 				</a>
+				</div>
 
-
+				<div class="col-md-3" style="margin-bottom: 10px;">
 				<!-- Voltar -->
 				<a href="filmes" class="btn btn-warning"> <i
 					class="fa fa-undo fa-fw"></i>Filmes
 				</a>
+				</div>
 			</div>
 		</div>
+		</div>
+		
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -243,8 +259,6 @@
 			</div>
 			<!-- /.modal-dialog -->
 		</div>
-
-	</div>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/script.js"></script>
