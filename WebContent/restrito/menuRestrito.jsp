@@ -104,7 +104,7 @@
 								Salas</a></li>
 						<li><a href="#"><i class="fa fa-group fa-fw"></i>
 								Funcion&aacute;rios</a></li>
-						<li><a href="#"><i class="fa fa-sitemap fa-fw"></i>
+						<li><a href="cargos"><i class="fa fa-sitemap fa-fw"></i>
 								Cargos</a></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								Relat&oacute;rios<span class="fa arrow"></span></a>

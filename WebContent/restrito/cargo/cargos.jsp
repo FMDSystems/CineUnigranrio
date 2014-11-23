@@ -4,7 +4,7 @@
 
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Funcionario"%>
-<%@page import="model.Genero"%>
+<%@page import="model.Cargo"%>
 <%@page import="java.util.List"%>
 
 <!DOCTYPE html>
@@ -38,7 +38,7 @@
 			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	
 			@SuppressWarnings("unchecked")
-			List<Genero> generosCadastrados = (List<Genero>) request.getAttribute("generosCadastrados");
+			List<Cargo> caragosCadastrados = (List<Cargo>) request.getAttribute("cargosCadastrados");
 	%>
 	<div id="wrapper">
 
@@ -98,7 +98,7 @@
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="generos" class="active"><i
+						<li><a href="generos"><i
 								class="fa fa-certificate fa-fw"></i> G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
@@ -106,7 +106,7 @@
 								Salas</a></li>
 						<li><a href="#"><i class="fa fa-group fa-fw"></i>
 								Funcion&aacute;rios</a></li>
-						<li><a href="cargos"><i class="fa fa-sitemap fa-fw"></i>
+						<li><a href="cargos" class="active"><i class="fa fa-sitemap fa-fw"></i>
 								Cargos</a></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								Relat&oacute;rios<span class="fa arrow"></span></a>
@@ -130,21 +130,21 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">
-						<i class="fa fa-certificate fa-fw"></i>G&ecirc;neros
+						<i class="fa fa-sitemap fa-fw"></i>Cargos
 					</h1>
 				</div>
 				<div class="row">
 					<div class="col-xs-6" align="left" style="left:10px;">
 						<%
-							if(!generosCadastrados.isEmpty()){
-								out.print("Total de G&ecirc;neros: " + generosCadastrados.size());
+							if(!caragosCadastrados.isEmpty()){
+								out.print("Total de Cargos: " + caragosCadastrados.size());
 							}
 						%>
 						
 					</div>
 					<div class="col-xs-6" align="right" style="right: 10px; margin-bottom: 10px;">
-						<a class="btn btn-success" href="cadastrarGenero"> <i
-							class="fa fa-plus"></i> Novo G&ecirc;nero
+						<a class="btn btn-success" href="cadastrarCargo"> <i
+							class="fa fa-plus"></i> Novo Cargo
 						</a>
 					</div>
 				</div>
@@ -153,31 +153,35 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="text-center"><strong>Descri&ccedil;&atilde;o</strong></th>
-							<th class="text-center"><strong>Filmes</strong></th>
+							<th class="text-center"><strong>Nível</strong></th>
+							<th class="text-center"><strong>Nome</strong></th>
+							<th class="text-center"><strong>Funcionários</strong></th>
 							<th class="text-center"><strong>A&ccedil;&otilde;es</strong></th>
 						</tr>
 					</thead>
 					<%
-						if(generosCadastrados.isEmpty()){
+						if(caragosCadastrados.isEmpty()){
 										out.print("<tr>");
-										out.print("<td colspan='3' align='center'><strong> N&atilde;o h&aacute; g&ecirc;neros cadastrados! </strong></td>");
+										out.print("<td colspan='4' align='center'><strong> N&atilde;o h&aacute; cargos cadastrados! </strong></td>");
 										out.print("</tr>");
 									}else{
 								
-									for(Genero genero : generosCadastrados){
-										Long id = genero.getId();
-										out.print("<tr><td align='center' style='vertical-align:middle;'>" + genero.getDescricao() + "</td><td style='vertical-align:middle;' align='center'>" + genero.getFilmes().size() + "</td>");
+									for(Cargo cargo : caragosCadastrados){
+										Long id = cargo.getID();
+										out.print("<tr><td align='center' style='vertical-align:middle;'>" + cargo.getNivel() + "</td>");
+										out.print("<td style='vertical-align:middle;' align='center'>" + cargo.getNome() + "</td>");
+										out.print("<td style='vertical-align:middle;' align='center'>" + cargo.getFuncionarios().size() + "</td>");
+										
 										out.print("<td align='left' width='10%'><div class='tooltip-demo row'>");
 																					
 										//Alterar Genero
 										out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
-										out.print("<a href='alterarGenero?id="+id.longValue()+"' class='btn btn-xs btn-info' data-toggle='tooltip' data-placement='top' title='Alterar'><i class='fa fa-edit'></i></a>");
+										out.print("<a href='alterarCargo?id="+id.longValue()+"' class='btn btn-xs btn-info' data-toggle='tooltip' data-placement='top' title='Alterar'><i class='fa fa-edit'></i></a>");
 										out.print("</div>");
 										
 										//Detalhar Genero
 										out.print("<div class='col-md-1' style='margin-bottom:5px;'>");
-										out.print("<a href='detalharGenero?id="+id.longValue()+"'class='btn btn-xs btn-warning' data-toggle='tooltip' data-placement='top' title='Detalhar'><i class='glyphicon glyphicon-list-alt'></i></a>");
+										out.print("<a href='detalharCargo?id="+id.longValue()+"'class='btn btn-xs btn-warning' data-toggle='tooltip' data-placement='top' title='Detalhar'><i class='glyphicon glyphicon-list-alt'></i></a>");
 										out.print("</div>");
 										
 										//Excluir Genero
@@ -199,14 +203,14 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="myModalLabel">Excluir G&ecirc;nero </h4>
+						<h4 class="modal-title" id="myModalLabel">Excluir Cargo </h4>
 					</div>
 					<div class="modal-body">
-					Deseja realmente excluir o g&ecirc;nero selecionado?
+					Deseja realmente excluir o cargo selecionado?
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo fa-fw"></i>Cancelar</a>
-						<a id="btn-excluir" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Excluir G&ecirc;nero</a>
+						<a id="btn-excluir" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Excluir Cargo</a>
 					<form action="#" method="get" name="excluir"><input type="hidden" name="id" id="txtExcluir"></form>
 					</div>
 				</div>
@@ -236,7 +240,7 @@
 		var id = $('#myModal').data('id');
 
   		document.getElementById("txtExcluir").value = id;
-		document.forms['excluir'].action = "excluirGenero?id='"+id+"'";
+		document.forms['excluir'].action = "excluirCargo?id='"+id+"'";
 		document.forms['excluir'].submit();  
 		
 	});

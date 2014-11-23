@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Funcionario"%>
-<%@page import="model.Genero"%>
+<%@page import="model.Cargo"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -94,7 +94,7 @@
 								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="generos" class="active"><i
+						<li><a href="generos"><i
 								class="fa fa-certificate fa-fw"></i> G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
@@ -102,7 +102,7 @@
 								Salas</a></li>
 						<li><a href="#"><i class="fa fa-group fa-fw"></i>
 								Funcion&aacute;rios</a></li>
-						<li><a href="cargos"><i class="fa fa-sitemap fa-fw"></i>
+						<li><a href="cargos" class="active"><i class="fa fa-sitemap fa-fw"></i>
 								Cargos</a></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								Relat&oacute;rios<span class="fa arrow"></span></a>
@@ -126,20 +126,22 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">
-						<i class="fa fa-certificate fa-fw"></i>Salvar G&ecirc;nero
+						<i class="fa fa-sitemap fa-fw"></i>Salvar Cargo
 					</h1>
 				</div>
 				<%
 						String mensagem = (String) request.getAttribute("mensagem");
 
-						String descricao= "";
+						int nivel= 0;
+						String nome = "";
 						String id = "";
 						
-						if (request.getAttribute("genero") != null){
-							Genero g = (Genero) request.getAttribute("genero");
+						if (request.getAttribute("cargo") != null){
+							Cargo c = (Cargo) request.getAttribute("cargo");
 							
-							descricao = g.getDescricao();
-							id = String.valueOf(g.getId());
+							nivel = c.getNivel();
+							nome = c.getNome();
+							id = String.valueOf(c.getID());
 							
 						}
 						
@@ -150,30 +152,41 @@
 							out.print("</div>");
 						}
 					%>
-				<form action="salvarGenero" method="post">
-					<div class="form-group">
-						<br /> 
-						
+					</div>
+				<form action="salvarCargo" method="post">
+					<div class="row form-group">
 						<!--  ID -->
 						<input type="hidden" name="id" value="<%=id%>">
-
-						<div class="col-lg-12" style="margin-bottom: 10px;">											
-						<!--  Descricao -->
-						<label>Descri&ccedil;&atilde;o</label> 
-						<input type="text" name="descricao" class="form-control" value="<%=descricao%>"
-							placeholder="Descri&ccedil;&atilde;o" autofocus required="required">
+						
+						<!--  Nível -->
+						<div class="col-md-2" style="margin-bottom: 10px;">											
+							<label>Nível</label> 
+							<select name="nivel" autofocus required class="form-control">
+								<option value="1" <%=(nivel==1 ? "selected":"") %> >1</option>
+								<option value="2" <%=(nivel==2 ? "selected":"") %> >2</option>
+								<option value="3" <%=(nivel==3 ? "selected":"") %> >3</option>
+								<option value="4" <%=(nivel==4 ? "selected":"") %> >4</option>
+								</select>
 						</div>
+						<!-- /Nivel -->
+						
+						<!-- Nome -->
+						<div class="col-md-10 form-group" style="margin-bottom: 10px;">											
+							<label>Nome</label>
+							<input type="text" name="nome" value="<%=nome %>" placeholder="Nome" class="form-control"> 
+						</div>
+						<!-- /Nome -->
 					</div>
+					
 					<div class="form-group" style="margin-top: 10px;" align="center">
 						<button type="submit" class="btn btn-success">
 							<i class="glyphicon glyphicon-ok"></i> Gravar
 						</button>
-						<a href="generos" class="btn btn-warning"> <i
+						<a href="cargos" class="btn btn-warning"> <i
 							class="fa fa-undo fa-fw"></i>Voltar
 						</a>
 					</div>
 				</form>
-			</div>
 		</div>
 	</div>
 	<!-- /#wrapper -->
