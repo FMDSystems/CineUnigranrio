@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="model.Pessoa"%>
+<%@page import="model.Cliente"%>
 <%@page import="model.Filme"%>
+<%@page import="model.Genero"%>
 <%@page import="java.util.List"%>
+<%@page import="org.apache.catalina.util.*"%>
 
 <html lang="pt-br">
 <head>
@@ -14,6 +16,10 @@
 <link rel="icon" href="img/favicon.ico">
 
 <title>Cine Unigranrio - O melhor cinema na melhor faculdade</title>
+
+<link href="css/plugins/metismenu.min.css" rel="stylesheet">
+<link href="css/menurestrito.css" rel="stylesheet">
+<link href="css/plugins/font.min.css" rel="stylesheet" type="text/css">
 
 <link href="css/style.css" rel="stylesheet">
 <link href="css/index.css" rel="stylesheet">
@@ -65,7 +71,7 @@
 						</form>
 						<ul class="nav navbar-nav navbar-right">
 							<%
-								Pessoa usuario = null;
+								Cliente usuario = null;
 
 								if ((session == null) || (session.getAttribute("usuario") == null)) {
 							%>
@@ -105,10 +111,10 @@
 
 							<%
 								} else {
-									usuario = (Pessoa) session.getAttribute("usuario");
+									usuario = (Cliente) session.getAttribute("usuario");
 							%>
 							<li class="dropdown"><a href="" class="dropdown-toggle"
-								data-toggle="dropdown"> <%=usuario.getNome()%> <span
+								data-toggle="dropdown"> <%=usuario.getPessoa().getNome()%> <span
 									class="glyphicon glyphicon-cog"></span>
 							</a>
 								<ul class="dropdown-menu" role="menu"
@@ -136,36 +142,79 @@
 			</div>
 		</div>
 		<!-- Fim da barra -->
+		<%
+			Filme filme = (Filme) request.getAttribute("filme");
+			String imagem = Base64.encode(filme.getImagem());
+		%>
 
-		<div class="page-header">
-			<h1>Em Exibi&ccedil;&atilde;o</h1>
-		</div>
+		<h1 class="page-header">
+			<i class="fa fa-file-video-o fa-fw"></i>Em Exibi&ccedil;&atilde;o:
+			<%=filme.getTitulo()%>
+		</h1>
+		<div class="panel-body">
 
-		<div class="row">
-			<%
-			@SuppressWarnings("unchecked")
-				List<Filme> listaFilmesExibicao = (List<Filme>) request
-						.getAttribute("filmesExibicao");
-				for (Filme filme : listaFilmesExibicao) {
-					out.print("<div class='col-sm-4 col-md-3'>");
-					out.print("<div class='thumbnail'>");
-					out.print("<img src=>");
-					out.print("<div class='caption'>");
-					out.print("<h3>" + filme.getTitulo() + "</h3>");
-					String palavras[] = filme.getSinopse().split(" ");
-					out.print("<p>");
-					for (int i = 0; i <= 20; i++) {
-						out.print(palavras[i].toString() + " ");
+			<div class="row">
+				<div class="col-md-4 form-group" align="center">
+					<strong>Imagem</strong>
+					<div class="form-group">
+						<img style="width: 280px; height: 400px;"
+							src=<%=(imagem == "" || imagem == null ? "img/semimg.jpg"
+					: "data:image/jpg;base64," + imagem)%>
+							class="img-thumbnail" name="imgC">
+					</div>
+				</div>
+
+				<div class="col-md-8 form-group">
+					<strong>Trailer</strong>
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe class="embed-responsive-item form-control"
+							src="<%=filme.getTrailer()%>"></iframe>
+					</div>
+				</div>
+			</div>
+
+			<div class=" col-xs-12 form-group">
+				<strong>Sinopse</strong><br />
+				<%=filme.getSinopse()%>
+			</div>
+			<div class="col-xs-12 form-group">
+				<strong>Diretor</strong> &nbsp;
+				<%=filme.getDiretor()%>
+			</div>
+			<div class="col-xs-12 form-group">
+				<strong>Dura&ccedil;&atilde;o</strong> &nbsp;
+				<%=filme.getDuracaoFormatada()%>
+			</div>
+			<div class="col-xs-12 form-group">
+				<strong>Generos</strong> &nbsp;
+				<%
+					for (Genero genero : filme.getGeneros()) {
+						out.print(genero.getDescricao() + ". ");
 					}
-					out.print("...");
-					out.print("</p>");
-
-					out.print("<p><a href='#' class='btn btn-default' role='button'>Saiba mais</a></p>");
-					out.print("</div></div></div>");
-				}
-			%>
-
+				%>
+			</div>
+			<div class="col-xs-12 form-group">
+				<strong>Faixa Et&aacute;ria</strong> &nbsp;
+				<%=filme.getFaixaEtaria()%>
+			</div>
+			<div class="col-xs-12 form-group">
+				<strong>Tipo</strong> &nbsp;
+				<%=filme.getTipo()%>
+				&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
+				 	if (filme.isLegendado())
+				 		out.print("Legendado");
+				 	else
+				 		out.print("Dublado");
+				 %>
+				</strong>
+			</div>
+			<div class="col-xs-12 form-group">
+				<strong>Status</strong> &nbsp;
+				<%=filme.getStatus()%>
+			</div>
 		</div>
+	</div>
+
 
 	</div>
 	<!-- /container -->
