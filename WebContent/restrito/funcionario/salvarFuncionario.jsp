@@ -1,8 +1,13 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.hibernate.annotations.Check"%>
+<%@page import="javax.persistence.UniqueConstraint"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Funcionario"%>
 <%@page import="model.Cargo"%>
+<%@page import="model.Pessoa"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -35,6 +40,7 @@
 				.getAttribute("usuarioRestrito");
 		java.util.Date now = new java.util.Date();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		List<Cargo> todosCargos = (List<Cargo>) request.getAttribute("cargos");
 	%>
 	<div id="wrapper">
 
@@ -100,9 +106,9 @@
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
 								Salas</a></li>
-						<li><a href="funcionarios"><i class="fa fa-group fa-fw"></i>
+						<li><a href="funcionarios" class="active"><i class="fa fa-group fa-fw"></i>
 								Funcion&aacute;rios</a></li>
-						<li><a href="cargos" class="active"><i class="fa fa-sitemap fa-fw"></i>
+						<li><a href="cargos" ><i class="fa fa-sitemap fa-fw"></i>
 								Cargos</a></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								Relat&oacute;rios<span class="fa arrow"></span></a>
@@ -125,24 +131,30 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">
-						<i class="fa fa-sitemap fa-fw"></i>Salvar Cargo
-					</h1>
-				</div>
 				<%
 						String mensagem = (String) request.getAttribute("mensagem");
 
-						int nivel= 0;
+						Pessoa p1 = null;
+						Cargo cargo = null;
 						String nome = "";
+						String cpf = "";
+						String email = "";
 						String id = "";
+						String re = "required";
 						
-						if (request.getAttribute("cargo") != null){
-							Cargo c = (Cargo) request.getAttribute("cargo");
-							
-							nivel = c.getNivel();
-							nome = c.getNome();
-							id = String.valueOf(c.getID());
-							
+						if(todosCargos == null || todosCargos.isEmpty()){
+							todosCargos = new ArrayList<Cargo>();
+						}
+						
+						if (request.getAttribute("funcionario") != null){
+							Funcionario f = (Funcionario) request.getAttribute("funcionario");
+							p1 = f.getPessoa();
+							nome = p1.getNome();
+							cpf = p1.getCpf();
+							email = p1.getEmail();
+							cargo = f.getCargo();
+							re = "";
+							id = String.valueOf(f.getMatricula());
 						}
 						
 						if (mensagem != null) {
@@ -152,39 +164,84 @@
 							out.print("</div>");
 						}
 					%>
+					<h1 class="page-header">
+						<i class="fa fa-group fa-fw"></i>Salvar Funcionário
+					</h1>
+				</div>
 					</div>
-				<form action="salvarCargo" method="post">
-					<div class="row form-group">
+				<form action="salvarFuncionario" method="post">
+					<div class="row form-group col-md-12" >
+					
 						<!--  ID -->
 						<input type="hidden" name="id" value="<%=id%>">
+						<!-- /ID -->
 						
-						<!--  Nível -->
-						<div class="col-md-2" style="margin-bottom: 10px;">											
-							<label>Nível</label> 
-							<select name="nivel" autofocus required class="form-control">
-								<option value="1" <%=(nivel==1 ? "selected":"") %> >1</option>
-								<option value="2" <%=(nivel==2 ? "selected":"") %> >2</option>
-								<option value="3" <%=(nivel==3 ? "selected":"") %> >3</option>
-								<option value="4" <%=(nivel==4 ? "selected":"") %> >4</option>
-								</select>
+						<div class="row col-md-12">
+						<!-- CPF -->
+						<div class="col-md-4" style="margin-bottom: 10px;">
+							<label>CPF</label>
+							<div class="input-group ">
+								<input type="text" class="form-control"	placeholder="CPF" name="cpf" value="<%=cpf%>"
+								onkeypress="javascript: mascara(this, cpf_mask);" autofocus required maxlength="14"> 
+								<span class="input-group-btn"> </span><span class="input-group-btn">
+									<a class="btn btn-primary" type="button" title="Buscar CPF">
+										<i class="fa fa-search"></i>
+									</a>
+								</span>
+							</div>
 						</div>
-						<!-- /Nivel -->
+						<!-- /CPF -->
+						
+						<!-- Cargo -->
+						<div class="col-md-7" style="margin-bottom: 10px;">
+							<label><i class="fa fa-sitemap fa-fw"></i><strong>Cargo</strong></label>
+							<% 
+							if(cargo == null){
+								cargo = new Cargo();
+							}
+							out.print("<select name='cargos' class='form-control' style='width:200px;'>");
+							for(Cargo c : todosCargos){
+								out.print("<option value='"+c.getID()+"' "+(cargo.equals(c)?"selected":"") +">"+c.getNome()+"</option>");
+							}
+							out.print("</select>");
+							%>
+						</div>
+						<!-- /Cargo -->
+						</div>
+						
 						
 						<!-- Nome -->
-						<div class="col-md-10 form-group" style="margin-bottom: 10px;">											
+						<div class="col-md-12 form-group" style="margin-bottom: 10px;">											
 							<label>Nome</label>
-							<input type="text" name="nome" value="<%=nome %>" placeholder="Nome" class="form-control"> 
+							<input type="text" name="nome" value="<%=nome %>" placeholder="Nome" class="form-control" required> 
 						</div>
 						<!-- /Nome -->
-					</div>
-					
-					<div class="form-group" style="margin-top: 10px;" align="center">
+						
+						<!-- Email -->
+						<div class="col-md-12 form-group" style="margin-bottom: 10px;">											
+							<label>Email</label>
+							<input type="email" name="email" value="<%=email %>" placeholder="Email" class="form-control" required> 
+						</div>
+						<!-- /Email -->
+						
+						<div class="row col-md-12">
+						<!-- Senha -->
+						<div class="col-md-4 form-group" style="margin-bottom: 10px;">											
+							<label>Senha</label>
+							<input type="password" name="senha" placeholder="Senha" class="form-control" <%=re%>> 
+						</div>
+						<!-- /Senha -->
+						
+						</div>
+					 <br/>
+					<div class="col-md-10 form-group" style="margin-top: 10px;" align="center">
 						<button type="submit" class="btn btn-success">
 							<i class="glyphicon glyphicon-ok"></i> Gravar
 						</button>
-						<a href="cargos" class="btn btn-warning"> <i
+						<a href="funcionarios" class="btn btn-warning"> <i
 							class="fa fa-undo fa-fw"></i>Voltar
 						</a>
+					</div>
 					</div>
 				</form>
 		</div>

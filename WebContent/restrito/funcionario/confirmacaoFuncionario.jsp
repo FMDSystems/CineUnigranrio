@@ -1,41 +1,33 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="model.Funcionario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="model.Funcionario"%>
+<%@page import="model.Pessoa"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
 
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Cinema Unigranrio">
 <meta name="author" content="FMD Systems">
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
 
 <title>Cine Unigranrio - &Aacute;rea Restrita</title>
 
 <link href="css/style.css" rel="stylesheet">
-
-<link href="css/plugins/metisMenu.min.css" rel="stylesheet">
-
+<link href="css/plugins/metismenu.min.css" rel="stylesheet">
 <link href="css/menurestrito.css" rel="stylesheet">
-
 <link href="css/plugins/font.min.css" rel="stylesheet" type="text/css">
-
 
 </head>
 
 <body>
 	<%
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
+		java.util.Date now = new java.util.Date();
 		Funcionario usuario = (Funcionario) session
 				.getAttribute("usuarioRestrito");
-		java.util.Date now = new java.util.Date();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div id="wrapper">
@@ -59,7 +51,7 @@
 				<li><a><i class="fa fa-calendar fa-fw"></i><%=formato.format(now)%></a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						<%=usuario.getPessoa().getNome()%> &nbsp;<i class="fa fa-caret-down"></i>
+						<%=usuario.getPessoa().getNome()%>&nbsp;<i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i> Alterar
@@ -88,7 +80,7 @@
 								</span>
 							</div> <!-- /input-group -->
 						</li>
-						<li><a class="active" href="centralControle"><i
+						<li><a href="centralControle"><i
 								class="fa fa-dashboard fa-fw"></i> Central de Controle</a></li>
 						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
 								Filmes<span class="fa arrow"></span></a>
@@ -96,15 +88,15 @@
 								<li><a href="filmes">Exibi&ccedil;&atilde;o</a></li>
 								<li><a href="filmes">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="generos"><i class="fa fa-certificate fa-fw"></i>
-								G&ecirc;neros</a></li>
+						<li><a href="generos"><i
+								class="fa fa-certificate fa-fw"></i> G&ecirc;neros</a></li>
 						<li><a href=""><i class="fa fa-film fa-fw"></i>
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
 								Salas</a></li>
-						<li><a href="funcionarios"><i class="fa fa-group fa-fw"></i>
+						<li><a href="funcionarios" class="active"><i class="fa fa-group fa-fw"></i>
 								Funcion&aacute;rios</a></li>
-						<li><a href="cargos"><i class="fa fa-sitemap fa-fw"></i>
+						<li><a href="cargos" ><i class="fa fa-sitemap fa-fw"></i>
 								Cargos</a></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								Relat&oacute;rios<span class="fa arrow"></span></a>
@@ -126,117 +118,125 @@
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">Central de Controle</h1>
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-			<div class="row">
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa  fa-video-camera fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge"><%=request.getAttribute("qtdFilmes") %></div>
-									<div>Filmes</div>
-								</div>
-							</div>
-						</div>
-						<a href="filmes">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Filmes</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
+				<%
+					String mensagem = (String) request.getAttribute("mensagem");
+
+					if (mensagem != null) {
+						out.print("<br/><div class='alert alert-success' role='alert'>");
+						out.print("<a class='close' data-dismiss='alert' href=''#''>x</a>");
+						out.print(mensagem);
+						out.print("</div>");
+					}
+
+					Funcionario funcionario = (Funcionario) request.getAttribute("funcionario");
+					Long id = funcionario.getMatricula();
+					Pessoa p1 = funcionario.getPessoa();
+					String cpf = p1.getCpf();
+					String nome = p1.getNome();
+					String email = p1.getEmail();
+				%>
+				<h1 class="page-header">
+					<i class="fa fa-sitemap fa-fw"></i><%=funcionario%>
+				</h1>
+				<div class="panel-body" align="center" style="text-align: center;">
+					<div class="form-group col-md-10">
+					<label>Matricula: </label> <%=id %>
+					&nbsp;&nbsp;&nbsp;
+					<label>Nome: </label> <%=nome %>
 					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-green">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa fa-film fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge">12</div>
-									<div>Sessões</div>
-								</div>
-							</div>
-						</div>
-						<a href="#">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Sessões</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
+				
+				
+					<div class="form-group col-md-10">
+					<label>CPF: </label> <%=cpf %>
+					&nbsp;&nbsp;&nbsp;
+					<label>Cargo: </label> <%=funcionario.getCargo() %>
 					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-yellow">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa fa-institution fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge">124</div>
-									<div>Salas</div>
-								</div>
-							</div>
-						</div>
-						<a href="#">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Salas</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
+
+					<div class="form-group col-md-10">
+					<label>Email: </label> <%=email %>
 					</div>
+					
 				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="panel panel-red">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="fa fa-group fa-5x"></i>
-								</div>
-								<div class="col-xs-9 text-right">
-									<div class="huge"><%=request.getAttribute("qtdFuncionarios") %></div>
-									<div>Funcion&aacute;rios</div>
-								</div>
-							</div>
-						</div>
-						<a href="funcionarios">
-							<div class="panel-footer">
-								<span class="pull-left">Ver Funcion&aacute;rios</span> <span
-									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								<div class="clearfix"></div>
-							</div>
-						</a>
+
+
+				<div align="center" class="row">
+					
+					<div class="col-md-3" style="margin-bottom: 10px;">
+					<!-- Cadastrar Novo -->
+					<a href="cadastrarFuncionario" class="btn btn-success"> <i
+						class="glyphicon glyphicon-plus"></i> Novo Funcionário
+					</a>
+					</div>
+					
+					<div class="col-md-3" style="margin-bottom: 10px;">
+					<!-- Alterar -->
+					<a href="alterarFuncionario?id=<%=id %>" class="btn btn-info"> <i
+						class="glyphicon glyphicon-edit"></i> Alterar Funcionário
+					</a>
+					</div>
+					
+					<div class="col-md-3" style="margin-bottom: 10px;">
+					<!-- Excluir -->
+					<a class='btn btn-danger confirm-delete' data-id="<%=id %>">
+					 <i	class="glyphicon glyphicon-remove"></i> Excluir Cargo
+					</a>
+					</div>
+
+					<div class="col-md-3" style="margin-bottom: 10px;">
+					<!-- Voltar -->
+					<a href="funcionarios" class="btn btn-warning"> <i
+						class="fa fa-undo fa-fw"></i>Funcionários
+					</a>
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-		<!-- /#page-wrapper -->
-
 	</div>
-	<!-- /#wrapper -->
-
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Excluir Funcionário </h4>
+					</div>
+					<div class="modal-body">
+					Deseja realmente excluir o funcionário selecionado?
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo fa-fw"></i>Cancelar</a>
+						<a id="btn-excluir" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Excluir Funcionário</a>
+					<form action="#" method="get" name="excluir"><input type="hidden" name="id" id="txtExcluir"></form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	
 	<script src="js/jquery.min.js"></script>
-
 	<script src="js/script.js"></script>
-
 	<script src="js/plugins/metisMenu.min.js"></script>
-
 	<script src="js/menuRestrito.js"></script>
+	
+	<script type="text/javascript">
+	$('.confirm-delete').on('click', function(e) {
+	    e.preventDefault();
+
+	    var id = $(this).data('id');
+	    $('#myModal').data('id', id).modal('show');
+	});
+	
+	$('#btn-excluir').click(function() {
+		var id = $('#myModal').data('id');
+
+  		document.getElementById("txtExcluir").value = id;
+		document.forms['excluir'].action = "excluirFuncionario?id='"+id+"'";
+		document.forms['excluir'].submit();  
+		
+	});
+    </script>
+
 </body>
 
 </html>

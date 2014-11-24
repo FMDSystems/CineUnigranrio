@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.DAO.FilmeDAO;
+import model.DAO.FuncionarioDAO;
 import control.util.JPAUtil;
 
 /**
@@ -40,9 +41,12 @@ public class ServletCentralControle extends HttpServlet {
 		if (sessao != null) {
 			EntityManager manager = JPAUtil.getEntityManager();
 			FilmeDAO daoFilme = new FilmeDAO(manager);
+			FuncionarioDAO daoFuncionario = new FuncionarioDAO(manager);
 			int qtdFilmes = daoFilme.lerTodos().size();
+			int qtdFuncionarios = daoFuncionario.lerTodos().size();
 			
 			request.setAttribute("qtdFilmes", qtdFilmes);
+			request.setAttribute("qtdFuncionarios", qtdFuncionarios);
 			
 			RequestDispatcher menuRestrito = request
 					.getRequestDispatcher("restrito/menuRestrito.jsp");

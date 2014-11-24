@@ -85,8 +85,8 @@
 						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
 								Filmes<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a href="">Exibi&ccedil;&atilde;o</a></li>
-								<li><a href="">Lan&ccedil;amento</a></li>
+								<li><a href="filmes">Exibi&ccedil;&atilde;o</a></li>
+								<li><a href="filmes">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
 						<li><a href="generos"><i
 								class="fa fa-certificate fa-fw"></i> G&ecirc;neros</a></li>
@@ -94,7 +94,7 @@
 								Sess&otilde;es</a></li>
 						<li><a href=""><i class="fa fa-institution fa-fw"></i>
 								Salas</a></li>
-						<li><a href="#"><i class="fa fa-group fa-fw"></i>
+						<li><a href="funcionarios"><i class="fa fa-group fa-fw"></i>
 								Funcion&aacute;rios</a></li>
 						<li><a href="cargos" class="active"><i class="fa fa-sitemap fa-fw"></i>
 								Cargos</a></li>

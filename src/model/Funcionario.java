@@ -70,7 +70,7 @@ public class Funcionario implements Serializable{
 	
 	@Override
 	public String toString(){
-		return this.getMatricula() + " - " + this.getPessoa().getNome() + "(" + this.getCargo() + ")";
+		return this.getMatricula() + " - " + this.getPessoa().getNome();
 	}
 	
 	@Override

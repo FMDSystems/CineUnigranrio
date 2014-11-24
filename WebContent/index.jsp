@@ -1,6 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="model.Cliente"%>
+<%@page import="model.Filme"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.DAO.FilmeDAO"%>
+<%@page import="org.apache.catalina.util.*"%>
+<%
+FilmeDAO daoFilme = new FilmeDAO();
+List<Filme> todosFilmes = daoFilme.lerTodos();
+List<Filme> filmesExibicao = new ArrayList<Filme>();
+List<Filme> filmesBreve = new ArrayList<Filme>();
+
+if(todosFilmes != null || !todosFilmes.isEmpty()){
+	for(Filme f : todosFilmes){
+		if(f.getStatus().equals("Exibição")){
+			filmesExibicao.add(f);
+		}else{
+			filmesBreve.add(f);
+		}
+	}
+}
+
+%>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -174,104 +196,27 @@
 
 		<div class="flexslider carousel">
 			<ul class="slides">
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/maze-runner.jsp"> <img
-							src="img/filmes/em-exibicao/maze-runner.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Maze Runner</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/maze-runner.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/as-tartarugas-ninja.jsp"><img
-							src="img/filmes/em-exibicao/as-tartarugas-ninja.jpg"></a>
-						<div class="caption" align="center">
-							<h4>As Tartarugas Ninjas</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/as-tartarugas-ninja.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/deus-nao-esta-morto.jsp"><img
-							src="img/filmes/em-exibicao/deus-nao-esta-morto.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Deus N&atilde;o Est&aacute; Morto</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/deus-nao-esta-morto.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/livrai-nos-do-mal.jsp"><img
-							src="img/filmes/em-exibicao/livrai-nos-do-mal.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Livrai-nos do Mal</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/livrai-nos-do-mal.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/o-protetor.jsp"><img
-							src="img/filmes/em-exibicao/o-protetor.jpg"></a>
-						<div class="caption" align="center">
-							<h4>O Protetor</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/o-protetor.jsp" class="btn btn-default" role="button">Saiba
-									Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/se-eu-ficar.jsp"><img
-							src="img/filmes/em-exibicao/se-eu-ficar.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Se Eu Ficar</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/se-eu-ficar.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/sera-que.jsp"><img
-							src="img/filmes/em-exibicao/sera-que.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Ser&aacute; Que?</h4>
-							<p>
-								<a href="#" class="btn btn-primary" role="button">Comprar</a> <a
-									href="jsp/sera-que.jsp" class="btn btn-default" role="button">Saiba
-									Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
+			<%
+			if(!filmesExibicao.isEmpty()){
+				for(Filme f : filmesExibicao){
+					String imagem = Base64.encode(f.getImagem());
+					out.print("<li>");
+					out.print("<div class='thumbnail'>");
+					out.print("<a href='exibirFilme?id="+f.getId()+"'>");
+					out.print("<img	style='width: 230px; height: 320px;' src='data:image/jpg;base64,"+imagem+"'>");
+					out.print("</a>");
+					out.print("<div class='caption' align='center'>");
+					out.print("<h4>"+f.getTitulo()+"</h4>");
+					out.print("<p>");
+					out.print("<a href='comprar' class='btn btn-primary' role='button'>Comprar</a>"); 
+					out.print("<a href='exibirFilme?id="+f.getId()+"' class='btn btn-default' role='button'>Saiba Mais</a>");
+					out.print("</p>");
+					out.print("</div>");
+					out.print("</div>");
+					out.print("</li>");
+				}
+			}
+			 %>
 			</ul>
 		</div>
 
@@ -280,84 +225,26 @@
 		</div>
 		<div class="flexslider carousel">
 			<ul class="slides">
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/anabelle.jsp"> <img
-							src="img/filmes/em-breve/anabelle.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Annabelle</h4>
-							<p>
-								<a href="jsp/anabelle.jsp" class="btn btn-default" role="button">Saiba
-									Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/o-fisico.jsp"><img
-							src="img/filmes/em-breve/o-fisico.jpg"></a>
-						<div class="caption" align="center">
-							<h4>O F&iacute;sico</h4>
-							<p>
-								<a href="jsp/o-fisico.jsp" class="btn btn-default" role="button">Saiba
-									Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/o-homem-mais-procurado.jsp"><img
-							src="img/filmes/em-breve/o-homem-mais-procurado.jpg"></a>
-						<div class="caption" align="center">
-							<h4>O Homem Mais Procurado</h4>
-							<p>
-								<a href="jsp/o-homem-mais-procurado.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/o-inventor-de-jogos.jsp"><img
-							src="img/filmes/em-breve/o-inventor-de-jogos.jpg"></a>
-						<div class="caption" align="center">
-							<h4>O Inventor de Jogos</h4>
-							<p>
-								<a href="jsp/o-inventor-de-jogos.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/trash.jsp"><img
-							src="img/filmes/em-breve/trash.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Trash - A Esperan&ccedil;a Vem do Lixo</h4>
-							<p>
-								<a href="jsp/trash.jsp" class="btn btn-default" role="button">Saiba
-									Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="thumbnail">
-						<a href="jsp/um-amor-de-vizinha.jsp"><img
-							src="img/filmes/em-breve/um-amor-de-vizinha.jpg"></a>
-						<div class="caption" align="center">
-							<h4>Um Amor de Vizinha</h4>
-							<p>
-								<a href="jsp/um-amor-de-vizinha.jsp" class="btn btn-default"
-									role="button">Saiba Mais</a>
-							</p>
-						</div>
-					</div>
-				</li>
+			<%
+			if(!filmesBreve.isEmpty()){
+				for(Filme f : filmesBreve){
+					String imagem = Base64.encode(f.getImagem());
+					out.print("<li>");
+					out.print("<div class='thumbnail'>");
+					out.print("<a href='exibirFilme?id="+f.getId()+"'>");
+					out.print("<img	style='width: 230px; height: 320px;' src='data:image/jpg;base64,"+imagem+"'>");
+					out.print("</a>");
+					out.print("<div class='caption' align='center'>");
+					out.print("<h4>"+f.getTitulo()+"</h4>");
+					out.print("<p>");
+					out.print("<a href='exibirFilme?id="+f.getId()+"' class='btn btn-default' role='button'>Saiba Mais</a>");
+					out.print("</p>");
+					out.print("</div>");
+					out.print("</div>");
+					out.print("</li>");
+				}
+			}
+			 %>
 			</ul>
 		</div>
 
