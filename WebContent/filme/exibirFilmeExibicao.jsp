@@ -142,72 +142,49 @@
 		</div>
 		<!-- Fim da barra -->
 		<%
-			Filme filme = (Filme) request.getAttribute("filme");
+			List<Filme> filmesExibicao = (List<Filme>) request.getAttribute("filmesExibicao");
 		%>
 
 		<h1 class="page-header">
-			<i class="fa fa-file-video-o fa-fw"></i>Em <%=(filme.getStatus().equals("Lançamento")?"Breve":filme.getStatus()) %>:
-			<%=filme.getTitulo()%>
+			<i class="fa fa-file-video-o fa-fw"></i>Filmes Em
+			Exibi&ccedil;&atilde;o
 		</h1>
 		<div class="panel-body">
-
-			<div class="row">
-				<div class="col-md-4 form-group" align="center">
-					<strong>Imagem</strong>
-					<div class="form-group">
-						<img style="width: 280px; height: 400px;"
-							src="downloadImagem?id=<%=filme.getId()%>" class="img-thumbnail" name="imgC">
-					</div>
-				</div>
-
-				<div class="col-md-8 form-group">
-					<strong>Trailer</strong>
-					<div class="embed-responsive embed-responsive-16by9">
-						<iframe class="embed-responsive-item form-control"
-							src="<%=filme.getTrailer()%>"></iframe>
-					</div>
-				</div>
-			</div>
-
-			<div class=" col-xs-12 form-group">
-				<strong>Sinopse</strong><br />
-				<%=filme.getSinopse()%>
-			</div>
-			<div class="col-xs-12 form-group">
-				<strong>Diretor</strong> &nbsp;
-				<%=filme.getDiretor()%>
-			</div>
-			<div class="col-xs-12 form-group">
-				<strong>Dura&ccedil;&atilde;o</strong> &nbsp;
-				<%=filme.getDuracaoFormatada()%>
-			</div>
-			<div class="col-xs-12 form-group">
-				<strong>Generos</strong> &nbsp;
-				<%
-					for (Genero genero : filme.getGeneros()) {
-						out.print(genero.getDescricao() + ". ");
+			<%
+				if (!filmesExibicao.isEmpty()) {
+					int cont = 0;
+					for (Filme f : filmesExibicao) {
+						cont++;
+						
+						if(cont==1){
+							out.print("<div class='row'>");
+						}
+							out.print(" <div class='col-md-3'>");
+							out.print("<div class='thumbnail'>");
+							out.print("<a href='exibirFilme?id=" + f.getId() + "'>");
+							out.print("<img	style='width: 230px; height: 320px;' src='downloadImagem?id="
+									+ f.getId() + "'>");
+							out.print("</a>");
+							out.print("<div class='caption' align='center'>");
+							out.print("<h4>" + f.getTitulo() + "</h4>");
+							out.print("<p>");
+							out.print("<a href='comprar' class='btn btn-primary' role='button'>Comprar</a>");
+							out.print("<a href='exibirFilme?id="
+									+ f.getId()
+									+ "' class='btn btn-default' role='button'>Saiba Mais</a>");
+							out.print("</p>");
+							out.print("</div>");
+							out.print("</div>");
+							out.print("</div>");
+						
+						if(cont==4){
+							cont=0;
+							out.print("</div>");
+						}
 					}
-				%>
-			</div>
-			<div class="col-xs-12 form-group">
-				<strong>Faixa Et&aacute;ria</strong> &nbsp;
-				<%=filme.getFaixaEtaria()%>
-			</div>
-			<div class="col-xs-12 form-group">
-				<strong>Tipo</strong> &nbsp;
-				<%=filme.getTipo()%>
-				&nbsp;&nbsp;&nbsp;&nbsp; <strong> <%
-				 	if (filme.isLegendado())
-				 		out.print("Legendado");
-				 	else
-				 		out.print("Dublado");
-				 %>
-				</strong>
-			</div>
-			<div class="col-xs-12 form-group">
-				<strong>Status</strong> &nbsp;
-				<%=filme.getStatus()%>
-			</div>
+				}
+			%>
+
 		</div>
 	</div>
 

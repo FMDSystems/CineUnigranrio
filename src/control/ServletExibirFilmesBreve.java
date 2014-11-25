@@ -17,14 +17,14 @@ import model.DAO.FilmeDAO;
 /**
  * Servlet implementation class ServletExibirFilmes
  */
-@WebServlet("/exibirFilmesExibicao")
-public class ServletExibirFilmesExibicao extends HttpServlet {
+@WebServlet("/exibirFilmesBreve")
+public class ServletExibirFilmesBreve extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ServletExibirFilmesExibicao() {
+	public ServletExibirFilmesBreve() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,17 +37,17 @@ public class ServletExibirFilmesExibicao extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		FilmeDAO dao = new FilmeDAO();
 		List<Filme> todosFilmes = dao.lerTodos();
-		List<Filme> filmesExibicao = new ArrayList<Filme>();
+		List<Filme> filmesBreve = new ArrayList<Filme>();
 		
 		for(Filme f : todosFilmes){
-			if(f.getStatus().equals("Exibição")){
-				filmesExibicao.add(f);
+			if(f.getStatus().equals("Lançamento")){
+				filmesBreve.add(f);
 			}
 		}
 		
-		request.setAttribute("filmesExibicao", filmesExibicao);
+		request.setAttribute("filmesBreve", filmesBreve);
 		
-		RequestDispatcher dispachante = request.getRequestDispatcher("filme/exibirFilmeExibicao.jsp");
+		RequestDispatcher dispachante = request.getRequestDispatcher("filme/exibirFilmeBreve.jsp");
 		dispachante.forward(request, response);
 
 	}

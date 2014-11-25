@@ -71,8 +71,8 @@ if(todosFilmes != null || !todosFilmes.isEmpty()){
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Filmes <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="exibirfilmesexibicao">Em Exibição</a></li>
-									<li><a href="#">Em Breve</a></li>
+									<li><a href="exibirFilmesExibicao">Em Exibição</a></li>
+									<li><a href="exibirFilmesBreve">Em Breve</a></li>
 								</ul></li>
 						</ul>
 						<form class="navbar-form navbar-left" role="search">
