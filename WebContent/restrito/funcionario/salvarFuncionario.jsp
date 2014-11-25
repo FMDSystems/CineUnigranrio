@@ -97,8 +97,8 @@
 						<li><a href="filmes"><i class="fa fa-video-camera fa-fw"></i>
 								Filmes<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a href="filmes">Exibi&ccedil;&atilde;o</a></li>
-								<li><a href="filmes">Lan&ccedil;amento</a></li>
+								<li><a href="filmesExibicao">Exibi&ccedil;&atilde;o</a></li>
+								<li><a href="filmesLacamentos">Lan&ccedil;amento</a></li>
 							</ul> <!-- /.nav-second-level --></li>
 						<li><a href="generos"><i
 								class="fa fa-certificate fa-fw"></i> G&ecirc;neros</a></li>
