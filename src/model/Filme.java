@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,7 @@ public class Filme implements Serializable {
 	private String trailer;
 
 	@Lob
+	@Basic(fetch=FetchType.LAZY)
 	private byte[] imagem;
 
 	@OneToMany(fetch = FetchType.LAZY)

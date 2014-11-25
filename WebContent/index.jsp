@@ -5,7 +5,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.DAO.FilmeDAO"%>
-<%@page import="org.apache.catalina.util.*"%>
 <%
 FilmeDAO daoFilme = new FilmeDAO();
 List<Filme> todosFilmes = daoFilme.lerTodos();
@@ -199,11 +198,10 @@ if(todosFilmes != null || !todosFilmes.isEmpty()){
 			<%
 			if(!filmesExibicao.isEmpty()){
 				for(Filme f : filmesExibicao){
-					String imagem = Base64.encode(f.getImagem());
 					out.print("<li>");
 					out.print("<div class='thumbnail'>");
 					out.print("<a href='exibirFilme?id="+f.getId()+"'>");
-					out.print("<img	style='width: 230px; height: 320px;' src='data:image/jpg;base64,"+imagem+"'>");
+					out.print("<img	style='width: 230px; height: 320px;' src='downloadImagem?id="+f.getId()+"'>");
 					out.print("</a>");
 					out.print("<div class='caption' align='center'>");
 					out.print("<h4>"+f.getTitulo()+"</h4>");
@@ -228,11 +226,10 @@ if(todosFilmes != null || !todosFilmes.isEmpty()){
 			<%
 			if(!filmesBreve.isEmpty()){
 				for(Filme f : filmesBreve){
-					String imagem = Base64.encode(f.getImagem());
 					out.print("<li>");
 					out.print("<div class='thumbnail'>");
 					out.print("<a href='exibirFilme?id="+f.getId()+"'>");
-					out.print("<img	style='width: 230px; height: 320px;' src='data:image/jpg;base64,"+imagem+"'>");
+					out.print("<img	style='width: 230px; height: 320px;' src='downloadImagem?id="+f.getId()+"'>");
 					out.print("</a>");
 					out.print("<div class='caption' align='center'>");
 					out.print("<h4>"+f.getTitulo()+"</h4>");

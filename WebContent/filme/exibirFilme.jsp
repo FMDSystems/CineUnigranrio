@@ -4,7 +4,6 @@
 <%@page import="model.Filme"%>
 <%@page import="model.Genero"%>
 <%@page import="java.util.List"%>
-<%@page import="org.apache.catalina.util.*"%>
 
 <html lang="pt-br">
 <head>
@@ -144,7 +143,6 @@
 		<!-- Fim da barra -->
 		<%
 			Filme filme = (Filme) request.getAttribute("filme");
-			String imagem = Base64.encode(filme.getImagem());
 		%>
 
 		<h1 class="page-header">
@@ -158,9 +156,7 @@
 					<strong>Imagem</strong>
 					<div class="form-group">
 						<img style="width: 280px; height: 400px;"
-							src=<%=(imagem == "" || imagem == null ? "img/semimg.jpg"
-					: "data:image/jpg;base64," + imagem)%>
-							class="img-thumbnail" name="imgC">
+							src="downloadImagem?id=<%=filme.getId()%>" class="img-thumbnail" name="imgC">
 					</div>
 				</div>
 
@@ -216,7 +212,6 @@
 	</div>
 
 
-	</div>
 	<!-- /container -->
 	<hr>
 	<div class="footer">

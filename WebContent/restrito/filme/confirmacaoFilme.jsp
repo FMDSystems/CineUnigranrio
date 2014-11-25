@@ -6,7 +6,6 @@
 <%@page import="model.Genero"%>
 <%@page import="org.apache.catalina.util.*"%>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -136,8 +135,8 @@
 
 							Filme filme = (Filme) request.getAttribute("filme");
 							Long id = filme.getId();
-							
 							String imagem = Base64.encode(filme.getImagem());
+							
 				%>
 				<h1 class="page-header">
 					<i class="fa fa-file-video-o fa-fw"></i><%=filme.getTitulo()%>

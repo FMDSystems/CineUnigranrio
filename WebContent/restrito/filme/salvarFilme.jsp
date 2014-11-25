@@ -10,8 +10,8 @@
 <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@page import="java.util.Iterator"%>
 <%@page import="org.apache.catalina.util.*"%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
