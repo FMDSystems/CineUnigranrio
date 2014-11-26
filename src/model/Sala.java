@@ -22,7 +22,6 @@ public class Sala implements Serializable{
 	private Long id;
 	
 	private int numero;
-	private int capacidade;
 	
 	@OneToMany(mappedBy = "sala")
 	private List<Sessao> sessoes;
@@ -37,7 +36,6 @@ public class Sala implements Serializable{
 	public Sala(int numero, int capacidade) {
 		super();
 		this.setNumero(numero);
-		this.setCapacidade(capacidade);
 	}
 
 	public Long getId() {
@@ -54,14 +52,6 @@ public class Sala implements Serializable{
 
 	public void setNumero(int numero) {
 		this.numero = numero;
-	}
-
-	public int getCapacidade() {
-		return this.capacidade;
-	}
-
-	public void setCapacidade(int capacidade) {
-		this.capacidade = capacidade;
 	}
 
 	/**
@@ -95,7 +85,7 @@ public class Sala implements Serializable{
 	
 	@Override
 	public String toString(){
-		return "Num.: " + this.getNumero() + " - Capacidade: " + this.getCapacidade();
+		return "Num.: " + this.getNumero() + " - Capacidade: " + this.getLugares().size();
 	}
 	
 	@Override

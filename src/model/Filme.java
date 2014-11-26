@@ -51,7 +51,7 @@ public class Filme implements Serializable {
 	private List<Sessao> sessoes;
 
 	@ManyToMany
-	@JoinTable(name = "filme_generos", 
+	@JoinTable(name = "filmes_generos", 
 	joinColumns = { @JoinColumn(name = "filme_id") }, 
 	inverseJoinColumns = { @JoinColumn(name = "genero_id") })
 	private List<Genero> generos;
