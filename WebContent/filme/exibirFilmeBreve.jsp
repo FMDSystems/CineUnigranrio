@@ -142,6 +142,7 @@
 		</div>
 		<!-- Fim da barra -->
 		<%
+			@SuppressWarnings("unchecked")
 			List<Filme> filmesBreve = (List<Filme>) request.getAttribute("filmesBreve");
 		%>
 

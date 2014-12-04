@@ -40,6 +40,7 @@
 				.getAttribute("usuarioRestrito");
 		java.util.Date now = new java.util.Date();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		@SuppressWarnings("unchecked")
 		List<Cargo> todosCargos = (List<Cargo>) request.getAttribute("cargos");
 	%>
 	<div id="wrapper">
